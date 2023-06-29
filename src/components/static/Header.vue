@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-navbar fluid="lg" class="px-3 px-lg-5 navbar navbar-expand-lg navbar-light bg-light text-black">
+  <b-container>
+    <b-navbar toggleable="lg" class="bg-white text-black">
       <b-navbar-brand to="/">NOW</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -15,20 +15,22 @@
         </b-navbar-nav>
 
         <b-navbar-form class="d-flex px-3">
-          <b-form-input type="text" placeholder="게시글 검색" class="me-2"></b-form-input>
-          <b-button variant="primary" class="text-nowrap" type="button">검색</b-button>
+          <b-form-input type="text" placeholder="게시글 검색" class="me-2 d-block d-sm-none d-xxl-block d-xl-block d-lg-block"></b-form-input>
+          <b-button variant="primary" class="text-nowrap d-block d-sm-none d-xxl-block d-xl-block d-lg-block" type="button">검색</b-button>
         </b-navbar-form>
 
         <b-navbar-nav style="font-size: 1.5rem;">
-          <b-nav-item href="#" class="ps-3">
+          <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
             <i class="bi bi-chat-left-dots"></i>
           </b-nav-item>
-          <b-nav-item href="#" class="ps-3">
+          <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
             <i class="bi bi-person"></i>
           </b-nav-item>
         </b-navbar-nav>
 
       </b-collapse>
     </b-navbar>
-  </div>
+  </b-container>
 </template>
+<script setup>
+</script>
