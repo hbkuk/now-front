@@ -23,7 +23,7 @@
       </b-col>
 
       <b-col md="2">
-        <b-row class="text-center w-100 float-end align-items-center flex-column">
+        <b-row class="text-center float-end align-items-center flex-column">
           <b-col class="p-0 d-flex align-items-center" style="height: 100px;">
             <i class="bi bi-emoji-smile me-1"></i>
             <span>10</span>
