@@ -6,7 +6,7 @@ import Pagination from "@/components/common/Pagination.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 </script>
 <template>
-  <BackgroundBanner :bannerPath="`community.png`"/>
+  <BackgroundBanner :title="`Q/A`" :bannerPath="`community.png`"/>
 
   <b-container class="mt-3">
     <b-row>
