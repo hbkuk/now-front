@@ -1,7 +1,7 @@
 <script setup>
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import Category from "@/components/common/Category.vue";
-import Table from "@/components/table/Table.vue";
+import Table from "@/components/table/PostTable.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 </script>
