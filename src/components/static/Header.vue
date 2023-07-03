@@ -33,7 +33,7 @@
             <i class="bi bi-chat-left-dots"></i>
           </b-nav-item>
           <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
-            <i class="bi bi-person"></i>
+            <router-link :to="{ name: 'Login' }" class="router-link text-decoration-none text-secondary"><i class="bi bi-person"></i></router-link>
           </b-nav-item>
         </b-navbar-nav>
 

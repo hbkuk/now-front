@@ -14,6 +14,7 @@ import PhotoPostForm from "@/pages/Photo/PhotoPostForm.vue";
 import Inquiries from "@/pages/Inquiry/Inquiries.vue";
 import InquiryView from "@/pages/Inquiry/InquiryView.vue";
 import InquiryPostForm from "@/pages/Inquiry/InquiryPostForm.vue";
+import Forgot from "@/pages/home/Forgot.vue";
 
 const routes = [
     {path: '/', redirect: '/home'}, // 리다이렉트 설정
@@ -21,6 +22,7 @@ const routes = [
     {path: '/home', name: 'Home', component: Home},
     {path: '/login', name: 'Login', component: Login},
     {path: '/SignUp', name: 'SignUp', component: SignUp},
+    {path: '/Forgot', name: 'Forgot', component: Forgot}, /** 추후 이메일 발송 구현 후 진행*/
 
     {path: '/notices', name: 'Notices', component: Notices},
     {path: '/notice/:noticeIdx', name: 'NoticeView', component: NoticeView},
