@@ -7,7 +7,7 @@ import ThumbnailTable from "@/components/table/ThumbnailTable.vue";
 <template>
   <Banner
     :router-name="`Home`"
-    :banner-path="`main.png`"
+    :banner-path="`home.png`"
   />
 
   <b-container class="mt-3">
@@ -18,7 +18,7 @@ import ThumbnailTable from "@/components/table/ThumbnailTable.vue";
       >
         <Banner
           :router-name="`Notices`"
-          :banner-path="`공지사항.png`"
+          :banner-path="`home-notice.png`"
         />
         <PostTable
           v-for="idx in 5"
@@ -32,7 +32,7 @@ import ThumbnailTable from "@/components/table/ThumbnailTable.vue";
       >
         <Banner
           :router-name="`Community`"
-          :banner-path="`커뮤니티.png`"
+          :banner-path="`home-community.png`"
         />
         <PostTable
           v-for="idx in 5"
@@ -46,7 +46,7 @@ import ThumbnailTable from "@/components/table/ThumbnailTable.vue";
       >
         <Banner
           :router-name="`Photos`"
-          :banner-path="`사진.png`" />
+          :banner-path="`home-photo.png`" />
         <ThumbnailTable
           v-for="idx in 5"
           :key="idx"
@@ -59,7 +59,7 @@ import ThumbnailTable from "@/components/table/ThumbnailTable.vue";
       >
         <Banner
           :router-name="`Inquiries`"
-          :banner-path="`문의.png`" />
+          :banner-path="`home-inquiry.png`" />
         <PostTable
           v-for="idx in 5"
           :key="idx"

@@ -41,7 +41,7 @@ const validateAndSingUp = () => {
 <template>
   <div class="bg-white py-1 mt-5">
     <b-img center style="height: 100px" class="img-fluid rounded d-block"
-           :src="require(`@/resources/banner/login.png`)"
+           :src="require(`@/resources/banner/now-icon-login-signup.png`)"
            alt="Main image"/>
   </div>
 
