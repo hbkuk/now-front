@@ -6,7 +6,11 @@ import Pagination from "@/components/common/Pagination.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 </script>
 <template>
-  <BackgroundBanner :title="`Q/A`" :bannerPath="`community.png`"/>
+  <BackgroundBanner
+    :title="`Community`"
+    :content="`다양한 사람을 만나고 생각의 폭을 넓혀보세요.`"
+    :banner-path="`community.png`"
+  />
 
   <b-container class="mt-3">
     <b-row>

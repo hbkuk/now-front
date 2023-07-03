@@ -5,7 +5,10 @@ import Category from "@/components/common/Category.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 </script>
 <template>
-  <BackgroundBanner :title="`Photo`" :bannerPath="`community.png`"/>
+  <BackgroundBanner
+      :title="`Photo`"
+      :content="`다양한 사람들에게 사진을 공유 해요.`"
+      :bannerPath="`community.png`"/>
 
   <b-container class="mt-3">
     <b-row>
