@@ -13,7 +13,7 @@
             <router-link :to="{ name: 'Notices' }" class="router-link text-decoration-none text-secondary">공지사항</router-link>
           </b-nav-item>
           <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Community' }" class="router-link text-decoration-none text-secondary">커뮤니티</router-link>
+            <router-link :to="{ name: 'Communities' }" class="router-link text-decoration-none text-secondary">커뮤니티</router-link>
           </b-nav-item>
           <b-nav-item class="nav-item px-3">
             <router-link :to="{ name: 'Photos' }" class="router-link text-decoration-none text-secondary">사진</router-link>
@@ -23,10 +23,10 @@
           </b-nav-item>
         </b-navbar-nav>
 
-        <b-navbar-form class="d-flex px-3">
+        <div class="d-flex px-3">
           <b-form-input type="text" placeholder="게시글 검색" class="me-2 d-block d-sm-none d-xxl-block d-xl-block d-lg-block"></b-form-input>
           <b-button variant="primary" class="text-nowrap d-block d-sm-none d-xxl-block d-xl-block d-lg-block" type="button">검색</b-button>
-        </b-navbar-form>
+        </div>
 
         <b-navbar-nav style="font-size: 1.5rem;">
           <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">

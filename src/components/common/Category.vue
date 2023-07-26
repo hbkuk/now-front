@@ -1,3 +1,10 @@
+<script setup>
+
+const props = defineProps({
+  categories: Object,
+})
+</script>
+
 <template>
   <nav class="navbar mb-2 navbar-expand navbar-light bg-light rounded-2">
     <!-- Left Element -->
@@ -12,17 +19,8 @@
 
     <!-- Center Element -->
     <b-navbar-nav class="mx-auto">
-      <b-nav-item class="ml-auto">
-        <b-link class="nav-link fs-6" href="#!">기술</b-link>
-      </b-nav-item>
-      <b-nav-item class="ml-auto">
-        <b-link class="nav-link fs-6" href="#!">커리어</b-link>
-      </b-nav-item>
-      <b-nav-item class="ml-auto">
-        <b-link class="nav-link fs-6" href="#!">일상</b-link>
-      </b-nav-item>
-      <b-nav-item>
-        <b-link class="nav-link" href="#!">기타</b-link>
+      <b-nav-item v-for="category in categories" :key="category.subCode">
+        <b-link class="nav-link fs-6" href="#!">{{ category.subCodeTitle }}</b-link>
       </b-nav-item>
     </b-navbar-nav>
     <!-- End Center Element -->
@@ -58,5 +56,3 @@
     <!-- End Right Element -->
   </nav>
 </template>
-<script setup>
-</script>

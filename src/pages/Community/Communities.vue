@@ -5,9 +5,9 @@ import Table from "@/components/table/PostTable.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 import {ref} from "vue";
+import DataService from "@/service/DataService";
 import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import DataService from "@/service/DataService";
 import {useFindSubCodeGroup} from "@/composable/store/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/store/PostGroup";
@@ -15,10 +15,10 @@ import {useGetPastDate} from "@/composable/date/getPastDate";
 import {useGetCurrentDate} from "@/composable/date/getCurrentDate";
 
 /** 게시글 목록을 담는 반응성 객체 */
-const fetchInquiriesData = ref(null);
+const fetchCommunitiesData = ref(null);
 
 /** 게시글 목록을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchInquiriesError = ref(null);
+const fetchCommunitiesError = ref(null);
 
 /** 초기 검색 조건을 담는 반응성 객체 */
 const initialCondition = ref({
@@ -38,26 +38,28 @@ const initialCondition = ref({
  * @param {Record<string, any>} condition - 검색 조건 객체
  * @returns {Promise<void>}
  */
-async function getInquiries(condition) {
-  const [response] = await Promise.all([DataService.fetchInquiries(condition)])
+async function getCommunities(condition) {
+  const [response] = await Promise.all([DataService.fetchCommunities(condition)])
   const result = await useResponseHandler(response, RequestSuccessCode.GET);
 
   if (result && result.type === "data") {
-    fetchInquiriesData.value = result.data
-    fetchInquiriesError.value = null
+    fetchCommunitiesData.value = result.data
+    fetchCommunitiesError.value = null
   } else {
-    fetchInquiriesError.value = result?.error;
+    fetchCommunitiesError.value = result?.error;
   }
 }
-getInquiries(initialCondition.value)
 
-const inquirySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQUIRY);
+getCommunities(initialCondition.value)
+
+const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
+
 
 </script>
 <template>
   <BackgroundBanner
-    :title="`Inquiry`"
-    :content="`궁금한 모든 것들을 운영진에게 물어봐요.`"
+    :title="`Community`"
+    :content="`다양한 사람을 만나고 생각의 폭을 넓혀보세요.`"
     :banner-path="`community.png`"
   />
 
@@ -66,11 +68,11 @@ const inquirySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQU
       <!-- Main content -->
       <b-col class="3">
         <searchForm/>
-        <Category :categories="inquirySubCodeGroup" />
-        <template v-if="fetchInquiriesData !== null">
-          <Table :posts="fetchInquiriesData"/>
+        <Category :categories="communitySubCodeGroup"/>
+        <template v-if="fetchCommunitiesData !== null">
+          <Table :posts="fetchCommunitiesData"/>
+          <Pagination/>
         </template>
-        <Pagination/>
       </b-col>
     </b-row>
   </b-container>

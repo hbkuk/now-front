@@ -7,7 +7,7 @@
             <router-link :to="{ name: 'Notices' }" class="router-link text-decoration-none text-secondary">공지사항</router-link>
           </b-nav-item>
           <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Community' }" class="router-link text-decoration-none text-secondary">커뮤니티</router-link>
+            <router-link :to="{ name: 'Communities' }" class="router-link text-decoration-none text-secondary">커뮤니티</router-link>
           </b-nav-item>
           <b-nav-item class="nav-item px-3">
             <router-link :to="{ name: 'Photos' }" class="router-link text-decoration-none text-secondary">사진</router-link>

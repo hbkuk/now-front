@@ -6,12 +6,13 @@ import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 import DataService from "@/service/DataService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
 import Comments from "@/components/Comments.vue";
+import Carousel from "@/components/Carousel.vue";
 
 /** 게시글을 담는 반응성 객체 */
-const fetchCommunityData = ref(null);
+const fetchPhotoData = ref(null);
 
 /** 게시글을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchCommunityError = ref(null);
+const fetchPhotoError = ref(null);
 
 const props = defineProps({
   postIdx: {
@@ -26,30 +27,34 @@ const props = defineProps({
  * @param postIdx 게시글 번호
  * @returns {Promise<void>}
  */
-async function getCommunity(postIdx) {
-  const [response] = await Promise.all([DataService.fetchCommunity(postIdx)])
+async function getPhoto(postIdx) {
+  const [response] = await Promise.all([DataService.fetchPhoto(postIdx)])
   const result = await useResponseHandler(response, RequestSuccessCode.GET);
 
   if (result && result.type === "data") {
-    fetchCommunityData.value = result.data
-    fetchCommunityError.value = null
+    fetchPhotoData.value = result.data
+    fetchPhotoError.value = null
   } else {
-    fetchCommunityError.value = result?.error;
+    fetchPhotoError.value = result?.error;
   }
 }
 
-getCommunity(props.postIdx);
+getPhoto(props.postIdx);
 
 </script>
 
 <template>
-  <BackgroundBanner :title="`Community`" :banner-path="`community.png`"/>
+  <BackgroundBanner :title="`Photo`" :banner-path="`community.png`"/>
 
   <b-container class="mt-3">
-    <template v-if="fetchCommunityData">
-      <Post :post="fetchCommunityData" />
-      <template v-if="fetchCommunityData.comments">
-        <Comments :comments="fetchCommunityData.comments" />
+    <template v-if="fetchPhotoData">
+      <Post :post="fetchPhotoData" >
+        <template v-if="fetchPhotoData.attachments">
+          <Carousel :attachments="fetchPhotoData.attachments"/>
+        </template>
+      </Post>
+      <template v-if="fetchPhotoData.comments">
+        <Comments :comments="fetchPhotoData.comments" />
       </template>
     </template>
   </b-container>

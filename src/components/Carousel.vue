@@ -1,19 +1,26 @@
 <script setup>
-import {ref} from "vue";
+import { ref } from "vue";
 
 const props = defineProps({
-  slides: Object,
-})
+  attachments: Array, // Use Array type instead of Object
+});
 
 const activeIndex = ref(0);
 
+const slides = props.attachments.map((attachment) => ({
+  src: `/file/${attachment.savedAttachmentName}`,
+  alt: attachment.originalAttachmentName,
+}));
+
 function prevSlide() {
-  activeIndex.value = (activeIndex.value - 1 + props.slides.length) % props.slides.length;
+  activeIndex.value = (activeIndex.value - 1 + slides.length) % slides.length;
 }
+
 function nextSlide() {
-  activeIndex.value = (activeIndex.value + 1) % props.slides.length;
+  activeIndex.value = (activeIndex.value + 1) % slides.length;
 }
 </script>
+
 
 <template>
   <div>

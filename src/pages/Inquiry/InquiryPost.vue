@@ -6,12 +6,13 @@ import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 import DataService from "@/service/DataService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
 import Comments from "@/components/Comments.vue";
+import Answer from "@/components/Answer.vue";
 
 /** 게시글을 담는 반응성 객체 */
-const fetchCommunityData = ref(null);
+const fetchInquiryData = ref(null);
 
 /** 게시글을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchCommunityError = ref(null);
+const fetchInquiryError = ref(null);
 
 const props = defineProps({
   postIdx: {
@@ -26,30 +27,31 @@ const props = defineProps({
  * @param postIdx 게시글 번호
  * @returns {Promise<void>}
  */
-async function getCommunity(postIdx) {
-  const [response] = await Promise.all([DataService.fetchCommunity(postIdx)])
+async function getInquiry(postIdx) {
+  const [response] = await Promise.all([DataService.fetchInquiry(postIdx)])
   const result = await useResponseHandler(response, RequestSuccessCode.GET);
 
   if (result && result.type === "data") {
-    fetchCommunityData.value = result.data
-    fetchCommunityError.value = null
+    fetchInquiryData.value = result.data
+    fetchInquiryError.value = null
   } else {
-    fetchCommunityError.value = result?.error;
+    fetchInquiryError.value = result?.error;
   }
 }
 
-getCommunity(props.postIdx);
+getInquiry(props.postIdx);
 
 </script>
 
 <template>
-  <BackgroundBanner :title="`Community`" :banner-path="`community.png`"/>
+  <BackgroundBanner :title="`Inquiry`" :banner-path="`community.png`"/>
 
   <b-container class="mt-3">
-    <template v-if="fetchCommunityData">
-      <Post :post="fetchCommunityData" />
-      <template v-if="fetchCommunityData.comments">
-        <Comments :comments="fetchCommunityData.comments" />
+    <template v-if="fetchInquiryData">
+      <Post :post="fetchInquiryData" />
+      <Answer :post="fetchInquiryData" />
+      <template v-if="fetchInquiryData.comments">
+        <Comments :comments="fetchInquiryData.comments" />
       </template>
     </template>
   </b-container>
