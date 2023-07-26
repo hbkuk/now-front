@@ -40,15 +40,15 @@ const props = defineProps({
               </ol>
             </nav>
 
-            <slot></slot>
-
             <p class="mt-5 mb-lg-5">{{ post.content }}</p>
 
             <div class="d-flex justify-content-end align-items-center">
               <i class="btn bi bi-chevron-up mx-2 icon-1x"></i><p class="text-dark mb-0 h4">3</p><i class="btn ms-2 bi-chevron-down icon-1x"></i>
             </div>
 
-            <hr class="my-2"/>
+            <slot></slot>
+
+            <hr class="my-3"/>
           </div>
         </article>
       </div>

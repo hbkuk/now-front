@@ -1,7 +1,7 @@
 <script setup>
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
-import Category from "@/components/common/Category.vue";
-import Table from "@/components/table/PostTable.vue";
+import PostNavbar from "@/components/common/PostNavbar.vue";
+import PostList from "@/components/table/PostList.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 import {ref} from "vue";
@@ -66,9 +66,10 @@ const noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTIC
       <!-- Main content -->
       <b-col class="3">
         <searchForm/>
-        <Category :categories="noticeSubCodeGroup"/>
+        <PostNavbar :categories="noticeSubCodeGroup"
+                    :PostFormRouteName="'NoticeForm'"/>
         <template v-if="fetchNoticesData !== null">
-          <Table :posts="fetchNoticesData"/>
+          <PostList :posts="fetchNoticesData"/>
         </template>
         <Pagination/>
       </b-col>

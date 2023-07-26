@@ -6,6 +6,7 @@ import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 import DataService from "@/service/DataService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
 import Comments from "@/components/Comments.vue";
+import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchCommunityData = ref(null);
@@ -47,7 +48,11 @@ getCommunity(props.postIdx);
 
   <b-container class="mt-3">
     <template v-if="fetchCommunityData">
-      <Post :post="fetchCommunityData" />
+      <Post :post="fetchCommunityData" >
+        <template v-if="fetchCommunityData.attachments">
+          <AttachmentList :attachments="fetchCommunityData.attachments"/>
+        </template>
+      </Post>
       <template v-if="fetchCommunityData.comments">
         <Comments :comments="fetchCommunityData.comments" />
       </template>

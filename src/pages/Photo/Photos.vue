@@ -1,7 +1,7 @@
 <script setup>
 import PhotoCard from "@/components/card/PhotoCard.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
-import Category from "@/components/common/Category.vue";
+import PostNavbar from "@/components/common/PostNavbar.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import {ref} from "vue";
@@ -64,7 +64,8 @@ const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO)
     <b-row>
       <b-col class="3">
         <searchForm/>
-        <Category :categories="photoSubCodeGroup"/>
+        <PostNavbar :categories="photoSubCodeGroup"
+                    :PostFormRouteName="'PhotoForm'"/>
         <b-row>
           <template v-if="fetchPhotosData !== null">
             <PhotoCard :posts="fetchPhotosData"/>

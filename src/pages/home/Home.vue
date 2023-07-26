@@ -1,6 +1,6 @@
 <script setup>
 import Banner from "@/components/common/Banner.vue";
-import PostTable from "@/components/table/PostTable.vue";
+import PostTable from "@/components/table/PostList.vue";
 import {ref} from "vue";
 import DataService from "@/service/DataService";
 import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";

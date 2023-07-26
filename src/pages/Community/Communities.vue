@@ -1,7 +1,7 @@
 <script setup>
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
-import Category from "@/components/common/Category.vue";
-import Table from "@/components/table/PostTable.vue";
+import PostNavbar from "@/components/common/PostNavbar.vue";
+import PostList from "@/components/table/PostList.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 import {ref} from "vue";
@@ -54,7 +54,6 @@ getCommunities(initialCondition.value)
 
 const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
 
-
 </script>
 <template>
   <BackgroundBanner
@@ -68,9 +67,10 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.CO
       <!-- Main content -->
       <b-col class="3">
         <searchForm/>
-        <Category :categories="communitySubCodeGroup"/>
+        <PostNavbar :categories="communitySubCodeGroup"
+                    :PostFormRouteName="'CommunityForm'"/>
         <template v-if="fetchCommunitiesData !== null">
-          <Table :posts="fetchCommunitiesData"/>
+          <PostList :posts="fetchCommunitiesData"/>
           <Pagination/>
         </template>
       </b-col>
