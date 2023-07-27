@@ -2,10 +2,10 @@
 import {defineProps} from "vue";
 import {useIsNewPost} from "@/composable/date/isNewPost";
 import {useGetTimeDifference} from "../../composable/date/getTimeDifference";
-import {useGetPostViewRouteBaseURL} from "@/composable/router/getPostViewRoute";
 
 const props = defineProps({
   posts: Object,
+  PostRouteName: String,
 });
 
 </script>
@@ -20,7 +20,7 @@ const props = defineProps({
         </div>
       </div>
       <div class="text-center mt-2 p-2">
-        <router-link class="text-decoration-none" :to="useGetPostViewRouteBaseURL(post.postGroup) + `${post.postIdx}`">
+        <router-link class="text-decoration-none" :to="{ name: `${PostRouteName}`, params: { postIdx: post.postIdx } }">">
           <b-img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRn_xsMTOHm_yD30lIt0MZwvggJS2BPPhuLg&usqp=CAU"
               fluid

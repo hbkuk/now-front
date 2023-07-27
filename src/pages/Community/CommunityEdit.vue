@@ -1,12 +1,11 @@
 <script setup>
-import Post from "@/components/Post.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
+import PostFormHeader from "@/components/common/PostFormHeader.vue";
+import CommunityEditForm from "@/pages/Community/component/CommunityEditForm.vue";
 import {ref} from "vue";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 import DataService from "@/service/DataService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import Comments from "@/components/Comments.vue";
-import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
+import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchCommunityData = ref(null);
@@ -42,21 +41,10 @@ async function getCommunity(postIdx) {
 getCommunity(props.postIdx);
 
 </script>
-
 <template>
-  <BackgroundBanner :title="`Community`" :banner-path="`community.png`"/>
-
-  <b-container class="mt-3">
+  <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
+    <PostFormHeader />
     <template v-if="fetchCommunityData">
-      <Post :post="fetchCommunityData"
-            :PostEditRouteName="`CommunityEdit`">
-        <template v-if="fetchCommunityData.attachments">
-          <AttachmentList :attachments="fetchCommunityData.attachments"/>
-        </template>
-      </Post>
-      <template v-if="fetchCommunityData.comments">
-        <Comments :comments="fetchCommunityData.comments" />
-      </template>
+      <CommunityEditForm :post="fetchCommunityData" />
     </template>
-  </b-container>
 </template>

@@ -69,7 +69,8 @@ const inquirySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQU
         <PostNavbar :categories="inquirySubCodeGroup"
                     :PostFormRouteName="'InquiryForm'"/>
         <template v-if="fetchInquiriesData !== null">
-          <PostList :posts="fetchInquiriesData"/>
+          <PostList :posts="fetchInquiriesData"
+                    :PostRouteName="`InquiryPost`" />
         </template>
         <Pagination/>
       </b-col>

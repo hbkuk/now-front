@@ -1,12 +1,11 @@
 <script setup>
-import Post from "@/components/Post.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
+import PostFormHeader from "@/components/common/PostFormHeader.vue";
+import PhotoEditForm from "@/pages/Photo/component/PhotoEditForm.vue";
 import {ref} from "vue";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 import DataService from "@/service/DataService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import Comments from "@/components/Comments.vue";
-import Carousel from "@/components/Carousel.vue";
+import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchPhotoData = ref(null);
@@ -42,21 +41,10 @@ async function getPhoto(postIdx) {
 getPhoto(props.postIdx);
 
 </script>
-
 <template>
-  <BackgroundBanner :title="`Photo`" :banner-path="`community.png`"/>
-
-  <b-container class="mt-3">
+  <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
+    <PostFormHeader />
     <template v-if="fetchPhotoData">
-      <Post :post="fetchPhotoData"
-            :PostEditRouteName="`PhotoEdit`" >
-        <template v-if="fetchPhotoData.attachments">
-          <Carousel :attachments="fetchPhotoData.attachments"/>
-        </template>
-      </Post>
-      <template v-if="fetchPhotoData.comments">
-        <Comments :comments="fetchPhotoData.comments" />
-      </template>
+      <PhotoEditForm :post="fetchPhotoData" />
     </template>
-  </b-container>
 </template>

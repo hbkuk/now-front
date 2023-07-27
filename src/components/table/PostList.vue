@@ -1,12 +1,12 @@
 <script setup>
 import {defineProps} from "vue";
-import {useGetPostViewRouteBaseURL} from "@/composable/router/getPostViewRoute";
 import {useCapitalizeFirstLetter} from "@/composable/uitls/capitalizeFirstLetter";
 import {useIsNewPost} from "@/composable/date/isNewPost";
 import {useGetTimeDifference} from "../../composable/date/getTimeDifference";
 
 const props = defineProps({
   posts: Object,
+  PostRouteName: String,
 });
 
 </script>
@@ -25,7 +25,7 @@ const props = defineProps({
             </b-col>
             <b-col class="p-0 d-flex align-items-center">
               <b>
-                <router-link class="text-decoration-none text-dark font-weight-bold" :to="useGetPostViewRouteBaseURL(post.postGroup) + `${post.postIdx}`">
+                <router-link class="text-decoration-none text-dark font-weight-bold" :to="{ name: `${PostRouteName}`, params: { postIdx: post.postIdx } }">
                   {{  post.title }}
                 </router-link>
               </b>

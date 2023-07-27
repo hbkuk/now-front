@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-navbar toggleable="lg" class="bg-white text-black">
-      <b-navbar-brand to="/">NOW</b-navbar-brand>
+      <b-navbar-brand to="/"><b>NOW</b></b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -33,7 +33,7 @@
             <i class="bi bi-chat-left-dots"></i>
           </b-nav-item>
           <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
-            <router-link :to="{ name: 'Login' }" class="router-link text-decoration-none text-secondary"><i class="bi bi-person"></i></router-link>
+            <router-link :to="{ name: 'SignIn' }" class="router-link text-decoration-none text-secondary"><i class="bi bi-person"></i></router-link>
           </b-nav-item>
         </b-navbar-nav>
 

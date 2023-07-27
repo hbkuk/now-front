@@ -69,7 +69,8 @@ const noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTIC
         <PostNavbar :categories="noticeSubCodeGroup"
                     :PostFormRouteName="'NoticeForm'"/>
         <template v-if="fetchNoticesData !== null">
-          <PostList :posts="fetchNoticesData"/>
+          <PostList :posts="fetchNoticesData"
+                    :PostRouteName="`NoticePost`"/>
         </template>
         <Pagination/>
       </b-col>

@@ -1,6 +1,6 @@
 <script setup>
 import Banner from "@/components/common/Banner.vue";
-import PostTable from "@/components/table/PostList.vue";
+import PostList from "@/components/table/PostList.vue";
 import {ref} from "vue";
 import DataService from "@/service/DataService";
 import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
@@ -123,8 +123,9 @@ getInquiries(condition.value)
             :banner-path="`home-notice.png`"
         />
         <template v-if="fetchPostsData.notices !== null">
-          <PostTable
+          <PostList
             :posts="fetchPostsData.notices"
+            :PostRouteName="`NoticePost`"
           />
         </template>
       </b-col>
@@ -138,8 +139,9 @@ getInquiries(condition.value)
             :banner-path="`home-community.png`"
         />
         <template v-if="fetchPostsData.communities !== null">
-          <PostTable
+          <PostList
               :posts="fetchPostsData.communities"
+              :PostRouteName="`CommunityPost`"
           />
         </template>
       </b-col>
@@ -152,8 +154,9 @@ getInquiries(condition.value)
             :router-name="`Photos`"
             :banner-path="`home-photo.png`"/>
         <template v-if="fetchPostsData.photos !== null">
-          <PostTable
+          <PostList
               :posts="fetchPostsData.photos"
+              :PostRouteName="`PhotoPost`"
           />
         </template>
       </b-col>
@@ -166,8 +169,9 @@ getInquiries(condition.value)
             :router-name="`Inquiries`"
             :banner-path="`home-inquiry.png`"/>
         <template v-if="fetchPostsData.inquiries !== null">
-          <PostTable
+          <PostList
               :posts="fetchPostsData.inquiries"
+              :PostRouteName="`InquiryPost`"
           />
         </template>
       </b-col>

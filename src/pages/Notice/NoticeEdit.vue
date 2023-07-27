@@ -1,11 +1,13 @@
 <script setup>
-import Post from "@/components/Post.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
+import PostFormHeader from "@/components/common/PostFormHeader.vue";
+import CommunityEditForm from "@/pages/Community/component/CommunityEditForm.vue";
 import {ref} from "vue";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 import DataService from "@/service/DataService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import Comments from "@/components/Comments.vue";
+import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
+import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
+import NoticeEditForm from "@/pages/Notice/component/NoticeEditForm.vue";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchNoticeData = ref(null);
@@ -41,18 +43,10 @@ async function getNotice(postIdx) {
 getNotice(props.postIdx);
 
 </script>
-
 <template>
-  <BackgroundBanner :title="`Notice`" :banner-path="`community.png`"/>
-
-  <b-container class="mt-3">
+  <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
+    <PostFormHeader />
     <template v-if="fetchNoticeData">
-      <Post :post="fetchNoticeData"
-            :PostEditRouteName="`NoticeEdit`"/>
-      <template v-if="fetchNoticeData.comments">
-        <Comments :comments="fetchNoticeData.comments" />
-      </template>
+      <NoticeEditForm :post="fetchNoticeData" />
     </template>
-  </b-container>
-
 </template>

@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
   <div>
     <div class="form-outline mb-2">
-      <b-form-textarea class="form-control p-3 mt-2" rows="5" id="comment" name="text" placeholder="댓글 입력 ..."></b-form-textarea>
+      <b-form-textarea class="form-control p-3 mt-2" rows="2" id="comment" name="text" placeholder="댓글 입력 ..."></b-form-textarea>
     </div>
     <div class="mb-4 text-end">
       <b-button variant="primary" size="sm">댓글 등록</b-button>

@@ -1,12 +1,11 @@
 <script setup>
-import Post from "@/components/Post.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
+import PostFormHeader from "@/components/common/PostFormHeader.vue";
+import InquiryEditForm from "@/pages/Inquiry/component/InquiryEditForm.vue";
 import {ref} from "vue";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 import DataService from "@/service/DataService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import Comments from "@/components/Comments.vue";
-import Answer from "@/components/Answer.vue";
+import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchInquiryData = ref(null);
@@ -42,18 +41,10 @@ async function getInquiry(postIdx) {
 getInquiry(props.postIdx);
 
 </script>
-
 <template>
-  <BackgroundBanner :title="`Inquiry`" :banner-path="`community.png`"/>
-
-  <b-container class="mt-3">
+  <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
+    <PostFormHeader />
     <template v-if="fetchInquiryData">
-      <Post :post="fetchInquiryData"
-            :PostEditRouteName="`InquiryEdit`"/>
-      <Answer :post="fetchInquiryData" />
-      <template v-if="fetchInquiryData.comments">
-        <Comments :comments="fetchInquiryData.comments" />
-      </template>
+      <InquiryEditForm :post="fetchInquiryData" />
     </template>
-  </b-container>
 </template>

@@ -70,7 +70,8 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.CO
         <PostNavbar :categories="communitySubCodeGroup"
                     :PostFormRouteName="'CommunityForm'"/>
         <template v-if="fetchCommunitiesData !== null">
-          <PostList :posts="fetchCommunitiesData"/>
+          <PostList :posts="fetchCommunitiesData"
+                    :PostRouteName="`CommunityPost`"/>
           <Pagination/>
         </template>
       </b-col>

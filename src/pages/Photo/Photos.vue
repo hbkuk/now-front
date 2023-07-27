@@ -68,7 +68,8 @@ const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO)
                     :PostFormRouteName="'PhotoForm'"/>
         <b-row>
           <template v-if="fetchPhotosData !== null">
-            <PhotoCard :posts="fetchPhotosData"/>
+            <PhotoCard :posts="fetchPhotosData"
+                       :PostRouteName="`PhotoPost`"/>
             <Pagination/>
           </template>
         </b-row>

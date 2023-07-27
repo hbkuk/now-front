@@ -47,13 +47,15 @@ const validateAndSingUp = () => {
 
   <div class="d-flex justify-content-center mt-2">
     <div class="w-25" role="group">
-      <div class="text-center mb-3 text-nowrap text-truncate">
-        <h3>NOW에 오신것을 환영합니다.</h3>
+      <div class="text-center mb-lg-4 text-nowrap text-truncate">
+        <h3 class="emphasis">NOW에 오신것을 환영합니다.</h3>
         <div>NOW는 지식공유 플랫폼입니다.</div>
       </div>
 
-      <b-row class="mb-1">
-        <label class="p-0" for="input-id">아이디</label>
+      <hr class="mb-3">
+
+      <b-row class="mb-3">
+        <label class="p-0" for="input-id"><b>ID</b></label>
         <b-form-input
             id="input-id"
             v-model="id"
@@ -67,8 +69,8 @@ const validateAndSingUp = () => {
         </b-form-invalid-feedback>
       </b-row>
 
-      <b-row class="my-1">
-        <label class="p-0" for="input-password">비밀번호</label>
+      <b-row class="mb-3">
+        <label class="p-0" for="input-password"><b>비밀번호</b></label>
         <b-form-input
             id="input-password"
             type="password"
@@ -83,8 +85,8 @@ const validateAndSingUp = () => {
         </b-form-invalid-feedback>
       </b-row>
 
-      <b-row class="my-1">
-        <label class="p-0" for="input-passwordConfirm">비밀번호 확인</label>
+      <b-row class="mb-3">
+        <label class="p-0" for="input-passwordConfirm"><b>비밀번호 확인</b></label>
         <b-form-input
             id="input-passwordConfirm"
             type="password"
@@ -99,8 +101,8 @@ const validateAndSingUp = () => {
         </b-form-invalid-feedback>
       </b-row>
 
-      <b-row class="my-1">
-        <label class="p-0" for="input-name">성명</label>
+      <b-row class="mb-3">
+        <label class="p-0" for="input-name"><b>성명</b></label>
         <b-form-input
             id="input-name"
             v-model="name"
@@ -114,8 +116,8 @@ const validateAndSingUp = () => {
         </b-form-invalid-feedback>
       </b-row>
 
-      <b-row class="my-1">
-        <label class="p-0" for="input-nickname">닉네임</label>
+      <b-row class="mb-3">
+        <label class="p-0" for="input-nickname"><b>닉네임</b></label>
         <b-form-input
             id="input-nickname"
             v-model="nickname"
@@ -130,15 +132,25 @@ const validateAndSingUp = () => {
       </b-row>
 
       <b-row class="mb-1 mt-5">
-        <b-button block @click="validateAndSingUp" variant="primary">회원가입</b-button>
+        <b-button block @click="validateAndSingUp" variant="primary"><b>회원가입</b></b-button>
       </b-row>
 
-      <b-row class="mt-2">
+      <hr class="mt-5">
+
+      <b-row class="mb-2">
         <span class="text-end"> 이미 회원이신가요?
           <router-link class="router-link text-decoration-none text-primary"
-                       :to="{ name: `Login` }">로그인</router-link>
+                       :to="{ name: `SignIn` }">로그인</router-link>
         </span>
       </b-row>
     </div>
   </div>
 </template>
+
+<style scoped>
+.emphasis {
+  font-weight: bold;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}
+</style>
