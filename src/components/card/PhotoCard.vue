@@ -2,6 +2,7 @@
 import {defineProps} from "vue";
 import {useIsNewPost} from "@/composable/date/isNewPost";
 import {useGetTimeDifference} from "../../composable/date/getTimeDifference";
+import {useGetPostViewRouteBaseURL} from "@/composable/router/getPostViewRoute";
 
 const props = defineProps({
   posts: Object,
@@ -11,7 +12,7 @@ const props = defineProps({
 
 <template>
   <b-col v-for="(post, index) in posts" :key="index" class="mt-5 mb-3" cols="3">
-    <b-card>
+    <b-card class="h-100 card-hover">
       <div>
         <div class="text-center">
           <b-badge pill variant="warning me-2" v-if="useIsNewPost(post.regDate)">NEW</b-badge>
@@ -19,15 +20,17 @@ const props = defineProps({
         </div>
       </div>
       <div class="text-center mt-2 p-2">
-        <b-img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRn_xsMTOHm_yD30lIt0MZwvggJS2BPPhuLg&usqp=CAU"
-            fluid
-            alt="Google Logo"
-            aspect-ratio="1/1"
-        ></b-img>
-        <b-card-text class="text-truncate">
-          {{ post.title }}
-        </b-card-text>
+        <router-link class="text-decoration-none" :to="useGetPostViewRouteBaseURL(post.postGroup) + `${post.postIdx}`">
+          <b-img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRn_xsMTOHm_yD30lIt0MZwvggJS2BPPhuLg&usqp=CAU"
+              fluid
+              alt="Google Logo"
+              aspect-ratio="1/1"
+          ></b-img>
+          <b-card-text class="text-dark fw-bold text-truncate">
+            {{ post.title }}
+          </b-card-text>
+        </router-link>
         <hr>
         <div class="text-truncate-2-lines">
           {{ post.content }}
@@ -56,6 +59,10 @@ const props = defineProps({
   display: -webkit-box;
   -webkit-line-clamp: 2; /* 원하는 줄 수로 변경 가능 */
   -webkit-box-orient: vertical;
+}
+
+.card-hover:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 </style>

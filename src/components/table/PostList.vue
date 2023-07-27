@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div v-for="(post, index) in posts" :key="index" class="card row-hover pos-relative pb-2 px-3 mb-1 border-0 rounded-0 border-bottom border-secondary">
+  <div v-for="(post, index) in posts" :key="index" class="card rounded-2 row-hover pos-relative pb-2 px-3 mb-1 border-0 rounded-0 border-bottom border-secondary card-hover">
     <template v-if="posts !== null">
       <b-row>
         <b-col md="10" class="d-flex justify-content-center">
@@ -61,5 +61,8 @@ const props = defineProps({
     </template>
   </div>
 </template>
-<script setup>
-</script>
+<style scoped>
+.card-hover:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+</style>
