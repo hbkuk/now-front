@@ -42,12 +42,14 @@ async function submitForm() {
   formData.append("password", password.value)
 
   const [response] = await Promise.all([AuthenticationService.signIn(formData)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.POST);
+  const result = await useResponseHandler(response, ResponseSuccessCode.POST.OK);
+
   if(isResponseSuccess(result.type)) {
-    store.saveUser(result.data.headers.authorization, result.data.headers['refresh-token']);
+    store.saveMember(result.data.data.id,result.data.data.nickname);
     await router.push({name: "Home"});
     return ;
   }
+
   submitError.value = result?.error;
 }
 
