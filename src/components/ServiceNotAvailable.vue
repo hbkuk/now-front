@@ -4,5 +4,5 @@ import CommonMessage from "@/components/common/CommonMessage.vue";
 <template>
   <CommonMessage :imagePath="`service-not-available.png`"
                  :title="`Service is currently under maintenance.`"
-                 :content="`죄송합니다. 해당 서비스를 준비 중 입니다`"/>
+                 :content="`죄송합니다. 현재 서비스가 준비 중이거나 예상치 못한 오류가 발생했습니다`"/>
 </template>

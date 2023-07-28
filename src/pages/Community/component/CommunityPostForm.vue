@@ -1,8 +1,8 @@
 <script setup>
 import {ref} from "vue";
 import {store} from "@/store";
-import {useFindSubCodeGroup} from "@/composable/store/findSubCodeGroup";
-import {PostGroup} from "@/composable/store/PostGroup";
+import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
+import {PostGroup} from "@/composable/postGroup/PostGroup";
 
 const selectedTopic = ref(null);
 const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);

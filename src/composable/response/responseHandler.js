@@ -1,5 +1,6 @@
 import router from "@/router/router";
-import { ResponseManager } from "@/composable/response/ResponseManager";
+import { ErrorTypeResponseManager } from "@/composable/response/ErrorTypeResponseManager";
+import {ResponseResultType} from "@/composable/response/ResponseResultType";
 
 /**
  * HTTP 요청의 응답을 처리
@@ -17,15 +18,15 @@ export async function useResponseHandler(response, httpSuccessCode, redirectName
         if (redirectName) {
             await router.push({ name: redirectName, params : redirectParams });
         }
-        return { type: "data", data: response.data };
+        return { type: ResponseResultType.SUCCESS, data: response };
     }
 
-    if (ResponseManager[errorCode]) { // 에러 코드에 해당하는 응답 관리 객체가 있는 경우
-        const { type, name } = ResponseManager[errorCode];
+    if (ErrorTypeResponseManager[errorCode]) { // 에러 코드에 해당하는 응답 관리 객체가 있는 경우
+        const { type, name } = ErrorTypeResponseManager[errorCode];
         if (type === "push") {
             await router.push({ name });
         } else if (type === "show") {
-            return { type: "error", error: response.response.data };
+            return { type: ResponseResultType.ERROR, error: response.response.data };
         }
     }
 

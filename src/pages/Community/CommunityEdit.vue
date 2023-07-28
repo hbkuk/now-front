@@ -3,9 +3,10 @@ import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import CommunityEditForm from "@/pages/Community/component/CommunityEditForm.vue";
 import {ref} from "vue";
-import DataService from "@/service/DataService";
+import PostService from "@/service/PostService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
+import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
+import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchCommunityData = ref(null);
@@ -27,11 +28,11 @@ const props = defineProps({
  * @returns {Promise<void>}
  */
 async function getCommunity(postIdx) {
-  const [response] = await Promise.all([DataService.fetchCommunity(postIdx)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchCommunity(postIdx)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchCommunityData.value = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchCommunityData.value = result.data.data
     fetchCommunityError.value = null
   } else {
     fetchCommunityError.value = result?.error;

@@ -2,10 +2,11 @@
 import Banner from "@/components/common/Banner.vue";
 import PostList from "@/components/table/PostList.vue";
 import {ref} from "vue";
-import DataService from "@/service/DataService";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
+import PostService from "@/service/PostService";
+import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import {useResponseHandler} from "@/composable/response/responseHandler";
 import Error from "@/components/common/Error.vue";
+import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchPostsData = ref({
@@ -30,11 +31,11 @@ const condition = ref({
  * @returns {Promise<void>}
  */
 async function getNotices(condition) {
-  const [response] = await Promise.all([DataService.fetchNotices(condition)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchNotices(condition)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchPostsData.value.notices = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchPostsData.value.notices = result.data.data
     fetchPostsError.value = null
   } else {
     fetchPostsError.value = result?.error;
@@ -48,11 +49,11 @@ async function getNotices(condition) {
  * @returns {Promise<void>}
  */
 async function getCommunities(condition) {
-  const [response] = await Promise.all([DataService.fetchCommunities(condition)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchCommunities(condition)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchPostsData.value.communities = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchPostsData.value.communities = result.data.data
     fetchPostsError.value = null
   } else {
     fetchPostsError.value = result?.error;
@@ -66,11 +67,11 @@ async function getCommunities(condition) {
  * @returns {Promise<void>}
  */
 async function getPhotos(condition) {
-  const [response] = await Promise.all([DataService.fetchPhotos(condition)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchPhotos(condition)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchPostsData.value.photos = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchPostsData.value.photos = result.data.data
     fetchPostsError.value = null
   } else {
     fetchPostsError.value = result?.error;
@@ -84,11 +85,11 @@ async function getPhotos(condition) {
  * @returns {Promise<void>}
  */
 async function getInquiries(condition) {
-  const [response] = await Promise.all([DataService.fetchInquiries(condition)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchInquiries(condition)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchPostsData.value.inquiries = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchPostsData.value.inquiries = result.data.data
     fetchPostsError.value = null
   } else {
     fetchPostsError.value = result?.error;

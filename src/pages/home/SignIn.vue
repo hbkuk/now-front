@@ -1,5 +1,12 @@
 <script setup>
 import {computed, ref} from "vue";
+import {useResponseHandler} from "@/composable/response/responseHandler";
+import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
+import AuthenticationService from "@/service/AuthenticationService";
+import Error from "@/components/common/Error.vue";
+import {store} from "@/store";
+import {isResponseSuccess, ResponseResultType} from "@/composable/response/ResponseResultType";
+import router from "@/router/router";
 
 const id = ref('')
 const password = ref('')
@@ -9,20 +16,40 @@ const passwordState = ref(null)
 
 const isFormValid = computed(() => {
   return (
-      idState.value === true &&
-      passwordState.value === true
+      idState.value === true && passwordState.value === true
   );
 });
 
-const validateAndLogin = () => {
-  idState.value = id.value.length > 2;
-  passwordState.value = password.value.length > 2;
+const validateAndSignIn = () => {
+  idState.value = id.value.length > 1;
+  passwordState.value = password.value.length > 1;
 
   if (isFormValid.value) {
+    idState.value = null;
+    passwordState.value = null;
     console.log("전송 성공")
-    return;
+    return submitForm();
   }
 };
+
+const submitError = ref(null)
+
+/** 서버 데이터 전송 처리하는 함수 */
+async function submitForm() {
+  const formData = new FormData();
+
+  formData.append("id", id.value)
+  formData.append("password", password.value)
+
+  const [response] = await Promise.all([AuthenticationService.signIn(formData)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.POST);
+  if(isResponseSuccess(result.type)) {
+    store.saveUser(result.data.headers.authorization, result.data.headers['refresh-token']);
+    await router.push({name: "Home"});
+    return ;
+  }
+  submitError.value = result?.error;
+}
 
 </script>
 
@@ -42,6 +69,11 @@ const validateAndLogin = () => {
 
       <hr class="mb-3">
 
+      <!-- 조건부 렌더링: 로그인 실패로 인한 Error Message -->
+      <template v-if="submitError !== null && submitError.error !== null">
+        <Error :error="submitError"/>
+      </template>
+
       <b-row class="mb-3">
         <label class="p-0" for="input-id"><b>ID</b></label>
         <b-form-input
@@ -53,7 +85,7 @@ const validateAndLogin = () => {
         ></b-form-input>
 
         <b-form-invalid-feedback id="input-id-feedback">
-          아이디를 입력하세요.
+          ID를 입력하세요.
         </b-form-invalid-feedback>
       </b-row>
 
@@ -69,12 +101,12 @@ const validateAndLogin = () => {
         ></b-form-input>
 
         <b-form-invalid-feedback id="input-password-feedback">
-          패스워드를 입력하세요.
+          비밀번호를 입력하세요.
         </b-form-invalid-feedback>
       </b-row>
 
       <b-row class="mb-1 mt-1">
-        <b-button block @click="validateAndLogin" variant="primary"><b>로그인</b></b-button>
+        <b-button block @click="validateAndSignIn" variant="primary"><b>로그인</b></b-button>
       </b-row>
 
       <hr class="mt-5">

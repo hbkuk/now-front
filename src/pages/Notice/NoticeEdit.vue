@@ -3,11 +3,12 @@ import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import CommunityEditForm from "@/pages/Community/component/CommunityEditForm.vue";
 import {ref} from "vue";
-import DataService from "@/service/DataService";
+import PostService from "@/service/PostService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
+import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
 import NoticeEditForm from "@/pages/Notice/component/NoticeEditForm.vue";
+import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchNoticeData = ref(null);
@@ -29,11 +30,11 @@ const props = defineProps({
  * @returns {Promise<void>}
  */
 async function getNotice(postIdx) {
-  const [response] = await Promise.all([DataService.fetchNotice(postIdx)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchNotice(postIdx)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchNoticeData.value = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchNoticeData.value = result.data.data
     fetchNoticeError.value = null
   } else {
     fetchNoticeError.value = result?.error;

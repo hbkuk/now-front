@@ -7,9 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="container">
-    <b-list-group>
-      <b-list-group-item class="text-center" variant="danger" v-for="item in error.detail.split('&')" :key="item">{{ item }}</b-list-group-item>
-    </b-list-group>
-  </div>
+  <b-list-group class="mb-3">
+    <b-list-group-item class="text-center" variant="danger"><b>{{ error.message }}</b></b-list-group-item>
+  </b-list-group>
 </template>

@@ -3,9 +3,10 @@ import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import InquiryEditForm from "@/pages/Inquiry/component/InquiryEditForm.vue";
 import {ref} from "vue";
-import DataService from "@/service/DataService";
+import PostService from "@/service/PostService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
+import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
+import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchInquiryData = ref(null);
@@ -27,11 +28,11 @@ const props = defineProps({
  * @returns {Promise<void>}
  */
 async function getInquiry(postIdx) {
-  const [response] = await Promise.all([DataService.fetchInquiry(postIdx)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchInquiry(postIdx)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchInquiryData.value = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchInquiryData.value = result.data.data
     fetchInquiryError.value = null
   } else {
     fetchInquiryError.value = result?.error;

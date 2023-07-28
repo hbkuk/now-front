@@ -5,14 +5,15 @@ import PostList from "@/components/table/PostList.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 import {ref} from "vue";
-import DataService from "@/service/DataService";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
+import PostService from "@/service/PostService";
+import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import {useFindSubCodeGroup} from "@/composable/store/findSubCodeGroup";
+import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
-import {PostGroup} from "@/composable/store/PostGroup";
+import {PostGroup} from "@/composable/postGroup/PostGroup";
 import {useGetPastDate} from "@/composable/date/getPastDate";
 import {useGetCurrentDate} from "@/composable/date/getCurrentDate";
+import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchCommunitiesData = ref(null);
@@ -39,11 +40,11 @@ const initialCondition = ref({
  * @returns {Promise<void>}
  */
 async function getCommunities(condition) {
-  const [response] = await Promise.all([DataService.fetchCommunities(condition)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchCommunities(condition)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchCommunitiesData.value = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchCommunitiesData.value = result.data.data
     fetchCommunitiesError.value = null
   } else {
     fetchCommunitiesError.value = result?.error;

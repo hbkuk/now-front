@@ -5,7 +5,6 @@ import SignIn from "@/pages/home/SignIn.vue";
 import SignUp from "@/pages/home/SignUp.vue";
 import Notices from "@/pages/Notice/Notices.vue";
 import Inquiries from "@/pages/Inquiry/Inquiries.vue";
-import Forgot from "@/pages/home/Forgot.vue";
 import Communities from "@/pages/Community/Communities.vue";
 import CommunityPost from "@/pages/Community/CommunityPost.vue";
 import NoticePost from "@/pages/Notice/NoticePost.vue";
@@ -26,6 +25,8 @@ const routes = [
     {path: '/', name: 'Home', component: Home},
     {path: '/sign-in', name: 'SignIn', component: SignIn},
     {path: '/sign-up', name: 'SignUp', component: SignUp},
+    {path: '/settings', name: 'Settings', component: ServiceNotAvailable},
+    {path: '/notification', name: 'Notification', component: ServiceNotAvailable},
     {path: '/forgot', name: 'Forgot', component: ServiceNotAvailable}, /** 추후 이메일 발송 구현 후 진행*/
 
     {path: '/notices', name: 'Notices', component: Notices},
@@ -51,9 +52,7 @@ const routes = [
     {path: '/:catchAll(.*)*', name: 'NotFound', component: NotFound}, // 404 페이지로 리다이렉트
 ]
 
-const router = createRouter({
+export default createRouter({
     history: createWebHistory(),
     routes
-})
-
-export default router;
+});

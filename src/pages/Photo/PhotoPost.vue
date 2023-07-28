@@ -2,11 +2,12 @@
 import Post from "@/components/Post.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import {ref} from "vue";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
-import DataService from "@/service/DataService";
+import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
+import PostService from "@/service/PostService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
 import Comments from "@/components/Comments.vue";
 import Carousel from "@/components/Carousel.vue";
+import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchPhotoData = ref(null);
@@ -28,11 +29,11 @@ const props = defineProps({
  * @returns {Promise<void>}
  */
 async function getPhoto(postIdx) {
-  const [response] = await Promise.all([DataService.fetchPhoto(postIdx)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchPhoto(postIdx)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchPhotoData.value = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchPhotoData.value = result.data.data
     fetchPhotoError.value = null
   } else {
     fetchPhotoError.value = result?.error;

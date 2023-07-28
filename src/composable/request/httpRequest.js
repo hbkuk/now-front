@@ -16,6 +16,7 @@ export function useHttpRequest(method, url, formData = null, requestHeader = nul
                 data: formData,
                 headers: requestHeader,
             }).then(response => {
+                console.log(response);
                 return response;
             }).catch(error => {
                 console.log(error);

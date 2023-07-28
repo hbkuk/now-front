@@ -5,14 +5,15 @@ import PostList from "@/components/table/PostList.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 import {ref} from "vue";
-import {RequestSuccessCode} from "@/composable/response/RequestSuccessCode";
+import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import {useResponseHandler} from "@/composable/response/responseHandler";
-import DataService from "@/service/DataService";
-import {useFindSubCodeGroup} from "@/composable/store/findSubCodeGroup";
+import PostService from "@/service/PostService";
+import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
-import {PostGroup} from "@/composable/store/PostGroup";
+import {PostGroup} from "@/composable/postGroup/PostGroup";
 import {useGetPastDate} from "@/composable/date/getPastDate";
 import {useGetCurrentDate} from "@/composable/date/getCurrentDate";
+import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchInquiriesData = ref(null);
@@ -39,11 +40,11 @@ const initialCondition = ref({
  * @returns {Promise<void>}
  */
 async function getInquiries(condition) {
-  const [response] = await Promise.all([DataService.fetchInquiries(condition)])
-  const result = await useResponseHandler(response, RequestSuccessCode.GET);
+  const [response] = await Promise.all([PostService.fetchInquiries(condition)])
+  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
 
-  if (result && result.type === "data") {
-    fetchInquiriesData.value = result.data
+  if (isResponseSuccess(result.type)) {
+    fetchInquiriesData.value = result.data.data
     fetchInquiriesError.value = null
   } else {
     fetchInquiriesError.value = result?.error;

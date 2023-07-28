@@ -3,7 +3,7 @@ import {useHttpRequest} from "@/composable/request/httpRequest";
 import {formUrlencoded, json, multipart} from "@/composable/request/Headers";
 import {HttpMethod} from "@/composable/request/HttpMethod";
 
-const DataService = {
+const PostService = {
 
     /**
      * 공지 게시글 목록을 가져오는 함수
@@ -154,4 +154,4 @@ const DataService = {
     },
 };
 
-export default DataService;
+export default PostService;
