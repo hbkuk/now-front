@@ -21,12 +21,24 @@ export const store = reactive({
         localStorage.setItem("member", JSON.stringify(this.member));
     },
 
+    resetMember() {
+        this.member.id = null
+        this.member.nickname = null
+        this.member.isSignedIn = false
+
+        localStorage.clear();
+    },
+
     /**
-     * 사용자가 로그인 상태라면 true 반환, 그렇지 않다면 false 반환
+     * 회원이 로그인 상태라면 true 반환, 그렇지 않다면 false 반환
      *
-     * @returns {boolean} 사용자가 로그인 상태라면 true 반환, 그렇지 않다면 false 반환
+     * @returns {boolean} 회원이 로그인 상태라면 true 반환, 그렇지 않다면 false 반환
      */
-    isUserSignedIn() {
+    isMemberSignedIn() {
         return this.member.isSignedIn;
+    },
+
+    isSameMember(nickname) {
+        return this.member.nickname === nickname;
     }
 });

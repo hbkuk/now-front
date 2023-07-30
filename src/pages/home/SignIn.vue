@@ -1,11 +1,7 @@
 <script setup>
 import {computed, ref} from "vue";
-import {useResponseHandler} from "@/composable/response/responseHandler";
-import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
-import AuthenticationService from "@/service/AuthenticationService";
 import Error from "@/components/common/Error.vue";
-import {store} from "@/store";
-import {isResponseSuccess, ResponseResultType} from "@/composable/response/ResponseResultType";
+import AuthenticationService from "@/service/AuthenticationService";
 import router from "@/router/router";
 
 const id = ref('')
@@ -27,7 +23,6 @@ const validateAndSignIn = () => {
   if (isFormValid.value) {
     idState.value = null;
     passwordState.value = null;
-    console.log("전송 성공")
     return submitForm();
   }
 };
@@ -41,16 +36,13 @@ async function submitForm() {
   formData.append("id", id.value)
   formData.append("password", password.value)
 
-  const [response] = await Promise.all([AuthenticationService.signIn(formData)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.POST.OK);
-
-  if(isResponseSuccess(result.type)) {
-    store.saveMember(result.data.data.id,result.data.data.nickname);
-    await router.push({name: "Home"});
-    return ;
-  }
-
-  submitError.value = result?.error;
+  await AuthenticationService.signIn(formData).then(response => {
+    router.push({name: "Home"})
+  }).catch(error => {
+    if(error.response.data.errorCode === 2001) {
+      submitError.value = error.response.data;
+    }
+  })
 }
 
 </script>

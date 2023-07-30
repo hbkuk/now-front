@@ -28,7 +28,7 @@
           <b-button variant="primary" pill class="text-nowrap d-block d-sm-none d-xxl-block d-xl-block d-lg-block" type="button">검색</b-button>
         </div>
 
-        <b-navbar-nav  v-if="store.isUserSignedIn()" style="font-size: 1.5rem;">
+        <b-navbar-nav v-if="store.isMemberSignedIn()" style="font-size: 1.5rem;">
           <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
             <router-link :to="{ name: 'Notification' }" class="router-link text-decoration-none text-secondary">
               <i class="bi bi-chat-left-dots"></i>
@@ -44,12 +44,12 @@
         <b-navbar-nav v-else style="font-size: 1.5rem;">
           <router-link :to="{ name: 'SignIn' }" class="router-link text-decoration-none text-secondary">
             <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
-              <b-button pill class="px-4" variant="outline-secondary">로그인</b-button>
+              <b-button pill class="px-4 text-truncate" variant="outline-secondary">로그인</b-button>
             </b-nav-item>
           </router-link>
           <router-link :to="{ name: 'SignUp' }" class="router-link text-decoration-none text-secondary">
             <b-nav-item href="#" class="d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
-              <b-button pill class="px-4" variant="primary">회원가입</b-button>
+              <b-button pill class="px-4 text-truncate" variant="primary">회원가입</b-button>
             </b-nav-item>
           </router-link>
 

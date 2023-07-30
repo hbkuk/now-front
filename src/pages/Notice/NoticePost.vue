@@ -11,9 +11,6 @@ import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 /** 게시글을 담는 반응성 객체 */
 const fetchNoticeData = ref(null);
 
-/** 게시글을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchNoticeError = ref(null);
-
 const props = defineProps({
   postIdx: {
     type: String,
@@ -28,15 +25,11 @@ const props = defineProps({
  * @returns {Promise<void>}
  */
 async function getNotice(postIdx) {
-  const [response] = await Promise.all([PostService.fetchNotice(postIdx)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchNoticeData.value = result.data.data
-    fetchNoticeError.value = null
-  } else {
-    fetchNoticeError.value = result?.error;
-  }
+  return PostService.fetchNotice(postIdx).then(response => {
+    fetchNoticeData.value = response?.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
 getNotice(props.postIdx);
@@ -44,16 +37,15 @@ getNotice(props.postIdx);
 </script>
 
 <template>
+  <template v-if="fetchNoticeData">
   <BackgroundBanner :title="`Notice`" :banner-path="`community.png`"/>
 
   <b-container class="mt-3">
-    <template v-if="fetchNoticeData">
       <Post :post="fetchNoticeData"
             :PostEditRouteName="`NoticeEdit`"/>
       <template v-if="fetchNoticeData.comments">
         <Comments :comments="fetchNoticeData.comments" />
       </template>
-    </template>
   </b-container>
-
+  </template>
 </template>

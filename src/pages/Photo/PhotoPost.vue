@@ -12,9 +12,6 @@ import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 /** 게시글을 담는 반응성 객체 */
 const fetchPhotoData = ref(null);
 
-/** 게시글을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchPhotoError = ref(null);
-
 const props = defineProps({
   postIdx: {
     type: String,
@@ -29,15 +26,11 @@ const props = defineProps({
  * @returns {Promise<void>}
  */
 async function getPhoto(postIdx) {
-  const [response] = await Promise.all([PostService.fetchPhoto(postIdx)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchPhotoData.value = result.data.data
-    fetchPhotoError.value = null
-  } else {
-    fetchPhotoError.value = result?.error;
-  }
+  await PostService.fetchPhoto(postIdx).then(response => {
+    fetchPhotoData.value = response?.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
 getPhoto(props.postIdx);
@@ -45,10 +38,10 @@ getPhoto(props.postIdx);
 </script>
 
 <template>
+  <template v-if="fetchPhotoData">
   <BackgroundBanner :title="`Photo`" :banner-path="`community.png`"/>
 
   <b-container class="mt-3">
-    <template v-if="fetchPhotoData">
       <Post :post="fetchPhotoData"
             :PostEditRouteName="`PhotoEdit`" >
         <template v-if="fetchPhotoData.attachments">
@@ -58,6 +51,6 @@ getPhoto(props.postIdx);
       <template v-if="fetchPhotoData.comments">
         <Comments :comments="fetchPhotoData.comments" />
       </template>
-    </template>
   </b-container>
+  </template>
 </template>

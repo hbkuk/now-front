@@ -3,6 +3,7 @@ import {defineProps, ref} from "vue";
 import {useCapitalizeFirstLetter} from "@/composable/uitls/capitalizeFirstLetter";
 import {useGetTimeDifference} from "@/composable/date/getTimeDifference";
 import {useRoute} from "vue-router";
+import {store} from "@/store";
 
 const props = defineProps({
   post: Object,
@@ -51,7 +52,7 @@ async function handleSubmit() {
 
         <b-col cols="2" class="d-flex justify-content-end">
           <div>
-            <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
+            <b-dropdown v-if="store.isSameMember(post.memberNickname)" size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
               <template #button-content>
                 <i class="bi bi-exclamation-circle" style="font-size:20px;"></i> &nbsp;
               </template>

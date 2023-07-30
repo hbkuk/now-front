@@ -18,9 +18,6 @@ import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchCommunitiesData = ref(null);
 
-/** 게시글 목록을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchCommunitiesError = ref(null);
-
 /** 초기 검색 조건을 담는 반응성 객체 */
 const initialCondition = ref({
   startDate: useGetPastDate(365),
@@ -40,21 +37,16 @@ const initialCondition = ref({
  * @returns {Promise<void>}
  */
 async function getCommunities(condition) {
-  const [response] = await Promise.all([PostService.fetchCommunities(condition)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchCommunitiesData.value = result.data.data
-    fetchCommunitiesError.value = null
-  } else {
-    fetchCommunitiesError.value = result?.error;
-  }
+  return PostService.fetchCommunities(condition).then(response => {
+    fetchCommunitiesData.value = response?.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
 getCommunities(initialCondition.value)
 
 const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
-
 </script>
 <template>
   <BackgroundBanner
