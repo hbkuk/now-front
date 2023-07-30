@@ -1,7 +1,7 @@
 import {useGetRequest} from "@/composable/request/getRequest";
 import {useHttpRequest} from "@/composable/request/httpRequest";
-import {formUrlencoded, json, multipart} from "@/composable/request/Headers";
-import {HttpMethod} from "@/composable/request/HttpMethod";
+import {formUrlencoded, json, multipart} from "@/composable/request/constants/Headers";
+import {HttpMethod} from "@/composable/request/constants/HttpMethod";
 
 const PostService = {
 
@@ -9,7 +9,7 @@ const PostService = {
      * 공지 게시글 목록을 가져오는 함수
      *
      * @param {object} condition - 조건 정보가 담긴 객체
-     * @returns {{data, error}} - 게시판 목록
+     * @returns {Promise<AxiosResponse<any>>} - 게시판 목록
      */
     fetchNotices(condition) {
         return useGetRequest('/api/notices', condition)
@@ -19,7 +19,7 @@ const PostService = {
      * 커뮤니티 게시글 목록을 가져오는 함수
      *
      * @param {object} condition - 조건 정보가 담긴 객체
-     * @returns {{data, error}} - 게시판 목록
+     * @returns {Promise<AxiosResponse<any>>} - 게시판 목록
      */
     fetchCommunities(condition) {
         return useGetRequest('/api/communities', condition)
@@ -29,7 +29,7 @@ const PostService = {
      * 사진 게시글 목록을 가져오는 함수
      *
      * @param {object} condition - 조건 정보가 담긴 객체
-     * @returns {{data, error}} - 게시판 목록
+     * @returns {Promise<AxiosResponse<any>>} - 게시판 목록
      */
     fetchPhotos(condition) {
         return useGetRequest('/api/photos', condition)
@@ -39,7 +39,7 @@ const PostService = {
      * 문의 게시글 목록을 가져오는 함수
      *
      * @param {object} condition - 조건 정보가 담긴 객체
-     * @returns {{data, error}} - 게시판 목록
+     * @returns {Promise<AxiosResponse<any>>} - 게시판 목록
      */
     fetchInquiries(condition) {
         return useGetRequest('/api/inquiries', condition)
@@ -53,7 +53,7 @@ const PostService = {
      * 공지 게시물 정보를 가져오는 함수
      *
      * @param postIdx 게시물 번호
-     * @returns {{data, error}}
+     * @returns {Promise<AxiosResponse<any>>}
      */
     fetchNotice(postIdx) {
         return useGetRequest(`/api/notices/${postIdx}`)
@@ -63,7 +63,7 @@ const PostService = {
      * 커뮤니티 게시물 정보를 가져오는 함수
      *
      * @param postIdx 게시물 번호
-     * @returns {{data, error}}
+     * @returns {Promise<AxiosResponse<any>>}
      */
     fetchCommunity(postIdx) {
         return useGetRequest(`/api/communities/${postIdx}`)
@@ -73,7 +73,7 @@ const PostService = {
      * 사진 게시물 정보를 가져오는 함수
      *
      * @param postIdx 게시물 번호
-     * @returns {{data, error}}
+     * @returns {Promise<AxiosResponse<any>>}
      */
     fetchPhoto(postIdx) {
         return useGetRequest(`/api/photos/${postIdx}`)
@@ -83,7 +83,7 @@ const PostService = {
      * 문의 게시물 정보를 가져오는 함수
      *
      * @param postIdx 게시물 번호
-     * @returns {{data, error}}
+     * @returns {Promise<AxiosResponse<any>>}
      */
     fetchInquiry(postIdx) {
         return useGetRequest(`/api/inquiries/${postIdx}`)
@@ -92,65 +92,45 @@ const PostService = {
     
     
     
-    
-    
 
     /**
-     * 게시물 작성을 위한 데이터를 가져오는 함수
+     * 수정 공지 게시물 정보를 가져오는 함수
      *
      * @param postIdx 게시물 번호
-     * @returns {{data, error}}
+     * @returns {Promise<AxiosResponse<any>>}
      */
-    fetchWriteView() {
-        return useGetRequest('/api/board/write')
+    fetchEditNotice(postIdx) {
+        return useGetRequest(`/api/manager/notices/${postIdx}/edit`)
     },
 
     /**
-     * 게시물 작성을 위한 데이터를 가져오는 함수
+     * 수정 커뮤니티 게시물 정보를 가져오는 함수
      *
      * @param postIdx 게시물 번호
-     * @returns {{data, error}}
+     * @returns {Promise<AxiosResponse<any>>}
      */
-    fetchModifyView(postIdx) {
-        return useGetRequest(`/api/board/modify/${postIdx}`)
+    fetchEditCommunity(postIdx) {
+        return useGetRequest(`/api/communities/${postIdx}/edit`)
     },
 
     /**
-     * 게시물 작성을 위한 요청 함수
-     *
-     * @param formData 요청 데이터
-     */
-    fetchWriteAction(formData) {
-        return useHttpRequest(HttpMethod.POST, `/api/board`, formData, multipart)
-    },
-
-    /**
-     * 게시물 수정을 위한 요청 함수
+     * 수정 사진 게시물 정보를 가져오는 함수
      *
      * @param postIdx 게시물 번호
-     * @param formData 요청 데이터
+     * @returns {Promise<AxiosResponse<any>>}
      */
-    fetchModifyAction(postIdx, formData) {
-        return useHttpRequest(HttpMethod.PUT,`/api/board/${postIdx}`, formData, multipart)
+    fetchEditPhoto(postIdx) {
+        return useGetRequest(`/api/photos/${postIdx}/edit`)
     },
 
     /**
-     * 게시물 삭제을 위한 요청 함수
+     * 수정 문의 게시물 정보를 가져오는 함수
      *
      * @param postIdx 게시물 번호
-     * @param formData 요청 데이터
+     * @returns {Promise<AxiosResponse<any>>}
      */
-    fetchDeleteAction(postIdx, formData) {
-        return useHttpRequest(HttpMethod.DELETE,`/api/board/${postIdx}`, formData, formUrlencoded)
-    },
-
-    /**
-     * 카테고리 목록을 가져오는 함수
-     *
-     * @returns {{data, error}} - 카테고리 목록
-     */
-    fetchCategories() {
-        return useGetRequest('/api/categories')
+    fetchEditInquiry(postIdx) {
+        return useGetRequest(`/api/inquiries/${postIdx}/edit`)
     },
 };
 

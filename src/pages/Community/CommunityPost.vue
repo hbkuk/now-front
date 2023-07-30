@@ -2,18 +2,12 @@
 import Post from "@/components/Post.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import {ref} from "vue";
-import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import PostService from "@/service/PostService";
-import {useResponseHandler} from "@/composable/response/responseHandler";
 import Comments from "@/components/Comments.vue";
 import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
-import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchCommunityData = ref(null);
-
-/** 게시글을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchCommunityError = ref(null);
 
 const props = defineProps({
   postIdx: {
@@ -29,15 +23,11 @@ const props = defineProps({
  * @returns {Promise<void>}
  */
 async function getCommunity(postIdx) {
-  const [response] = await Promise.all([PostService.fetchCommunity(postIdx)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchCommunityData.value = result.data.data
-    fetchCommunityError.value = null
-  } else {
-    fetchCommunityError.value = result?.error;
-  }
+  return PostService.fetchCommunity(postIdx).then(response => {
+    fetchCommunityData.value = response?.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
 getCommunity(props.postIdx);
@@ -45,10 +35,10 @@ getCommunity(props.postIdx);
 </script>
 
 <template>
+  <template v-if="fetchCommunityData">
   <BackgroundBanner :title="`Community`" :banner-path="`community.png`"/>
 
   <b-container class="mt-3">
-    <template v-if="fetchCommunityData">
       <Post :post="fetchCommunityData"
             :PostEditRouteName="`CommunityEdit`">
         <template v-if="fetchCommunityData.attachments">
@@ -58,6 +48,6 @@ getCommunity(props.postIdx);
       <template v-if="fetchCommunityData.comments">
         <Comments :comments="fetchCommunityData.comments" />
       </template>
-    </template>
   </b-container>
+  </template>
 </template>

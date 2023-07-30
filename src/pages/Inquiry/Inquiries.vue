@@ -18,9 +18,6 @@ import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchInquiriesData = ref(null);
 
-/** 게시글 목록을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchInquiriesError = ref(null);
-
 /** 초기 검색 조건을 담는 반응성 객체 */
 const initialCondition = ref({
   startDate: useGetPastDate(365),
@@ -32,7 +29,6 @@ const initialCondition = ref({
   maxNumberOfPosts: 10
 });
 
-
 /**
  * 공지 게시글 목록을 가져오는 함수
  *
@@ -40,15 +36,11 @@ const initialCondition = ref({
  * @returns {Promise<void>}
  */
 async function getInquiries(condition) {
-  const [response] = await Promise.all([PostService.fetchInquiries(condition)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchInquiriesData.value = result.data.data
-    fetchInquiriesError.value = null
-  } else {
-    fetchInquiriesError.value = result?.error;
-  }
+  return PostService.fetchInquiries(condition).then(response => {
+    fetchInquiriesData.value = response?.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 getInquiries(initialCondition.value)
 

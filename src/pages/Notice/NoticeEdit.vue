@@ -9,12 +9,10 @@ import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
 import NoticeEditForm from "@/pages/Notice/component/NoticeEditForm.vue";
 import {isResponseSuccess} from "@/composable/response/ResponseResultType";
+import router from "@/router/router";
 
 /** 게시글을 담는 반응성 객체 */
-const fetchNoticeData = ref(null);
-
-/** 게시글을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchNoticeError = ref(null);
+const fetchEditNoticeData = ref(null);
 
 const props = defineProps({
   postIdx: {
@@ -24,30 +22,26 @@ const props = defineProps({
 });
 
 /**
- * 커뮤니티 게시글을 가져오는 함수
+ * 공지 게시글을 가져오는 함수
  *
  * @param postIdx 게시글 번호
  * @returns {Promise<void>}
  */
-async function getNotice(postIdx) {
-  const [response] = await Promise.all([PostService.fetchNotice(postIdx)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchNoticeData.value = result.data.data
-    fetchNoticeError.value = null
-  } else {
-    fetchNoticeError.value = result?.error;
-  }
+async function getEditNotice(postIdx) {
+  return PostService.fetchEditNotice(postIdx).then(response => {
+    fetchEditNoticeData.value = response?.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
-getNotice(props.postIdx);
+getEditNotice(props.postIdx);
 
 </script>
 <template>
+  <template v-if="fetchEditNoticeData">
   <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
     <PostFormHeader />
-    <template v-if="fetchNoticeData">
-      <NoticeEditForm :post="fetchNoticeData" />
-    </template>
+      <NoticeEditForm :post="fetchEditNoticeData" />
+  </template>
 </template>

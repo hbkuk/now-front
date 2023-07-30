@@ -1,8 +1,7 @@
 <script setup>
 import Header from "@/components/static/Header.vue";
 import Footer from "@/components/static/Footer.vue";
-import PostService from "@/service/PostService";
-import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
+import CategoryService from "@/service/CategoryService";
 
 /**
  * 카테고리 데이터를 가져와 sessionStorage 저장
@@ -10,14 +9,14 @@ import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
  * @returns {Promise<void>} 카테고리 데이터 가져오기와 sessionStorage 저장 후 완료
  */
 async function getCategories() {
-  const [response] = await Promise.all([PostService.fetchCategories()]);
-  if(response.status === ResponseSuccessCode.GET) {
+  return CategoryService.fetchCategories().then(response => {
     sessionStorage.setItem("categories", JSON.stringify(response.data));
-  }
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
-getCategories()
-
+getCategories();
 </script>
 
 <template>

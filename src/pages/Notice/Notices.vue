@@ -18,9 +18,6 @@ import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchNoticesData = ref(null);
 
-/** 게시글 목록을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchNoticesError = ref(null);
-
 /** 초기 검색 조건을 담는 반응성 객체 */
 const initialCondition = ref({
   startDate: useGetPastDate(365),
@@ -39,15 +36,11 @@ const initialCondition = ref({
  * @returns {Promise<void>}
  */
 async function getNotices(condition) {
-  const [response] = await Promise.all([PostService.fetchNotices(condition)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchNoticesData.value = result.data.data
-    fetchNoticesError.value = null
-  } else {
-    fetchNoticesError.value = result?.error;
-  }
+  return PostService.fetchNotices(condition).then(response => {
+    fetchNoticesData.value = response?.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
 getNotices(initialCondition.value)

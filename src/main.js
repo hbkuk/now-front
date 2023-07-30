@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import {createApp} from 'vue';
 import App from './App.vue';
 import router from "@/router/router";
 
@@ -6,9 +6,9 @@ import BootstrapVue3 from 'bootstrap-vue-3';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 import '@/assest/main.css';
-import { useParseJsonItemFromSessionStorage } from "@/composable/store/parseJsonItemFromSessionStorage";
-import { store } from "@/store";
-import { useParseJsonItemFromLocalStorage } from "@/composable/store/parseJsonItemFromLocalStorage";
+import {useParseJsonItemFromSessionStorage} from "@/composable/parse/parseJsonItemFromSessionStorage";
+import {store} from "@/store";
+import {useParseJsonItemFromLocalStorage} from "@/composable/parse/parseJsonItemFromLocalStorage";
 
 const app = createApp(App);
 initializeStore(store);

@@ -18,9 +18,6 @@ import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchPhotosData = ref(null);
 
-/** 게시글 목록을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchPhotosError = ref(null);
-
 /** 초기 검색 조건을 담는 반응성 객체 */
 const initialCondition = ref({
   startDate: useGetPastDate(365),
@@ -39,15 +36,11 @@ const initialCondition = ref({
  * @returns {Promise<void>}
  */
 async function getPhotos(condition) {
-  const [response] = await Promise.all([PostService.fetchPhotos(condition)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchPhotosData.value = result.data.data
-    fetchPhotosError.value = null
-  } else {
-    fetchPhotosError.value = result?.error;
-  }
+  await PostService.fetchPhotos(postIdx).then(response => {
+    fetchPhotosData.value = response?.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
 getPhotos(initialCondition.value)

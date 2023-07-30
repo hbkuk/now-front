@@ -14,3 +14,7 @@ export const ResponseResultType = {
 export function isResponseSuccess(type) {
     return ResponseResultType.SUCCESS === type;
 }
+
+export function isResponseError(type) {
+    return ResponseResultType.ERROR === type;
+}

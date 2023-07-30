@@ -20,39 +20,55 @@ import PhotoEdit from "@/pages/Photo/PhotoEdit.vue";
 import InquiryEdit from "@/pages/Inquiry/InquiryEdit.vue";
 import NotFound from "@/components/NotFound.vue";
 import ServiceNotAvailable from "@/components/ServiceNotAvailable.vue";
+import {store} from "@/store";
+import Unauthorized from "@/components/Unauthorized.vue";
+import Forbidden from "@/components/Forbidden.vue";
 
 const routes = [
     {path: '/', name: 'Home', component: Home},
     {path: '/sign-in', name: 'SignIn', component: SignIn},
     {path: '/sign-up', name: 'SignUp', component: SignUp},
-    {path: '/settings', name: 'Settings', component: ServiceNotAvailable},
-    {path: '/notification', name: 'Notification', component: ServiceNotAvailable},
-    {path: '/forgot', name: 'Forgot', component: ServiceNotAvailable}, /** 추후 이메일 발송 구현 후 진행*/
+    {path: '/settings', name: 'Settings', component: ServiceNotAvailable, beforeEnter: requireSignIn},
+    {path: '/notification', name: 'Notification', component: ServiceNotAvailable, beforeEnter: requireSignIn},
+    {path: '/forgot', name: 'Forgot', component: ServiceNotAvailable, beforeEnter: requireSignIn},
 
     {path: '/notices', name: 'Notices', component: Notices},
     {path: '/notices/:postIdx', name: 'NoticePost', component: NoticePost, props: true},
-    {path: '/notices/form', name: 'NoticeForm', component: NoticeForm},
-    {path: '/notices/:postIdx/edit', name: 'NoticeEdit', component: NoticeEdit, props: true},
+    {path: '/notices/form', name: 'NoticeForm', component: NoticeForm, beforeEnter: requireSignIn},
+    {path: '/notices/:postIdx/edit', name: 'NoticeEdit', component: NoticeEdit, props: true, beforeEnter: requireSignIn},
 
     {path: '/communities', name: 'Communities', component: Communities},
     {path: '/communities/:postIdx', name: 'CommunityPost', component: CommunityPost, props: true},
-    {path: '/communities/form', name: 'CommunityForm', component: CommunityForm},
-    {path: '/communities/:postIdx/edit', name: 'CommunityEdit', component: CommunityEdit, props: true},
+    {path: '/communities/form', name: 'CommunityForm', component: CommunityForm, beforeEnter: requireSignIn},
+    {path: '/communities/:postIdx/edit', name: 'CommunityEdit', component: CommunityEdit, props: true, beforeEnter: requireSignIn},
 
     {path: '/photos', name: 'Photos', component: Photos},
     {path: '/photos/:postIdx', name: 'PhotoPost', component: PhotoPost, props: true},
-    {path: '/photos/form', name: 'PhotoForm', component: PhotoForm},
-    {path: '/photos/:postIdx/edit', name: 'PhotoEdit', component: PhotoEdit, props: true},
+    {path: '/photos/form', name: 'PhotoForm', component: PhotoForm, beforeEnter: requireSignIn},
+    {path: '/photos/:postIdx/edit', name: 'PhotoEdit', component: PhotoEdit, props: true, beforeEnter: requireSignIn},
 
     {path: '/inquiries', name: 'Inquiries', component: Inquiries},
     {path: '/inquiries/:postIdx', name: 'InquiryPost', component: InquiryPost, props: true},
-    {path: '/inquiries/form', name: 'InquiryForm', component: InquiryForm},
-    {path: '/inquiries/:postIdx/edit', name: 'InquiryEdit', component: InquiryEdit, props: true},
+    {path: '/inquiries/form', name: 'InquiryForm', component: InquiryForm, beforeEnter: requireSignIn},
+    {path: '/inquiries/:postIdx/edit', name: 'InquiryEdit', component: InquiryEdit, props: true, beforeEnter: requireSignIn},
 
+
+    {path: '/Forbidden', name: 'Forbidden', component: Forbidden },
+    {path: '/unauthorized', name: 'Unauthorized', component: Unauthorized },
     {path: '/:catchAll(.*)*', name: 'NotFound', component: NotFound}, // 404 페이지로 리다이렉트
 ]
 
-export default createRouter({
+const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
 });
+
+export default router;
+
+function requireSignIn(to, from, next) {
+    if (store.isMemberSignedIn()) {
+        next();
+    } else {
+        next({ name: 'SignIn' });
+    }
+}

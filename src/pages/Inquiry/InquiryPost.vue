@@ -8,12 +8,10 @@ import {useResponseHandler} from "@/composable/response/responseHandler";
 import Comments from "@/components/Comments.vue";
 import Answer from "@/components/Answer.vue";
 import {isResponseSuccess} from "@/composable/response/ResponseResultType";
+import ErrorType from "@/composable/response/ErrorType";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchInquiryData = ref(null);
-
-/** 게시글을 가져올때 발생하는 에러를 담는 반응성 객체 */
-const fetchInquiryError = ref(null);
 
 const props = defineProps({
   postIdx: {
@@ -29,15 +27,16 @@ const props = defineProps({
  * @returns {Promise<void>}
  */
 async function getInquiry(postIdx) {
-  const [response] = await Promise.all([PostService.fetchInquiry(postIdx)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchInquiryData.value = result.data.data
-    fetchInquiryError.value = null
-  } else {
-    fetchInquiryError.value = result?.error;
-  }
+  return PostService.fetchInquiry(postIdx).then(response => {
+    fetchInquiryData.value = response?.data
+  }).catch(error => {
+    console.log(error);
+    const errorCode = error?.response?.data?.errorCode;
+    if(errorCode === ErrorType.CAN_NOT_VIEW_SECRET_INQUIRY) {
+      // TODO: 모달 혹은 컴포넌트 이동 후 비밀번호 입력
+      console.log("비밀번호를 입력하세요.")
+    }
+  })
 }
 
 getInquiry(props.postIdx);
@@ -45,16 +44,16 @@ getInquiry(props.postIdx);
 </script>
 
 <template>
+  <template v-if="fetchInquiryData">
   <BackgroundBanner :title="`Inquiry`" :banner-path="`community.png`"/>
 
   <b-container class="mt-3">
-    <template v-if="fetchInquiryData">
       <Post :post="fetchInquiryData"
             :PostEditRouteName="`InquiryEdit`"/>
       <Answer :post="fetchInquiryData" />
       <template v-if="fetchInquiryData.comments">
         <Comments :comments="fetchInquiryData.comments" />
       </template>
-    </template>
   </b-container>
+  </template>
 </template>
