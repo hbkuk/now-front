@@ -1,5 +1,4 @@
-import { reactive } from 'vue';
-import AuthenticationService from "@/service/AuthenticationService";
+import {reactive} from 'vue';
 
 export const store = reactive({
     categories: [],

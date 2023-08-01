@@ -143,6 +143,19 @@ const PostService = {
     fetchEditInquiry(postIdx) {
         return useGetRequest(`/api/inquiries/${postIdx}/edit`)
     },
+
+
+
+    /**
+     * 커뮤니티 게시물을 저장하는 함수
+     *
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
+     */
+    saveCommunity(formData) {
+        return useHttpRequest(HttpMethod.POST, '/api/communities', formData, multipart);
+    },
+
 };
 
 export default PostService;

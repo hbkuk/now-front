@@ -36,7 +36,7 @@ async function getInquiry(postIdx) {
     console.log(error);
     const errorCode = error?.response?.data?.errorCode;
 
-    // TODO: 코드 리팩토링, 로그인시 비밀글에 접근할 수 있도록
+    // TODO: 코드 리팩토링
     if (errorCode === ErrorType.CAN_NOT_VIEW_SECRET_INQUIRY) {
       if(store.isMemberSignedIn()) {
         try {
@@ -54,6 +54,9 @@ async function getInquiry(postIdx) {
           }
         }
       }
+      if(!store.isMemberSignedIn()) {
+        modalShow.value = true;
+      }
     }
   }
 }
@@ -62,7 +65,7 @@ getInquiry(props.postIdx);
 
 const submitError = ref(null)
 /** 반환된 에러를 담는 반응성 객체 */
-const modalShow = ref(false)
+const   modalShow = ref(false)
 const password = ref('')
 
 /**
@@ -145,6 +148,7 @@ async function handleSubmit() {
       @hidden="resetPassword"
       @ok="handleOk"
       @cancel="router.go(-1)"
+      @close="router.go(-1)"
       centered
       no-close-on-backdrop
   >

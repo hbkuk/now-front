@@ -4,9 +4,6 @@ import {store} from "@/store";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 
-const selectedTopic = ref(null);
-const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
-
 </script>
 <template>
   <b-container>
@@ -19,7 +16,7 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.CO
               <b-col>
                 <b-form>
                   <b-form-group label="토픽">
-                    <b-form-select v-model="selectedTopic">
+                    <b-form-select v-model="post.category">
                       <b-form-select-option :value="null" selected>모든 토픽</b-form-select-option>
                       <b-form-select-option v-for="category in communitySubCodeGroup" :key="category.subCode" :value="category.subCode">
                         {{ category.subCodeTitle }}
@@ -29,6 +26,7 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.CO
                   <b-form>
                     <b-form-group label="제목">
                       <b-form-input
+                          v-model="post.title"
                           id="titleInput"
                           placeholder="4글자 이상, 100글자 이하여야 합니다"
                           required
@@ -38,6 +36,7 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.CO
                     </b-form-group>
                     <b-form-group label="내용">
                       <b-form-textarea
+                          v-model="post.content"
                           id="contentTextarea"
                           placeholder="4글자 이상, 2000글자 이하여야 합니다"
                           required
@@ -49,11 +48,11 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.CO
 
                     <div class="mb-5">
                       <label for="formFileMultiple" class="form-label">파일 업로드</label>
-                      <input class="form-control" type="file" id="formFileMultiple" multiple ref="fileInput">
+                      <input @change="handleAttachment" class="form-control" type="file" id="formFileMultiple" multiple ref="fileInput">
                     </div>
 
                     <div class="d-grid gap-2 mt-4">
-                      <b-button block variant="primary"><i
+                      <b-button block variant="primary" @click="saveCommunity()"><i
                           class="fa-regular fa-circle-check"></i> 등록
                       </b-button>
                     </div>
