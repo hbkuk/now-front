@@ -9,7 +9,6 @@ const props = defineProps({
 </script>
 
 <template>
-
   <b-container>
     <div class="row">
       <!-- 왼쪽 공백을 둘 컬럼 -->
@@ -27,7 +26,7 @@ const props = defineProps({
             <nav style="--bs-breadcrumb-divider: 'ㆍ';" aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li v-if="post.answerManagerNickname" class="breadcrumb-item text-secondary">{{ post.answerManagerNickname }}</li>
-                <li class="breadcrumb-item text-secondary">{{ useGetTimeDifference(post.regDate) }}</li>
+                <li v-if="post.answerRegDate" class="breadcrumb-item text-secondary">{{ useGetTimeDifference(post.answerRegDate) }}</li>
               </ol>
             </nav>
 
@@ -36,9 +35,6 @@ const props = defineProps({
         </article>
       </div>
     </div>
+    <hr class="mb-5"/>
   </b-container>
-
-
-
-  <hr class="mb-5"/>
 </template>

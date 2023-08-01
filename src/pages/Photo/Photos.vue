@@ -14,6 +14,12 @@ import {PostGroup} from "@/composable/postGroup/PostGroup";
 import {useGetPastDate} from "@/composable/date/getPastDate";
 import {useGetCurrentDate} from "@/composable/date/getCurrentDate";
 import {isResponseSuccess} from "@/composable/response/ResponseResultType";
+import PostNavbarSkeleton from "@/components/skeleton/PostNavbarSkeleton.vue";
+import SearchFormSkeleton from "@/components/skeleton/SearchFormSkeleton.vue";
+import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
+import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
+import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
+import BannerSub from "@/components/common/BannerSub.vue";
 
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchPhotosData = ref(null);
@@ -36,7 +42,7 @@ const initialCondition = ref({
  * @returns {Promise<void>}
  */
 async function getPhotos(condition) {
-  await PostService.fetchPhotos(postIdx).then(response => {
+  await PostService.fetchPhotos(condition).then(response => {
     fetchPhotosData.value = response?.data
   }).catch(error => {
     console.log(error)
@@ -49,25 +55,37 @@ const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO)
 
 </script>
 <template>
-  <BackgroundBanner
-      :title="`Photo`"
-      :content="`다양한 사람들에게 사진을 공유 해요.`"
-      :bannerPath="`community.png`"/>
+  <template v-if="fetchPhotosData !== null">
+    <BannerSub
+        :banner-path="`home-photo.png`"
+    />
+    <b-container class="mt-3">
+      <b-row>
+        <b-col class="3">
+          <searchForm/>
+          <PostNavbar :categories="photoSubCodeGroup"
+                      :PostFormRouteName="'PhotoForm'"/>
+          <b-row>
+              <PhotoCard :posts="fetchPhotosData"
+                         :PostRouteName="`PhotoPost`"/>
+              <Pagination/>
+          </b-row>
+        </b-col>
+      </b-row>
+    </b-container>
 
-  <b-container class="mt-3">
-    <b-row>
-      <b-col class="3">
-        <searchForm/>
-        <PostNavbar :categories="photoSubCodeGroup"
-                    :PostFormRouteName="'PhotoForm'"/>
-        <b-row>
-          <template v-if="fetchPhotosData !== null">
-            <PhotoCard :posts="fetchPhotosData"
-                       :PostRouteName="`PhotoPost`"/>
-            <Pagination/>
-          </template>
-        </b-row>
-      </b-col>
-    </b-row>
-  </b-container>
+  </template>
+  <template v-else>
+    <BackgroundBannerSkeleton />
+    <b-container class="mt-3">
+      <b-row>
+        <b-col class="3">
+          <search-form-skeleton />
+          <PostNavbarSkeleton />
+          <PostListSkeleton :posts-count=10 />
+          <PaginationSkeleton />
+        </b-col>
+      </b-row>
+    </b-container>
+  </template>
 </template>

@@ -7,6 +7,10 @@ import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import {useResponseHandler} from "@/composable/response/responseHandler";
 import Error from "@/components/common/Error.vue";
 import {isResponseSuccess} from "@/composable/response/ResponseResultType";
+import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
+
+
+// TODO: PostController 추가 => 동시에 get
 
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchPostsData = ref({
@@ -129,6 +133,9 @@ getInquiries(condition.value)
             :PostRouteName="`NoticePost`"
           />
         </template>
+        <template v-else>
+          <PostListSkeleton :postCount="5" />
+        </template>
       </b-col>
 
       <b-col
@@ -145,6 +152,9 @@ getInquiries(condition.value)
               :PostRouteName="`CommunityPost`"
           />
         </template>
+        <template v-else>
+          <PostListSkeleton :postCount="5" />
+        </template>
       </b-col>
 
       <b-col
@@ -160,6 +170,9 @@ getInquiries(condition.value)
               :PostRouteName="`PhotoPost`"
           />
         </template>
+        <template v-else>
+          <PostListSkeleton :postCount="5" />
+        </template>
       </b-col>
 
       <b-col
@@ -174,6 +187,9 @@ getInquiries(condition.value)
               :posts="fetchPostsData.inquiries"
               :PostRouteName="`InquiryPost`"
           />
+        </template>
+        <template v-else>
+          <PostListSkeleton :postCount="5" />
         </template>
       </b-col>
     </b-row>

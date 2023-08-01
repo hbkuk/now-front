@@ -59,7 +59,7 @@ async function handleSubmit() {
               <b-dropdown-item>
                 <router-link class="text-decoration-none text-dark"
                              :to="{ name: `${PostEditRouteName}`, params: { postIdx: useRoute().params.postIdx } }">
-                  <i class="bi bi-pencil"></i> 수정하기
+                  <i class="bi bi-eraser"></i> 수정하기
                 </router-link>
               </b-dropdown-item>
               <b-dropdown-item @click="modalShow = true"><i class="bi bi-trash"></i> 삭제하기</b-dropdown-item>

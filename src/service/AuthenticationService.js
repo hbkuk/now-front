@@ -20,6 +20,18 @@ const AuthenticationService = {
         }
         return response;
     },
+    /**
+     * 로그아웃 요청을 서버에 전송하는 함수
+     *
+     * @returns {Promise} 서버 응답에 대한 Promise 객체
+     */
+    async logout() {
+        const response = await useHttpRequest(HttpMethod.POST, '/api/log-out');
+        if (response.status === 200) {
+            store.resetMember();
+        }
+        return response;
+    },
     refresh() {
         return useHttpRequest(HttpMethod.POST, '/api/refresh');
     }

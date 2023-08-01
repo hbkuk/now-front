@@ -24,3 +24,10 @@ getCategories();
   <RouterView/>
   <Footer/>
 </template>
+
+<style>
+/* 스크롤바 항상 보이도록 설정 */
+body {
+  overflow: scroll;
+}
+</style>

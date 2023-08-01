@@ -7,6 +7,8 @@ import PostService from "@/service/PostService";
 import {useResponseHandler} from "@/composable/response/responseHandler";
 import Comments from "@/components/Comments.vue";
 import {isResponseSuccess} from "@/composable/response/ResponseResultType";
+import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";
+import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchNoticeData = ref(null);
@@ -47,5 +49,9 @@ getNotice(props.postIdx);
         <Comments :comments="fetchNoticeData.comments" />
       </template>
   </b-container>
+  </template>
+  <template v-else>
+    <BackgroundBannerSkeleton />
+    <PostSkeleton/>
   </template>
 </template>

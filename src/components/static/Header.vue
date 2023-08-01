@@ -1,3 +1,23 @@
+<script setup>
+import {store} from "@/store";
+import AuthenticationService from "@/service/AuthenticationService";
+import router from "@/router/router";
+
+/**
+ * 로그아웃 요청하는 함수
+ *
+ * @returns {Promise<void>}
+ */
+async function logout() {
+  await AuthenticationService.logout().then(() => {
+    router.push({ name: "Home"})
+  }).catch(error => {
+    console.log(error)
+  })
+}
+
+</script>
+
 <template>
   <b-container>
     <b-navbar toggleable="lg" class="bg-white text-black">
@@ -10,35 +30,63 @@
         <b-navbar-nav class="me-auto mb-2 mb-lg-0 ms-lg-4 text-truncate">
 
           <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Notices' }" class="router-link text-decoration-none text-secondary">공지사항</router-link>
+            <router-link :to="{ name: 'Notices' }" class="router-link text-decoration-none text-secondary">공지사항
+            </router-link>
           </b-nav-item>
           <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Communities' }" class="router-link text-decoration-none text-secondary">커뮤니티</router-link>
+            <router-link :to="{ name: 'Communities' }" class="router-link text-decoration-none text-secondary">커뮤니티
+            </router-link>
           </b-nav-item>
           <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Photos' }" class="router-link text-decoration-none text-secondary">사진</router-link>
+            <router-link :to="{ name: 'Photos' }" class="router-link text-decoration-none text-secondary">사진
+            </router-link>
           </b-nav-item>
           <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Inquiries' }" class="router-link text-decoration-none text-secondary">문의</router-link>
+            <router-link :to="{ name: 'Inquiries' }" class="router-link text-decoration-none text-secondary">문의
+            </router-link>
           </b-nav-item>
         </b-navbar-nav>
 
         <div class="d-flex px-3">
-          <b-form-input type="text" placeholder="게시글 검색" class="me-2 d-block d-sm-none d-xxl-block d-xl-block d-lg-block"></b-form-input>
-          <b-button variant="primary" pill class="text-nowrap d-block d-sm-none d-xxl-block d-xl-block d-lg-block" type="button">검색</b-button>
+          <b-form-input type="text" placeholder="게시글 검색"
+                        class="me-2 d-block d-sm-none d-xxl-block d-xl-block d-lg-block"></b-form-input>
+          <b-button variant="primary" pill class="text-nowrap d-block d-sm-none d-xxl-block d-xl-block d-lg-block"
+                    type="button">검색
+          </b-button>
         </div>
 
-        <b-navbar-nav v-if="store.isMemberSignedIn()" style="font-size: 1.5rem;">
-          <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
-            <router-link :to="{ name: 'Notification' }" class="router-link text-decoration-none text-secondary">
-              <i class="bi bi-chat-left-dots"></i>
-            </router-link>
+        <b-navbar-nav class="ms-xl-5" v-if="store.isMemberSignedIn()" style="font-size: 1.5rem;">
+
+          <b-nav-item class="d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
+            <b-dropdown class="p-0" variant="variant" size="sm" toggle-class="text-decoration-none" no-caret>
+              <template #button-content>
+                <i class="bi bi-chat-left-dots" style="font-size:24px;"></i>
+              </template>
+              <b-dropdown-item>
+                알림 내용입니다 ....
+              </b-dropdown-item>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item>
+                알림 내용입니다 ....
+              </b-dropdown-item>
+            </b-dropdown>
           </b-nav-item>
-          <b-nav-item href="#" class="ps-3 d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
-            <router-link :to="{ name: 'Settings' }" class="router-link text-decoration-none text-secondary">
-              <i class="bi bi-person"></i>
-            </router-link>
+
+          <b-nav-item class="d-block d-sm-none d-xxl-block d-xl-block d-lg-block">
+            <b-dropdown variant="variant" size="sm" toggle-class="text-decoration-none" no-caret>
+              <template #button-content>
+                <i class="bi bi-person" style="font-size:24px;"></i>
+              </template>
+              <b-dropdown-item>
+                <i class="bi bi-person-circle"></i>&nbsp;&nbsp;마이페이지
+              </b-dropdown-item>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item @click="logout()">
+                <i class="bi bi-box-arrow-right"></i>&nbsp;&nbsp;로그아웃
+              </b-dropdown-item>
+            </b-dropdown>
           </b-nav-item>
+
         </b-navbar-nav>
 
         <b-navbar-nav v-else style="font-size: 1.5rem;">
@@ -59,6 +107,3 @@
     </b-navbar>
   </b-container>
 </template>
-<script setup>
-import {store} from "@/store";
-</script>

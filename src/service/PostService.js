@@ -88,6 +88,17 @@ const PostService = {
     fetchInquiry(postIdx) {
         return useGetRequest(`/api/inquiries/${postIdx}`)
     },
+
+
+    /**
+     * 비밀글 설정된 문의 게시글 정보를 가져오는 함수
+     *
+     * @param postIdx 게시물 번호
+     * @param formData 폼 데이터
+     */
+    fetchSecretInquiry(postIdx, formData) {
+        return useHttpRequest(HttpMethod.POST, `/api/inquiries/secret/${postIdx}`, formData, formUrlencoded);
+    },
     
     
     

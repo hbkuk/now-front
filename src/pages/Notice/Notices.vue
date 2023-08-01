@@ -14,6 +14,12 @@ import {PostGroup} from "@/composable/postGroup/PostGroup";
 import {useGetPastDate} from "@/composable/date/getPastDate";
 import {useGetCurrentDate} from "@/composable/date/getCurrentDate";
 import {isResponseSuccess} from "@/composable/response/ResponseResultType";
+import PostNavbarSkeleton from "@/components/skeleton/PostNavbarSkeleton.vue";
+import SearchFormSkeleton from "@/components/skeleton/SearchFormSkeleton.vue";
+import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
+import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
+import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
+import BannerSub from "@/components/common/BannerSub.vue";
 
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchNoticesData = ref(null);
@@ -49,11 +55,10 @@ const noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTIC
 
 </script>
 <template>
-  <BackgroundBanner
-      :title="`Notice`"
-      :content="`NOW의 새소식, 이벤트, 행사 정보를 공유하는 공간입니다.`"
-      :banner-path="`community.png`"
-  />
+  <template v-if="fetchNoticesData !== null">
+    <BannerSub
+        :banner-path="`home-notice.png`"
+    />
 
   <b-container class="mt-3">
     <b-row>
@@ -62,12 +67,25 @@ const noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTIC
         <searchForm/>
         <PostNavbar :categories="noticeSubCodeGroup"
                     :PostFormRouteName="'NoticeForm'"/>
-        <template v-if="fetchNoticesData !== null">
           <PostList :posts="fetchNoticesData"
                     :PostRouteName="`NoticePost`"/>
-        </template>
         <Pagination/>
       </b-col>
     </b-row>
   </b-container>
+  </template>
+
+  <template v-else>
+    <BackgroundBannerSkeleton />
+    <b-container class="mt-3">
+      <b-row>
+        <b-col class="3">
+          <search-form-skeleton />
+          <PostNavbarSkeleton />
+          <PostListSkeleton :posts-count=10 />
+          <PaginationSkeleton />
+        </b-col>
+      </b-row>
+    </b-container>
+  </template>
 </template>

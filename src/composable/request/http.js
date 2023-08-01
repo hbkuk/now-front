@@ -7,7 +7,8 @@ import { store } from "@/store";
  * Axios 인스턴스를 생성
  * @type {import("axios").AxiosInstance}
  */
-const instance = axios.create({});
+const instance = axios.create({
+});
 
 export default instance;
 
@@ -34,11 +35,19 @@ instance.interceptors.response.use(function (response) {
         store.resetMember();
         await router.push({ name: "SignIn" });
     }
+    if (errorCode === ErrorType.EXPIRED_REFRESH_TOKEN) {
+        store.resetMember();
+        await router.push({ name: "SignIn" });
+    }
     if (errorCode === ErrorType.CAN_NOT_UPDATE_OTHER_MEMBER_POST) {
         await router.push({ name: "Forbidden" });
     }
     if (errorCode === ErrorType.FORBIDDEN) {
         await router.push({ name: "Forbidden" });
+    }
+    if (errorCode === ErrorType.LOGGED_OUT_TOKEN) {
+        store.resetMember();
+        await router.push({ name: "SignIn" });
     }
     return Promise.reject(error);
 });
