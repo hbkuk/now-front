@@ -2,6 +2,7 @@ import {useHttpRequest} from "@/composable/request/httpRequest";
 import {HttpMethod} from "@/composable/request/constants/HttpMethod";
 import {json} from "@/composable/request/constants/Headers";
 import {store} from "@/store";
+import {useGetRequest} from "@/composable/request/getRequest";
 
 /**
  * 인증 서비스 객체
@@ -34,6 +35,10 @@ const AuthenticationService = {
     },
     refresh() {
         return useHttpRequest(HttpMethod.POST, '/api/refresh');
+    },
+
+    isManager() {
+        return useGetRequest("/api/manager/isManager")
     }
 };
 export default AuthenticationService;

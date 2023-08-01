@@ -10,6 +10,7 @@ import Carousel from "@/components/Carousel.vue";
 import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
+import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchPhotoData = ref(null);
@@ -48,6 +49,7 @@ getPhoto(props.postIdx);
             :PostEditRouteName="`PhotoEdit`" >
         <template v-if="fetchPhotoData.attachments">
           <Carousel :attachments="fetchPhotoData.attachments"/>
+          <AttachmentList :attachments="fetchPhotoData.attachments"/>
         </template>
       </Post>
       <template v-if="fetchPhotoData.comments">

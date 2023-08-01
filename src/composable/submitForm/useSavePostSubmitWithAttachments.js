@@ -19,6 +19,8 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
 
     const post = ref({category: null});
 
+    const attachment = ref({});
+
     const formData = ref(new FormData());
 
     const attachmentUploadErrors = ref({
@@ -46,13 +48,6 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
     }
 
     /**
-     * 새로운 FormData 객체를 생성하여 초기화하는 함수
-     */
-    function useInitializeFormData() {
-        formData.value = new FormData();
-    }
-
-    /**
      * 파일 업로드 핸들러 함수
      *
      * @param {Event} event - 파일 업로드 이벤트 객체
@@ -62,9 +57,8 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
             event.target.value = "";
             return;
         }
-
-        formData.value.delete('attachment');
-        formData.value.append('attachment', ...event.target.files);
+        formData.value.delete('attachments');
+        formData.value.append('attachments', ...event.target.files);
     };
 
     /**
@@ -73,6 +67,7 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
      * @returns {FormData} 폼 데이터 객체
      */
     function getSubmitFormData() {
+        formData.value.delete(formDataName);
         formData.value.append(formDataName, new Blob([JSON.stringify(post.value)], {type: 'application/json'}));
         return formData.value;
     }
@@ -90,16 +85,17 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
             }
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;
-                useInitializeFormData();
             }
         }
     }
 
     return {
         post,
+        attachment,
+        formData,
         submitError,
         attachmentUploadErrors,
-        useInitializeFormData,
+        hasAttachmentUploadErrors,
         useHandleAttachment,
         useSubmit
     };

@@ -1,19 +1,15 @@
 <script setup>
-import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
-import {ref} from "vue";
 import PostService from "@/service/PostService";
-import ErrorType from "@/composable/response/ErrorType";
-import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
-import router from "@/router/router";
 import ValidationError from "@/components/common/ValidationError.vue";
 import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/useSavePostSubmitWithAttachments";
-import { AttachmentType } from '@/composable/attachment/constants/AttachmentType';
+import {AttachmentType} from '@/composable/attachment/constants/AttachmentType';
+import {ref} from "vue";
 
-const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
+const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
 
 const {post, submitError, attachmentUploadErrors,
         useHandleAttachment, useSubmit}
@@ -21,7 +17,6 @@ const {post, submitError, attachmentUploadErrors,
           "community",  PostService.saveCommunity)
 </script>
 <template>
-  <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
   <PostFormHeader/>
 
   <b-container>
@@ -36,7 +31,7 @@ const {post, submitError, attachmentUploadErrors,
                   <b-form-group label="토픽">
                     <b-form-select v-model="post.category">
                       <b-form-select-option :value="null" selected>모든 토픽</b-form-select-option>
-                      <b-form-select-option v-for="category in communitySubCodeGroup" :key="category.subCode"
+                      <b-form-select-option v-for="category in subCodeGroup" :key="category.subCode"
                                             :value="category.subCode">
                         {{ category.subCodeTitle }}
                       </b-form-select-option>

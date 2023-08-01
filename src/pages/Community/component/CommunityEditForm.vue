@@ -3,6 +3,8 @@ import {defineProps, ref} from "vue";
 import {store} from "@/store";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
+import {useFormatBytes} from "../../../composable/attachment/formatBytes";
+import {useGetIconTagByExtension} from "@/composable/attachment/getIconTagByExtension";
 
 const props = defineProps({
   post: Object,
@@ -60,7 +62,8 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.CO
                         <div v-for="(attachment, attachmentIdx) in post.attachments" :key="attachmentIdx"
                              class="list-group-item list-group-item-action px-3 border-1 ripple d-flex align-items-center">
                           <div class="flex-grow-1 text-decoration-none text-dark">
-                            <a :href="`/download/${attachment.attachmentIdx}`" class="text-decoration-none text-dark">{{ attachment.originalAttachmentName }} ({{ attachment.attachmentSize }})</a>
+                            <span v-if="attachment.attachmentExtension" v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
+                            <a :href="`/attachments/${attachment.attachmentIdx}`" class="text-decoration-none text-dark">{{ attachment.originalAttachmentName }} ({{ useFormatBytes(attachment.attachmentSize) }})</a>
                           </div>
                           <button type="button" class="btn-close" aria-label="Delete"></button>
                         </div>

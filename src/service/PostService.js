@@ -147,6 +147,18 @@ const PostService = {
 
 
     /**
+     * 공지 게시물을 저장하는 함수
+     *
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
+     */
+    saveNotice(formData) {
+        return useHttpRequest(HttpMethod.POST, '/api/manager/notices', formData, json);
+    },
+
+
+
+    /**
      * 커뮤니티 게시물을 저장하는 함수
      *
      * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
@@ -154,6 +166,26 @@ const PostService = {
      */
     saveCommunity(formData) {
         return useHttpRequest(HttpMethod.POST, '/api/communities', formData, multipart);
+    },
+
+    /**
+     * 사진 게시물을 저장하는 함수
+     *
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
+     */
+    savePhoto(formData) {
+        return useHttpRequest(HttpMethod.POST, '/api/photos', formData, multipart);
+    },
+
+    /**
+     * 문의 게시물을 저장하는 함수
+     *
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
+     */
+    saveInquiry(formData) {
+        return useHttpRequest(HttpMethod.POST, '/api/inquiries', formData, json);
     },
 
 };

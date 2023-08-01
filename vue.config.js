@@ -8,7 +8,7 @@ module.exports = defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
-      '/download': {
+      '/attachments': {
         target: 'http://localhost:8080',
         changeOrigin: true,
       }

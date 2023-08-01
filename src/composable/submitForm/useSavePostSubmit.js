@@ -18,47 +18,29 @@ export function useSavePostSubmit(formDataName, savePostFunction) {
 
     const post = ref({category: null});
 
-    const formData = ref(new FormData());
-
-    /**
-     * 새로운 FormData 객체를 생성하여 초기화하는 함수
-     */
-    function useInitializeFormData() {
-        formData.value = new FormData();
-    }
-
-    /**
-     * 서버로 전송할 폼 데이터 객체를 반환하는 함수
-     *
-     * @returns {FormData} 폼 데이터 객체
-     */
-    function getSubmitFormData() {
-        formData.value.append(formDataName, new Blob([JSON.stringify(post.value)], {type: 'application/json'}));
-        return formData.value;
-    }
-
     /**
      * 게시글 작성 폼을 서버에 제출하는 함수
      */
     async function useSubmit() {
         try {
-            const response = await savePostFunction(getSubmitFormData());
+            const response = await savePostFunction(new Blob([JSON.stringify(post.value)], {type: 'application/json'}));
             await router.push(response.headers.location.replace("/api", ""));
         } catch (error) {
             if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
                 await useRefreshTokenAndRetry(() => useSubmit());
+                return;
             }
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;
-                useInitializeFormData();
+                return;
             }
+            return Promise.reject(error);
         }
     }
 
     return {
         post,
         submitError,
-        useInitializeFormData,
         useSubmit
     };
 }

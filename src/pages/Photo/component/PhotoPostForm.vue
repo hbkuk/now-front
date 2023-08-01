@@ -97,5 +97,3 @@ const handleFileUpload = (event) => {
     </b-row>
   </b-container>
 </template>
-<script setup>
-</script>
