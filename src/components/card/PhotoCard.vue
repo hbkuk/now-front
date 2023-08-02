@@ -20,7 +20,7 @@ const props = defineProps({
         </div>
       </div>
       <div class="text-center mt-2 p-2">
-        <router-link class="text-decoration-none" :to="{ name: `${PostRouteName}`, params: { postIdx: post.postIdx } }">">
+        <router-link class="text-decoration-none" :to="{ name: `${PostRouteName}`, params: { postIdx: post.postIdx } }">
           <b-img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRn_xsMTOHm_yD30lIt0MZwvggJS2BPPhuLg&usqp=CAU"
               fluid
@@ -57,7 +57,7 @@ const props = defineProps({
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* 원하는 줄 수로 변경 가능 */
+  -webkit-line-clamp: 1; /* 원하는 줄 수로 변경 가능 */
   -webkit-box-orient: vertical;
 }
 

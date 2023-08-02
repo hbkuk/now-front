@@ -57,8 +57,11 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
             event.target.value = "";
             return;
         }
+
         formData.value.delete('attachments');
-        formData.value.append('attachments', ...event.target.files);
+        for (const file of event.target.files) {
+            formData.value.append('attachments', file)
+        }
     };
 
     /**

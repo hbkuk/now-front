@@ -6,7 +6,7 @@ import AuthenticationService from "@/service/AuthenticationService";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
-import {useSavePostSubmit} from "@/composable/submitForm/useSavePostSubmit";
+import {useSavePostSubmit} from "@/composable/submitForm/savePostSubmit";
 import PostService from "@/service/PostService";
 import ValidationError from "@/components/common/ValidationError.vue";
 
@@ -33,7 +33,7 @@ isManager(); // 컴포넌트가 마운트되기 전에 매니저 여부를 확�
 </script>
 
 <template>
-  <PostFormHeader />
+  <PostFormHeader :routeNameForPush="'Notices'"/>
   <b-container>
     <b-row>
       <b-col>

@@ -4,44 +4,35 @@ import {useCapitalizeFirstLetter} from "@/composable/uitls/capitalizeFirstLetter
 import {useGetTimeDifference} from "@/composable/date/getTimeDifference";
 import {useRoute} from "vue-router";
 import {store} from "@/store";
+import {useFormatNumber} from "../composable/number/formatNumber";
+
+const emit = defineEmits(['delete'])
 
 const props = defineProps({
   post: Object,
-  PostEditRouteName: String,
+  postEditRouteName: String,
 });
 
-const modalShow = ref(false)
+const modalShow = ref(false);
 
 function handleOk(bvModalEvent) {
-  bvModalEvent.preventDefault()
-  handleSubmit()
+  bvModalEvent.preventDefault();
+  emit('delete');
+  modalShow.value = false;
+  closeModal();
 }
 
-/**
- * 게시글 삭제 함수
- */
-async function handleSubmit() {
-  // const formData = new FormData
-  // formData.append('password', password.value)
-  //
-  // const [response] = await Promise.all([DataService.fetchDeleteAction(props.boardIdx, formData)])
-  // const result = await useResponseHandler(response, RequestSuccessCode.DELETE, 'Boards');
-  // submitError.value = result?.error;
-  console.log("삭제 요청");
+function closeModal() {
+  const modalElement = document.getElementById('deleteModal');
+  if (modalElement) {
+    modalElement.style.display = "none";
+  }
 }
-
 </script>
 <template>
 
   <div class="board bg-white text-dark py-1 text-left">
     <b-container class="mt-3">
-      <div class="d-flex flex-row mt-3 mb-5">
-        <b-button variant="secondary" size="sm" @click="$router.go(-1)">
-          <i class="fa-solid fa-arrow-left"></i> 나가기
-        </b-button>
-      </div>
-
-
       <b-row align-h="between" class="justify-content-start">
         <b-col cols="2">
           <div class="hstack gap-3 h-100">
@@ -58,7 +49,7 @@ async function handleSubmit() {
               </template>
               <b-dropdown-item>
                 <router-link class="text-decoration-none text-dark"
-                             :to="{ name: `${PostEditRouteName}`, params: { postIdx: useRoute().params.postIdx } }">
+                             :to="{ name: `${postEditRouteName}`, params: { postIdx: useRoute().params.postIdx } }">
                   <i class="bi bi-eraser"></i> 수정하기
                 </router-link>
               </b-dropdown-item>
@@ -83,7 +74,7 @@ async function handleSubmit() {
                 <li v-if="post.memberNickname" class="breadcrumb-item text-secondary">{{ post.memberNickname }}</li>
                 <li v-if="post.managerNickname" class="breadcrumb-item text-secondary">{{ post.managerNickname }}</li>
                 <li class="breadcrumb-item text-secondary">{{ useGetTimeDifference(post.regDate) }}</li>
-                <li v-if="post.comments" class="breadcrumb-item text-secondary">댓글 {{ post.comments.length }}개</li>
+                <li v-if="post.comments" class="breadcrumb-item text-secondary">댓글 {{ useFormatNumber(post.comments.length) }}개</li>
               </ol>
             </nav>
 

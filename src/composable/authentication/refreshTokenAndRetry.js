@@ -20,7 +20,5 @@ export async function useRefreshTokenAndRetry(callback) {
     } catch (error) {
         store.resetMember();
         await router.push({name: "SignIn"});
-        console.log(error);
-        throw error;
     }
 }

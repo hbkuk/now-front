@@ -2,15 +2,15 @@
 import Post from "@/components/Post.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import {ref} from "vue";
-import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import PostService from "@/service/PostService";
-import {useResponseHandler} from "@/composable/response/responseHandler";
 import Comments from "@/components/Comments.vue";
 import Carousel from "@/components/Carousel.vue";
-import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
+import PostFormHeader from "@/components/common/PostFormHeader.vue";
+import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
+import Error from "@/components/common/Error.vue";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchPhotoData = ref(null);
@@ -38,27 +38,34 @@ async function getPhoto(postIdx) {
 
 getPhoto(props.postIdx);
 
+const {deleteSubmitError, useSubmit}
+    = useDeletePostSubmit("Photos", PostService.deletePhoto);
+
 </script>
 
 <template>
   <template v-if="fetchPhotoData">
-  <BackgroundBanner :title="`Photo`" :banner-path="`community.png`"/>
-
-  <b-container class="mt-3">
+    <BackgroundBanner :title="`Photo`" :banner-path="`community.png`"/>
+    <PostFormHeader :routeNameForPush="'Photos'"/>
+    <b-container class="mt-3">
+      <template v-if="deleteSubmitError !== null && deleteSubmitError.error !== null">
+        <Error :error="deleteSubmitError"/>
+      </template>
       <Post :post="fetchPhotoData"
-            :PostEditRouteName="`PhotoEdit`" >
+            :postEditRouteName="`PhotoEdit`"
+            @delete="useSubmit(postIdx)" >
         <template v-if="fetchPhotoData.attachments">
           <Carousel :attachments="fetchPhotoData.attachments"/>
           <AttachmentList :attachments="fetchPhotoData.attachments"/>
         </template>
       </Post>
       <template v-if="fetchPhotoData.comments">
-        <Comments :comments="fetchPhotoData.comments" />
+        <Comments :comments="fetchPhotoData.comments"/>
       </template>
-  </b-container>
+    </b-container>
   </template>
   <template v-else>
-    <BackgroundBannerSkeleton />
+    <BackgroundBannerSkeleton/>
     <PostSkeleton/>
   </template>
 </template>

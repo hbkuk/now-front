@@ -49,8 +49,8 @@ getEditNotice(props.postIdx);
 <template>
   <template v-if="fetchEditNoticeData">
   <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
-    <PostFormHeader />
-      <NoticeEditForm :post="fetchEditNoticeData" />
+    <PostFormHeader :routeNameForPush="'Notices'"/>
+    <NoticeEditForm :post="fetchEditNoticeData" />
   </template>
   <template v-else>
     <BackgroundBannerSkeleton />

@@ -1,7 +1,4 @@
 import {ref} from 'vue';
-import {useValidateAttachmentsExtension} from "@/composable/attachment/validateAttachmentsExtension";
-import {useValidateAttachmentSize} from "@/composable/attachment/validateAttachmentSize";
-import {useValidateAttachmentUploadCount} from "@/composable/attachment/validateAttachmentUploadCount";
 import router from "@/router/router";
 import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";

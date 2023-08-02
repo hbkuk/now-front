@@ -5,9 +5,8 @@ import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import ValidationError from "@/components/common/ValidationError.vue";
-import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/useSavePostSubmitWithAttachments";
 import {AttachmentType} from '@/composable/attachment/constants/AttachmentType';
-import {ref} from "vue";
+import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/savePostSubmitWithAttachments";
 
 const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
 
@@ -17,7 +16,7 @@ const {post, submitError, attachmentUploadErrors,
           "community",  PostService.saveCommunity)
 </script>
 <template>
-  <PostFormHeader/>
+  <PostFormHeader :routeNameForPush="'Communities'"/>
 
   <b-container>
     <b-row>

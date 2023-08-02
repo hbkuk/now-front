@@ -188,6 +188,47 @@ const PostService = {
         return useHttpRequest(HttpMethod.POST, '/api/inquiries', formData, json);
     },
 
+
+    /**
+     * 문의 게시글을 삭제하는 함수
+     *
+     * @param {string} postIdx - 삭제할 게시물의 번호
+     * @returns {Promise<AxiosResponse<any>>} - 삭제 요청 결과
+     */
+    deleteNotice(postIdx) {
+        return useHttpRequest(HttpMethod.DELETE, `/api/manager/notices/${postIdx}`);
+    },
+
+    /**
+     * 커뮤니티 게시글을 삭제하는 함수
+     *
+     * @param {string} postIdx - 삭제할 게시물의 번호
+     * @returns {Promise<AxiosResponse<any>>} - 삭제 요청 결과
+     */
+    deleteCommunity(postIdx) {
+        return useHttpRequest(HttpMethod.DELETE, `/api/communities/${postIdx}`);
+    },
+
+    /**
+     * 사진 게시글을 삭제하는 함수
+     *
+     * @param {string} postIdx - 삭제할 게시물의 번호
+     * @returns {Promise<AxiosResponse<any>>} - 삭제 요청 결과
+     */
+    deletePhoto(postIdx) {
+        return useHttpRequest(HttpMethod.DELETE, `/api/photos/${postIdx}`);
+    },
+
+    /**
+     * 문의 게시글을 삭제하는 함수
+     *
+     * @param {string} postIdx - 삭제할 게시물의 번호
+     * @returns {Promise<AxiosResponse<any>>} - 삭제 요청 결과
+     */
+    deleteInquiry(postIdx) {
+        return useHttpRequest(HttpMethod.DELETE, `/api/inquiries/${postIdx}`);
+    },
+
 };
 
 export default PostService;

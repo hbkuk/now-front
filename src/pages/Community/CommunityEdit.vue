@@ -43,7 +43,7 @@ getEditCommunity(props.postIdx);
 <template>
   <template v-if="fetchEditCommunityData">
   <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
-    <PostFormHeader />
+    <PostFormHeader :routeNameForPush="'Communities'"/>
       <CommunityEditForm :post="fetchEditCommunityData" />
   </template>
   <template v-else>

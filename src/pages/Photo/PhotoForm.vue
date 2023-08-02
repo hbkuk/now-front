@@ -4,7 +4,7 @@ import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import ValidationError from "@/components/common/ValidationError.vue";
-import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/useSavePostSubmitWithAttachments";
+import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/savePostSubmitWithAttachments";
 import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
 import PostService from "@/service/PostService";
 import {ref} from "vue";
@@ -46,7 +46,7 @@ const useHandleThumbnail = (event) => {
 
 </script>
 <template>
-  <PostFormHeader/>
+  <PostFormHeader :routeNameForPush="'Photos'"/>
   <b-container>
     <b-row>
       <b-col>

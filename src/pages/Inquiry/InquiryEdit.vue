@@ -46,7 +46,7 @@ getEditInquiry(props.postIdx);
 <template>
   <template v-if="fetchEditInquiryData">
   <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
-    <PostFormHeader />
+    <PostFormHeader :routeNameForPush="'Inquiries'"/>
       <InquiryEditForm :post="fetchEditInquiryData" />
   </template>
   <template v-else>

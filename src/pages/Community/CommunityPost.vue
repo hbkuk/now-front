@@ -7,6 +7,10 @@ import Comments from "@/components/Comments.vue";
 import AttachmentList from "@/pages/Community/component/AttachmentList.vue";
 import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
+import PostFormHeader from "@/components/common/PostFormHeader.vue";
+import Error from "@/components/common/Error.vue";
+import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
+import ErrorType from "@/composable/response/ErrorType";
 
 /** 게시글을 담는 반응성 객체 */
 const fetchCommunityData = ref(null);
@@ -34,26 +38,34 @@ async function getCommunity(postIdx) {
 
 getCommunity(props.postIdx);
 
+
+const {deleteSubmitError, useSubmit}
+    = useDeletePostSubmit("Communities", PostService.deleteCommunity);
+
 </script>
 
 <template>
   <template v-if="fetchCommunityData">
-  <BackgroundBanner :title="`Community`" :banner-path="`community.png`"/>
-
-  <b-container class="mt-3">
+    <BackgroundBanner :title="`Community`" :banner-path="`community.png`"/>
+    <PostFormHeader :routeNameForPush="'Communities'"/>
+    <b-container class="mt-3">
+      <template v-if="deleteSubmitError !== null && deleteSubmitError.error !== null">
+        <Error :error="deleteSubmitError"/>
+      </template>
       <Post :post="fetchCommunityData"
-            :PostEditRouteName="`CommunityEdit`">
+            :postEditRouteName="`CommunityEdit`"
+            @delete="useSubmit(postIdx)" >
         <template v-if="fetchCommunityData.attachments">
           <AttachmentList :attachments="fetchCommunityData.attachments"/>
         </template>
       </Post>
       <template v-if="fetchCommunityData.comments">
-        <Comments :comments="fetchCommunityData.comments" />
+        <Comments :comments="fetchCommunityData.comments"/>
       </template>
-  </b-container>
+    </b-container>
   </template>
   <template v-else>
-    <BackgroundBannerSkeleton />
+    <BackgroundBannerSkeleton/>
     <PostSkeleton/>
   </template>
 </template>

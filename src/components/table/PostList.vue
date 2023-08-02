@@ -3,6 +3,7 @@ import {defineProps} from "vue";
 import {useCapitalizeFirstLetter} from "@/composable/uitls/capitalizeFirstLetter";
 import {useIsNewPost} from "@/composable/date/isNewPost";
 import {useGetTimeDifference} from "../../composable/date/getTimeDifference";
+import {useFormatNumber} from "../../composable/number/formatNumber";
 
 const props = defineProps({
   posts: Object,
@@ -15,6 +16,8 @@ const props = defineProps({
   <div v-for="(post, index) in posts" :key="index" class="card rounded-2 row-hover pos-relative pb-2 px-3 mb-1 border-0 rounded-0 border-bottom border-secondary card-hover">
     <template v-if="posts !== null">
       <b-row>
+
+
         <b-col md="10" class="d-flex justify-content-center">
           <b-row class="text-center w-100 float-end align-items-center flex-column">
             <b-col class="p-0 d-flex align-items-center">
@@ -36,26 +39,28 @@ const props = defineProps({
                 <b-link class="text-black text-decoration-none" v-if="post.managerNickname" >{{ post.managerNickname }}</b-link>
               </div>
             </b-col>
-
           </b-row>
         </b-col>
 
         <b-col md="2">
-          <b-row class="text-center float-end align-items-center flex-column">
-            <b-col class="p-0 d-flex align-items-center" style="height: 100px;">
+          <b-list-group class="border-0">
+            <b-list-group-item class="d-flex justify-content-md-around align-items-center border-0 py-sm-1">
               <i class="bi bi-emoji-smile me-1"></i>
-              <span>{{ post.likeCount - post.dislikeCount }}</span>
-            </b-col>
-            <b-col class="p-0 d-flex align-items-center" style="height: 100px;">
+              <b-badge pill variant="secondary"><span>{{ useFormatNumber(post.likeCount - post.dislikeCount) }}</span></b-badge>
+            </b-list-group-item>
+
+            <b-list-group-item class="d-flex justify-content-md-around align-items-center border-0 py-sm-1">
               <i class="bi bi-chat-square-text me-1"></i>
-              <span v-if="post.comments">{{ post.comments.length }}</span>
-            </b-col>
-            <b-col class="p-0 d-flex align-items-center" style="height: 100px;">
+              <b-badge pill variant="secondary"><span v-if="post.comments">{{ useFormatNumber(post.comments.length) }}</span></b-badge>
+            </b-list-group-item>
+
+            <b-list-group-item class="d-flex justify-content-md-around align-items-center border-0 py-sm-1">
               <i class="bi bi-hand-index-thumb me-1"></i>
-              <span>{{ post.viewCount }}</span>
-            </b-col>
-          </b-row>
+              <b-badge pill variant="secondary"><span>{{ useFormatNumber(post.viewCount) }}</span></b-badge>
+            </b-list-group-item>
+          </b-list-group>
         </b-col>
+
 
       </b-row>
     </template>

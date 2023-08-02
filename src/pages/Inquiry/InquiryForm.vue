@@ -4,9 +4,9 @@ import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import PostService from "@/service/PostService";
-import {useSavePostSubmit} from "@/composable/submitForm/useSavePostSubmit";
 import ValidationError from "@/components/common/ValidationError.vue";
 import ErrorType from "@/composable/response/ErrorType";
+import {useSavePostSubmit} from "@/composable/submitForm/savePostSubmit";
 
 const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQUIRY);
 
@@ -28,7 +28,7 @@ async function handleSubmit() {
 
 </script>
 <template>
-  <PostFormHeader />
+  <PostFormHeader :routeNameForPush="'Inquiries'"/>
   <b-container>
     <b-row>
       <b-col>

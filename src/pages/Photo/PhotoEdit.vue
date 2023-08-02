@@ -4,10 +4,6 @@ import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import PhotoEditForm from "@/pages/Photo/component/PhotoEditForm.vue";
 import {ref} from "vue";
 import PostService from "@/service/PostService";
-import {useResponseHandler} from "@/composable/response/responseHandler";
-import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
-import {isResponseSuccess} from "@/composable/response/ResponseResultType";
-import router from "@/router/router";
 import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";
@@ -46,12 +42,12 @@ getEditPhoto(props.postIdx);
 </script>
 <template>
   <template v-if="fetchEditPhotoData">
-  <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
-    <PostFormHeader />
-      <PhotoEditForm :post="fetchEditPhotoData" />
+    <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
+    <PostFormHeader :routeNameForPush="'Photos'"/>
+    <PhotoEditForm :post="fetchEditPhotoData"/>
   </template>
   <template v-else>
-    <BackgroundBannerSkeleton />
+    <BackgroundBannerSkeleton/>
     <PostSkeleton/>
   </template>
 </template>

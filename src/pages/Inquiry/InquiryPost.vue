@@ -13,6 +13,8 @@ import Error from "@/components/common/Error.vue";
 import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import {store} from "@/store";
+import PostFormHeader from "@/components/common/PostFormHeader.vue";
+import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
 
 const fetchInquiryData = ref(null);
 const props = defineProps({
@@ -106,15 +108,22 @@ async function handleSubmit() {
   }
 }
 
+const {deleteSubmitError, useSubmit}
+    = useDeletePostSubmit("Inquiries", PostService.deleteInquiry);
+
 </script>
 
 <template>
   <template v-if="fetchInquiryData">
     <BackgroundBanner :title="`Inquiry`" :banner-path="`community.png`"/>
-
+    <PostFormHeader :routeNameForPush="'Inquiries'"/>
     <b-container class="mt-3">
+      <template v-if="deleteSubmitError !== null && deleteSubmitError.error !== null">
+        <Error :error="deleteSubmitError"/>
+      </template>
       <Post :post="fetchInquiryData"
-            :PostEditRouteName="`InquiryEdit`"/>
+            :postEditRouteName="`InquiryEdit`"
+            @delete="useSubmit(postIdx)" />
       <template v-if="fetchInquiryData.answerManagerNickname">
         <Answer :post="fetchInquiryData"/>
       </template>
