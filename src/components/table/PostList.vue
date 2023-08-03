@@ -7,7 +7,7 @@ import {useFormatNumber} from "../../composable/number/formatNumber";
 
 const props = defineProps({
   posts: Object,
-  PostRouteName: String,
+  postRouteName: String,
 });
 
 </script>
@@ -28,7 +28,7 @@ const props = defineProps({
             </b-col>
             <b-col class="p-0 d-flex align-items-center">
               <b>
-                <router-link class="text-decoration-none text-dark font-weight-bold" :to="{ name: `${PostRouteName}`, params: { postIdx: post.postIdx } }">
+                <router-link class="text-decoration-none text-dark font-weight-bold" :to="{ name: `${postRouteName}`, params: { postIdx: post.postIdx } }">
                   {{  post.title }}
                 </router-link>
               </b>

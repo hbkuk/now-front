@@ -21,10 +21,13 @@ import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
 
-/** 게시글 목록을 담는 반응성 객체 */
+// useFindSubCodeGroup 커스텀 훅을 사용하여 포토 서브코드 그룹 가져오기
+const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
+
+// 게시글 목록을 담는 반응성 객체
 const fetchPhotosData = ref(null);
 
-/** 초기 검색 조건을 담는 반응성 객체 */
+// 초기 검색 조건을 담는 반응성 객체
 const initialCondition = ref({
   startDate: useGetPastDate(365),
   endDate: useGetCurrentDate(),
@@ -36,7 +39,7 @@ const initialCondition = ref({
 });
 
 /**
- * 공지 게시글 목록을 가져오는 함수
+ * 사진 게시글 목록을 가져오는 함수
  *
  * @param {Record<string, any>} condition - 검색 조건 객체
  * @returns {Promise<void>}
@@ -49,41 +52,52 @@ async function getPhotos(condition) {
   })
 }
 
+// 컴포넌트가 마운트되기 전에 게시글 목록을 가져옴
 getPhotos(initialCondition.value)
-
-const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
-
 </script>
+
 <template>
+  <!-- 게시글 목록이 있을 경우 -->
   <template v-if="fetchPhotosData !== null">
-    <BannerSub
-        :banner-path="`home-photo.png`"
-    />
+    <!-- 포토 배너와 검색 폼, 포스트 네비게이션 바 사용 -->
+    <BannerSub :banner-path="`home-photo.png`"/>
+
+    <!-- 컨테이너 -->
     <b-container class="mt-3">
       <b-row>
+        <!-- Main content -->
         <b-col class="3">
-          <searchForm/>
-          <PostNavbar :categories="photoSubCodeGroup"
-                      :PostFormRouteName="'PhotoForm'"/>
+          <!-- 검색 폼 컴포넌트 SearchForm 사용 -->
+          <SearchForm/>
+          <!-- 게시글 네비게이션 바 컴포넌트 PostNavbar 사용 -->
+          <PostNavbar :categories="photoSubCodeGroup" :postFormRouteName="'PhotoForm'"/>
           <b-row>
-              <PhotoCard :posts="fetchPhotosData"
-                         :PostRouteName="`PhotoPost`"/>
-              <Pagination/>
+            <!-- PhotoCard 컴포넌트 사용하여 포토 게시글 카드 표시 -->
+            <PhotoCard :posts="fetchPhotosData" :PostRouteName="`PhotoPost`"/>
+            <!-- 페이지네이션 컴포넌트 Pagination 사용 -->
+            <Pagination/>
           </b-row>
         </b-col>
       </b-row>
     </b-container>
 
   </template>
+
+  <!-- 게시글 목록이 없을 경우 -->
   <template v-else>
-    <BackgroundBannerSkeleton />
+    <!-- 로딩 중을 나타내는 배너와 스켈레톤 컴포넌트 사용 -->
+    <BackgroundBannerSkeleton/>
     <b-container class="mt-3">
       <b-row>
         <b-col class="3">
-          <search-form-skeleton />
-          <PostNavbarSkeleton />
-          <PostListSkeleton :posts-count=10 />
-          <PaginationSkeleton />
+          <!-- 검색 폼 스켈레톤 컴포넌트 SearchFormSkeleton 사용 -->
+          <SearchFormSkeleton/>
+          <!-- 게시글 네비게이션 바 스켈레톤 컴포넌트 PostNavbarSkeleton 사용 -->
+          <PostNavbarSkeleton/>
+          <!-- 게시글 목록 스켈레톤 컴포넌트 PostListSkeleton 사용 -->
+          <PostListSkeleton :posts-count="10"/>
+          <!-- 페이지네이션 스켈레톤 컴포넌트 PaginationSkeleton 사용 -->
+          <PaginationSkeleton/>
         </b-col>
       </b-row>
     </b-container>

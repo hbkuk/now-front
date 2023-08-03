@@ -1,7 +1,7 @@
 <script setup>
 import {defineProps} from "vue";
 import {useGetIconTagByExtension} from "@/composable/attachment/getIconTagByExtension";
-import {useFormatBytes} from "../../../composable/attachment/formatBytes";
+import {useFormatBytes} from "../composable/attachment/formatBytes";
 
 const props = defineProps({
   attachments: Array,

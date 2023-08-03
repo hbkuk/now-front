@@ -29,6 +29,7 @@ instance.interceptors.response.use(function (response) {
         await router.push({ name: "NotFound" });
     }
     if (errorCode === ErrorType.NOT_AUTHENTICATED) {
+        store.resetMember();
         await router.push({ name: "SignIn" });
     }
     if (errorCode === ErrorType.INVALID_TOKEN) {

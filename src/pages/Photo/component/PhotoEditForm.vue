@@ -90,5 +90,3 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PH
     </b-row>
   </b-container>
 </template>
-<script setup>
-</script>

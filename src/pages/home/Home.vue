@@ -130,7 +130,7 @@ getInquiries(condition.value)
         <template v-if="fetchPostsData.notices !== null">
           <PostList
             :posts="fetchPostsData.notices"
-            :PostRouteName="`NoticePost`"
+            :postRouteName="`NoticePost`"
           />
         </template>
         <template v-else>
@@ -149,7 +149,7 @@ getInquiries(condition.value)
         <template v-if="fetchPostsData.communities !== null">
           <PostList
               :posts="fetchPostsData.communities"
-              :PostRouteName="`CommunityPost`"
+              :postRouteName="`CommunityPost`"
           />
         </template>
         <template v-else>
@@ -167,7 +167,7 @@ getInquiries(condition.value)
         <template v-if="fetchPostsData.photos !== null">
           <PostList
               :posts="fetchPostsData.photos"
-              :PostRouteName="`PhotoPost`"
+              :postRouteName="`PhotoPost`"
           />
         </template>
         <template v-else>
@@ -185,7 +185,7 @@ getInquiries(condition.value)
         <template v-if="fetchPostsData.inquiries !== null">
           <PostList
               :posts="fetchPostsData.inquiries"
-              :PostRouteName="`InquiryPost`"
+              :postRouteName="`InquiryPost`"
           />
         </template>
         <template v-else>

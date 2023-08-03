@@ -143,6 +143,8 @@ const PostService = {
     fetchEditInquiry(postIdx) {
         return useGetRequest(`/api/inquiries/${postIdx}/edit`)
     },
+    
+    
 
 
 
@@ -155,7 +157,6 @@ const PostService = {
     saveNotice(formData) {
         return useHttpRequest(HttpMethod.POST, '/api/manager/notices', formData, json);
     },
-
 
 
     /**
@@ -187,6 +188,32 @@ const PostService = {
     saveInquiry(formData) {
         return useHttpRequest(HttpMethod.POST, '/api/inquiries', formData, json);
     },
+    
+    
+
+    /**
+     * 커뮤니티 게시물을 수정하는 함수
+     *
+     * @param postIdx 게시글 번호
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
+     */
+    editCommunity(postIdx, formData) {
+        return useHttpRequest(HttpMethod.PUT, `/api/communities/${postIdx}`, formData, multipart);
+    },
+
+    /**
+     * 사진 게시물을 수정하는 함수
+     *
+     * @param postIdx 게시글 번호
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
+     */
+    editPhoto(postIdx, formData) {
+        return useHttpRequest(HttpMethod.PUT, `/api/photos/${postIdx}`, formData, multipart);
+    },
+    
+    
 
 
     /**

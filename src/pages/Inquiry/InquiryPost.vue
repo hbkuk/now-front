@@ -16,7 +16,10 @@ import {store} from "@/store";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
 
+// 게시글을 담는 반응성 객체
 const fetchInquiryData = ref(null);
+
+// 게시글 번호를 props로 전달받음
 const props = defineProps({
   postIdx: {
     type: String,
@@ -63,11 +66,16 @@ async function getInquiry(postIdx) {
   }
 }
 
+// 게시글 가져오기 함수 호출
 getInquiry(props.postIdx);
 
+// 반환된 에러를 담는 반응성 객체
 const submitError = ref(null)
-/** 반환된 에러를 담는 반응성 객체 */
-const   modalShow = ref(false)
+
+// 비밀번호 모달 반응성 객체
+const modalShow = ref(false)
+
+// 비밀글 열람을 위한 입력된 비밀번호 반응성 객체
 const password = ref('')
 
 /**
@@ -108,6 +116,7 @@ async function handleSubmit() {
   }
 }
 
+// 커스텀 훅을 사용하여 게시글 삭제를 위한 변수와 함수들을 가져옴
 const {deleteSubmitError, useSubmit}
     = useDeletePostSubmit("Inquiries", PostService.deleteInquiry);
 
@@ -115,35 +124,42 @@ const {deleteSubmitError, useSubmit}
 
 <template>
   <template v-if="fetchInquiryData">
+    <!-- BackgroundBanner 컴포넌트로 게시글의 제목과 배경 이미지를 표시 -->
     <BackgroundBanner :title="`Inquiry`" :banner-path="`community.png`"/>
+
+    <!-- 게시글 작성 헤더 컴포넌트 PostFormHeader 사용 -->
     <PostFormHeader :routeNameForPush="'Inquiries'"/>
+
+    <!-- 게시글 데이터가 로딩되었을 경우 -->
     <b-container class="mt-3">
       <template v-if="deleteSubmitError !== null && deleteSubmitError.error !== null">
+        <!-- deleteSubmitError가 null이 아니고 error 속성이 null이 아닐 경우 에러 컴포넌트 Error로 에러 메시지 표시 -->
         <Error :error="deleteSubmitError"/>
       </template>
-      <Post :post="fetchInquiryData"
-            :postEditRouteName="`InquiryEdit`"
-            @delete="useSubmit(postIdx)" />
+      <!-- Post 컴포넌트로 게시글 데이터를 표시하고 삭제 이벤트 처리 -->
+      <Post :post="fetchInquiryData" :postEditRouteName="`InquiryEdit`" @delete="useSubmit(postIdx)" />
       <template v-if="fetchInquiryData.answerManagerNickname">
+        <!-- fetchInquiryData.answerManagerNickname이 존재하는 경우 Answer 컴포넌트로 답변 데이터 표시 -->
         <Answer :post="fetchInquiryData"/>
       </template>
       <template v-if="fetchInquiryData.comments">
+        <!-- fetchInquiryData.comments가 존재하는 경우 Comments 컴포넌트로 댓글 데이터 표시 -->
         <Comments :comments="fetchInquiryData.comments"/>
       </template>
     </b-container>
   </template>
   <template v-else-if="modalShow">
-    <CommonMessage
-        :imagePath="`secret.jpg`"
-        :title="`비밀글 설정`"
-        :content="`이 게시글은 비밀글로 설정되어있습니다.`"
-    />
+    <!-- 데이터 로딩 중이면서 modalShow 값이 true인 경우 -->
+    <!-- CommonMessage 컴포넌트로 비밀글 설정 안내 메시지 표시 -->
+    <CommonMessage :imagePath="`secret.jpg`" :title="`비밀글 설정`" :content="`이 게시글은 비밀글로 설정되어있습니다.`" />
   </template>
   <template v-else>
+    <!-- 데이터 로딩 중이면서 modalShow 값이 false인 경우 -->
+    <!-- BackgroundBannerSkeleton 컴포넌트로 스켈레톤 형식의 배경 이미지 표시 -->
     <BackgroundBannerSkeleton />
-    <PostSkeleton/>
+    <!-- PostSkeleton 컴포넌트로 스켈레톤 형식의 게시글 데이터 표시 -->
+    <PostSkeleton />
   </template>
-
 
   <!-- 모달 -->
   <b-modal
@@ -161,20 +177,14 @@ const {deleteSubmitError, useSubmit}
       centered
       no-close-on-backdrop
   >
+    <!-- 비밀번호 입력 폼 -->
     <b>비밀번호를 입력해 주세요.</b>
     <form ref="form" class="mt-3">
-      <b-form-group
-          label-for="password-input"
-          invalid-feedback="비밀번호는 필수입니다."
-      >
-        <b-form-input
-            id="password-input"
-            v-model="password"
-            type="password"
-            required
-        />
+      <b-form-group label-for="password-input" invalid-feedback="비밀번호는 필수입니다.">
+        <b-form-input id="password-input" v-model="password" type="password" required />
       </b-form-group>
     </form>
+    <!-- submitError가 null이 아닐 경우 에러 컴포넌트 Error로 에러 메시지 표시 -->
     <div v-if="submitError !== null">
       <Error :error="submitError"/>
     </div>

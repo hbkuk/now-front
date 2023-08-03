@@ -2,7 +2,7 @@
 
 const props = defineProps({
   categories: Object,
-  PostFormRouteName: String
+  postFormRouteName: String
 })
 </script>
 
@@ -11,7 +11,7 @@ const props = defineProps({
     <!-- Left Element -->
       <b-navbar-nav class="me-auto">
         <b-nav-item>
-          <b-button variant="primary" class="mr-3" @click="$router.push({name:`${PostFormRouteName}`})">
+          <b-button variant="primary" class="mr-3" @click="$router.push({name:`${postFormRouteName}`})">
             <i class="bi bi-pencil-square" style="font-size:24px;"></i>
           </b-button>
         </b-nav-item>
