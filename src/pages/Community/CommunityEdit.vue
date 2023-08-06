@@ -52,6 +52,8 @@ getEditCommunity(props.postIdx);
 const {
   post,
   submitError,
+  selectedDeleteAttachmentIndexes,
+  isAttachmentIdxDeleted,
   attachmentUploadErrors,
   useHandleAttachment,
   useDeleteAttachment,
@@ -159,24 +161,32 @@ async function handleEditSubmit(postIdx) {
 
                       <!-- 기존 업로드된 파일 목록 -->
                       <div class="mb-3" v-if="post.attachments && post.attachments.length > 0">
+                        <b-badge class="mb-3" variant="danger">이미지 삭제</b-badge>
                         <ul class="list-group list-group-light">
-                          <label class="form-label">기존 업로드된 파일</label>
+
+
                           <div v-for="(attachment, attachmentIdx) in post.attachments" :key="attachmentIdx"
                                class="list-group-item list-group-item-action px-3 border-1 ripple d-flex align-items-center">
-                            <div class="flex-grow-1 text-decoration-none text-dark">
-                              <span v-if="attachment.attachmentExtension"
-                                    v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
-                              <a :href="`/attachments/${attachment.attachmentIdx}`"
-                                 class="text-decoration-none text-dark">
-                                {{ attachment.originalAttachmentName }} ({{
-                                  useFormatBytes(attachment.attachmentSize)
-                                }})
+
+                            <!-- 파일 이름과 기타 내용들을 표시 -->
+                            <div class="flex-grow-1 text-decoration-none text-dark" v-if="!isAttachmentIdxDeleted(attachment.attachmentIdx)">
+                                    <span v-if="attachment.attachmentExtension"
+                                          v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
+                              <a :href="`/attachments/${attachment.attachmentIdx}`" class="text-decoration-none text-dark">
+                                {{ attachment.originalAttachmentName }} ({{ useFormatBytes(attachment.attachmentSize) }})
                               </a>
                             </div>
+                            <!-- 삭제된 파일 이름 표시 -->
+                            <div class="flex-grow-1 text-decoration-line-through" v-else style="color: #ff0000;">
+                              <span v-if="attachment.attachmentExtension" v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
+                              {{ attachment.originalAttachmentName }} ({{ useFormatBytes(attachment.attachmentSize) }})
+                            </div>
+
                             <!-- 파일 삭제 버튼 -->
                             <button type="button" class="btn-close" aria-label="Delete"
                                     @click="useDeleteAttachment(attachment.attachmentIdx)"></button>
                           </div>
+
                         </ul>
                       </div>
 

@@ -18,12 +18,12 @@ import {EditPhotoOptions} from "@/composable/attachment/constants/EditAttachment
 export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, formDataName, savePostFunction) {
 
     // 선택된 편집 옵션
-    const selectedEditOption = ref(EditPhotoOptions.EDIT_EXISTING.value);
+    const selectedEditOption = ref(EditPhotoOptions.EDIT_EXISTING.code);
 
     // 편집 옵션 목록
     const editOptions = ref([
-        { text: EditPhotoOptions.EDIT_EXISTING.text, value: EditPhotoOptions.EDIT_EXISTING.value },
-        { text: EditPhotoOptions.ADD_NEW.text, value: EditPhotoOptions.ADD_NEW.value },
+        { text: EditPhotoOptions.EDIT_EXISTING.text, value: EditPhotoOptions.EDIT_EXISTING.code },
+        { text: EditPhotoOptions.ADD_NEW.text, value: EditPhotoOptions.ADD_NEW.code },
     ])
 
     // 게시글 데이터 객체
@@ -183,13 +183,13 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
 
         formData.value.delete('thumbnailAttachmentIdx');
 
-        // 사진을 하나만 선택할 수 있도록 기존의 newThumbnail을 모두 삭제
-        formData.value.delete('newThumbnail');
+        // 사진을 하나만 선택할 수 있도록 기존의 thumbnail을 모두 삭제
+        formData.value.delete('thumbnail');
 
         // 새로 선택한 파일을 formData에 추가
         if (event.target.files && event.target.files.length > 0) {
             const file = event.target.files[0];
-            formData.value.append('newThumbnail', file);
+            formData.value.append('thumbnail', file);
 
             // 파일 미리보기 설정
             const reader = new FileReader();

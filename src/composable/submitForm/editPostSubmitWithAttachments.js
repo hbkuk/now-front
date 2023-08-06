@@ -21,6 +21,9 @@ export function useEditPostSubmitWithAttachments(attachmentType, formDataName, s
 
     const formData = ref(new FormData());
 
+    // 삭제할 첨부파일 인덱스를 저장하는 배열
+    const selectedDeleteAttachmentIndexes = ref([]);
+
     const attachmentUploadErrors = ref({
         hasUnsupportedExtensions: false,
         isSizeExceeded: false,
@@ -63,22 +66,33 @@ export function useEditPostSubmitWithAttachments(attachmentType, formDataName, s
     };
 
     /**
-     * 파일 인덱스에 해당하는 파일을 삭제
+     * 삭제할 첨부파일 인덱스를 배열에 추가
      *
      * @param {number} attachmentIdx - 삭제할 파일의 인덱스
      */
     function useDeleteAttachment(attachmentIdx) {
-        post.value.attachments = post.value.attachments.filter((attachment) => attachment.attachmentIdx !== attachmentIdx)
+        selectedDeleteAttachmentIndexes.value.push(attachmentIdx);
     }
 
     /**
-     * 파일의 인덱스를 계산된 속성으로 반환
+     * 게시글의 이전 첨부파일 인덱스들을 계산하는 반응성 컴퓨티드 프로퍼티
      *
-     * @returns {number[]} 파일의 인덱스 배열
+     * @type {ComputedRef<number[]>} 이전 첨부파일 인덱스들을 담은 ComputedRef 객체
      */
-    const attachmentIndexes = computed(() => {
+    const notDeletedIndexes = computed(() => {
         return post.value.attachments.map((attachment) => attachment.attachmentIdx)
-    })
+            .filter((idx) => !selectedDeleteAttachmentIndexes.value.includes(idx))
+    });
+
+    /**
+     * 첨부파일 인덱스가 삭제된 상태인지 확인하는 함수
+     *
+     * @param {number} attachmentIdx - 첨부파일 인덱스
+     * @returns {boolean} 첨부파일 인덱스가 삭제된 상태인지 여부 (true: 삭제된 상태, false: 삭제되지 않은 상태)
+     */
+    function isAttachmentIdxDeleted(attachmentIdx) {
+        return selectedDeleteAttachmentIndexes.value.indexOf(attachmentIdx) !== -1;
+    }
 
     /**
      * 서버로 전송할 폼 데이터 객체를 반환하는 함수
@@ -86,8 +100,8 @@ export function useEditPostSubmitWithAttachments(attachmentType, formDataName, s
      * @returns {FormData} 폼 데이터 객체
      */
     function getSubmitFormData() {
-        formData.value.delete('attachmentIndexes');
-        formData.value.append('attachmentIndexes', attachmentIndexes.value);
+        formData.value.delete('notDeletedIndexes');
+        formData.value.append('notDeletedIndexes', notDeletedIndexes.value);
 
         formData.value.delete(formDataName);
         formData.value.append(formDataName, new Blob([JSON.stringify(post.value)], {type: 'application/json'}));
@@ -117,6 +131,8 @@ export function useEditPostSubmitWithAttachments(attachmentType, formDataName, s
 
     return {
         post,
+        selectedDeleteAttachmentIndexes,
+        isAttachmentIdxDeleted,
         formData,
         submitError,
         attachmentUploadErrors,

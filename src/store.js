@@ -17,8 +17,6 @@ export const store = reactive({
         this.member.id = id
         this.member.nickname = nickname
         this.member.isSignedIn = true
-
-        localStorage.setItem("member", JSON.stringify(this.member));
     },
 
     /**
@@ -28,8 +26,6 @@ export const store = reactive({
         this.member.id = null
         this.member.nickname = null
         this.member.isSignedIn = false
-
-        localStorage.clear();
     },
 
     /**

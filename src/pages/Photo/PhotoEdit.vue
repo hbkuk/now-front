@@ -191,6 +191,8 @@ async function handleEditSubmit(postIdx) {
                         <b-form-group label="기존 이미지 수정"
                                       v-if=" post.attachments && post.attachments.length > 0">
                           <b-card class="my-3">
+
+
                             <!-- 기존 업로드된 파일 목록 -->
                             <div class="mb-3" v-if="post.attachments && post.attachments.length > 0">
                               <b-badge class="mb-3" variant="danger">이미지 삭제</b-badge>

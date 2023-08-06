@@ -33,10 +33,30 @@ const AuthenticationService = {
         }
         return response;
     },
+
+    /**
+     * 토큰 재발급을 서버에 요청을 전송하는 함수
+     * 
+     * @returns {Promise<AxiosResponse<any>>} 서버 응답에 대한 Promise 객체
+     */
     refresh() {
         return useHttpRequest(HttpMethod.POST, '/api/refresh');
     },
 
+    /**
+     * 회원 정보를 서버에 요청하는 함수
+     * 
+     * @returns {Promise<AxiosResponse<any>>} 서버 응답에 대한 Promise 객체
+     */
+    getMember() {
+        return useHttpRequest(HttpMethod.POST, '/api/member/me');
+    },
+
+    /**
+     * 현재 사용자가 매니저인지 확인을 요청하는 함수
+     *
+     * @returns {Promise<axios.AxiosResponse<*>>} 서버 응답에 대한 Promise 객체
+     */
     isManager() {
         return useGetRequest("/api/manager/isManager")
     }

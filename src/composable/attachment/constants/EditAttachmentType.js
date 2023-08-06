@@ -8,6 +8,7 @@ export const EditPhotoOptions = {
      * 기존 이미지 수정 옵션
      */
     EDIT_EXISTING: {
+        code: "EDIT_EXISTING",
         text: '기존 이미지 수정',
         value: 'editExisting'
     },
@@ -16,6 +17,7 @@ export const EditPhotoOptions = {
      * 새로운 이미지 추가 옵션
      */
     ADD_NEW: {
+        code: "ADD_NEW",
         text: '새로운 이미지 추가',
         value: 'addNew'
     }

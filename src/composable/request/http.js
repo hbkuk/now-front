@@ -48,7 +48,9 @@ instance.interceptors.response.use(function (response) {
     }
     if (errorCode === ErrorType.LOGGED_OUT_TOKEN) {
         store.resetMember();
-        await router.push({ name: "SignIn" });
+    }
+    if (errorCode === ErrorType.NOT_FOUND_TOKEN) {
+        store.resetMember();
     }
     return Promise.reject(error);
 });
