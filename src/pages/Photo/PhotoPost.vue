@@ -11,6 +11,7 @@ import AttachmentList from "@/components/AttachmentList.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
 import Error from "@/components/common/Error.vue";
+import BannerSub from "@/components/common/BannerSub.vue";
 
 // 게시글을 담는 반응성 객체
 const fetchPhotoData = ref(null);
@@ -50,8 +51,9 @@ const {deleteSubmitError, useSubmit}
   <!-- 게시글 정보가 있을 경우 -->
   <template v-if="fetchPhotoData">
     <!-- 게시글 배경 배너와 헤더 컴포넌트 사용 -->
-    <BackgroundBanner :title="`Photo`" :banner-path="`community.png`"/>
+    <BannerSub :banner-path="`good-post.png`"/>
     <PostFormHeader :routeNameForPush="'Photos'"/>
+
     <b-container class="mt-3">
       <!-- 삭제 오류가 있을 경우, 오류 메시지 출력 -->
       <template v-if="deleteSubmitError !== null && deleteSubmitError.error !== null">

@@ -10,6 +10,7 @@ import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkel
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import Error from "@/components/common/Error.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
+import BannerSub from "@/components/common/BannerSub.vue";
 
 // 게시글을 담는 반응성 객체
 const fetchCommunityData = ref(null);
@@ -48,10 +49,8 @@ const {deleteSubmitError, useSubmit}
 <template>
   <!-- 게시글이 로딩되었을 때 -->
   <template v-if="fetchCommunityData">
-    <!-- BackgroundBanner 컴포넌트 사용 -->
-    <BackgroundBanner :title="`Community`" :banner-path="`community.png`"/>
-
-    <!-- PostFormHeader 컴포넌트 사용 -->
+    <!-- 게시글 배경 배너와 헤더 컴포넌트 사용 -->
+    <BannerSub :banner-path="`good-post.png`"/>
     <PostFormHeader :routeNameForPush="'Communities'"/>
 
     <b-container class="mt-3">

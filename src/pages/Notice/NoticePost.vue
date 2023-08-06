@@ -9,6 +9,7 @@ import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkel
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
 import Error from "@/components/common/Error.vue";
+import BannerSub from "@/components/common/BannerSub.vue";
 
 // 게시글을 담는 반응성 객체
 const fetchNoticeData = ref(null);
@@ -47,10 +48,11 @@ const {deleteSubmitError, useSubmit}
 <template>
   <!-- 게시글 정보가 있을 경우 -->
   <template v-if="fetchNoticeData">
-    <!-- 배경 배너 컴포넌트 BackgroundBanner 사용 -->
-    <BackgroundBanner :title="`Notice`" :banner-path="`community.png`"/>
-    <!-- 게시글 작성 헤더 컴포넌트 PostFormHeader 사용 -->
+
+    <!-- 게시글 배경 배너와 헤더 컴포넌트 사용 -->
+    <BannerSub :banner-path="`good-post.png`"/>
     <PostFormHeader :routeNameForPush="'Notices'"/>
+
     <b-container class="mt-3">
       <!-- 삭제 에러가 있을 경우, 에러 메시지 출력 -->
       <template v-if="deleteSubmitError !== null && deleteSubmitError.error !== null">

@@ -101,8 +101,6 @@ async function handleEditSubmit(postIdx) {
 
 <template>
   <template v-if="post">
-    <!-- 배경 배너 컴포넌트 BackgroundBanner 사용 -->
-    <BackgroundBanner :title="`행복한 마음`" :bannerPath="`community.png`"/>
 
     <!-- 게시글 작성 헤더 컴포넌트 PostFormHeader 사용 -->
     <PostFormHeader :routeNameForPush="'Photos'"/>

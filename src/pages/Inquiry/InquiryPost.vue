@@ -15,6 +15,7 @@ import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkel
 import {store} from "@/store";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
+import BannerSub from "@/components/common/BannerSub.vue";
 
 // 게시글을 담는 반응성 객체
 const fetchInquiryData = ref(null);
@@ -124,10 +125,8 @@ const {deleteSubmitError, useSubmit}
 
 <template>
   <template v-if="fetchInquiryData">
-    <!-- BackgroundBanner 컴포넌트로 게시글의 제목과 배경 이미지를 표시 -->
-    <BackgroundBanner :title="`Inquiry`" :banner-path="`community.png`"/>
-
-    <!-- 게시글 작성 헤더 컴포넌트 PostFormHeader 사용 -->
+    <!-- 게시글 배경 배너와 헤더 컴포넌트 사용 -->
+    <BannerSub :banner-path="`good-post.png`"/>
     <PostFormHeader :routeNameForPush="'Inquiries'"/>
 
     <!-- 게시글 데이터가 로딩되었을 경우 -->
