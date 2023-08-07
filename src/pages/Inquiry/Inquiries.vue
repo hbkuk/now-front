@@ -16,6 +16,9 @@ import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
 import {useInitialCondition} from "@/composable/param/initialCondition";
+import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
+import {useUpdateUrl} from "@/composable/param/updateUrl";
+import {useConvertKeysToConditionParams} from "@/composable/param/constants/conditionParams";
 
 // 문의 게시글의 토픽 하위 코드 그룹 가져오기
 const inquirySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQUIRY);
@@ -24,7 +27,7 @@ const inquirySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQU
 const fetchInquiriesData = ref(null);
 
 // 초기 검색 조건을 담는 반응성 객체
-const initialCondition = useInitialCondition();
+const initialCondition = useInitialCondition(ROUTE_NAME_GROUP.INQUIRY.code);
 
 /**
  * 문의 게시글 목록을 가져오는 함수
@@ -35,6 +38,7 @@ const initialCondition = useInitialCondition();
 async function getInquiries(condition) {
   return PostService.fetchInquiries(condition).then(response => {
     fetchInquiriesData.value = response?.data
+    useUpdateUrl("/inquiries", useConvertKeysToConditionParams(condition));
   }).catch(error => {
     console.log(error)
   })
@@ -42,6 +46,16 @@ async function getInquiries(condition) {
 
 // 문의 게시글 목록 가져오기 함수 호출
 getInquiries(initialCondition.value)
+
+/**
+ * 페이지 변경 함수
+ *
+ * @param {number} changePageNo - 변경된 페이지 번호
+ */
+function changePage(pageNo) {
+  initialCondition.value.pageNo = pageNo
+  getInquiries(initialCondition.value)
+}
 
 </script>
 <template>
@@ -60,10 +74,12 @@ getInquiries(initialCondition.value)
                       :categories="inquirySubCodeGroup" :postFormRouteName="'InquiryForm'"/>
 
           <!-- 문의 게시글 목록을 표시하기 위한 PostList 컴포넌트 사용 -->
-          <PostList :posts="fetchInquiriesData" :postRouteName="`InquiryPost`"/>
+          <PostList :posts="fetchInquiriesData.inquiries"
+                    :postRouteName="`InquiryPost`"/>
 
-          <!-- 페이지네이션을 표시하기 위한 Pagination 컴포넌트 사용 -->
-          <Pagination/>
+          <!-- Pagination 컴포넌트 사용 -->
+          <Pagination :page="fetchInquiriesData.page"
+                      @changePageNo="(changePageNo) => changePage(changePageNo)" />
         </b-col>
       </b-row>
     </b-container>

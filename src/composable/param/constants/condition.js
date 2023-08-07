@@ -1,11 +1,13 @@
 /**
  * 게시글의 최대 개수를 나타내는 배열
+ *
  * @type {Array<number>}
  */
 export const MAX_NUMBER_OF_POSTS = [10, 20, 30, 40, 50];
 
 /**
  * 게시글 정렬 옵션을 나타내는 객체
+ *
  * @type {Object}
  * @property {null} LATEST - 최신순 정렬을 나타내는 상수
  * @property {string} RECOMMENDED - 추천순 정렬을 나타내는 상수
@@ -14,15 +16,16 @@ export const MAX_NUMBER_OF_POSTS = [10, 20, 30, 40, 50];
  * @property {string} SCRAPED - 스크랩순 정렬을 나타내는 상수
  */
 export const SORT = {
-    LATEST: null,
-    RECOMMENDED: "recommended",
-    MOST_VIEWED: "most_viewed",
-    COMMENTED: "commented",
-    SCRAPED: "scraped",
+    LATEST: "LATEST",
+    RECOMMENDED: "RECOMMENDED",
+    MOST_VIEWED: "MOST_VIEWED",
+    COMMENTED: "COMMENTED",
+    SCRAPED: "SCRAPED",
 };
 
 /**
  * 게시글 정렬 옵션을 담은 배열
+ *
  * @type {Array<Object>}
  */
 export const SORT_OPTIONS = [

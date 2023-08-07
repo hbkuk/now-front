@@ -14,6 +14,9 @@ import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
 import {useInitialCondition} from "@/composable/param/initialCondition";
+import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
+import {useUpdateUrl} from "@/composable/param/updateUrl";
+import {useConvertKeysToConditionParams} from "@/composable/param/constants/conditionParams";
 
 // useFindSubCodeGroup 커스텀 훅을 사용하여 포토 서브코드 그룹 가져오기
 const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
@@ -22,7 +25,7 @@ const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO)
 const fetchPhotosData = ref(null);
 
 // 초기 검색 조건을 담는 반응성 객체
-const initialCondition = useInitialCondition();
+const initialCondition = useInitialCondition(ROUTE_NAME_GROUP.PHOTO.code);
 
 /**
  * 사진 게시글 목록을 가져오는 함수
@@ -33,6 +36,7 @@ const initialCondition = useInitialCondition();
 async function getPhotos(condition) {
   await PostService.fetchPhotos(condition).then(response => {
     fetchPhotosData.value = response?.data
+    useUpdateUrl("/photos", useConvertKeysToConditionParams(condition));
   }).catch(error => {
     console.log(error)
   })
@@ -40,6 +44,16 @@ async function getPhotos(condition) {
 
 // 컴포넌트가 마운트되기 전에 게시글 목록을 가져옴
 getPhotos(initialCondition.value)
+
+/**
+ * 페이지 변경 함수
+ *
+ * @param {number} changePageNo - 변경된 페이지 번호
+ */
+function changePage(pageNo) {
+  initialCondition.value.pageNo = pageNo
+  getPhotos(initialCondition.value)
+}
 </script>
 
 <template>
@@ -60,10 +74,12 @@ getPhotos(initialCondition.value)
 
           <b-row>
             <!-- PhotoCard 컴포넌트 사용하여 포토 게시글 카드 표시 -->
-            <PhotoCard :posts="fetchPhotosData" :PostRouteName="`PhotoPost`"/>
+            <PhotoCard :posts="fetchPhotosData.photos"
+                       :PostRouteName="`PhotoPost`"/>
 
-            <!-- 페이지네이션 컴포넌트 Pagination 사용 -->
-            <Pagination/>
+            <!-- Pagination 컴포넌트 사용 -->
+            <Pagination :page="fetchPhotosData.page"
+                        @changePageNo="(changePageNo) => changePage(changePageNo)" />
           </b-row>
         </b-col>
       </b-row>

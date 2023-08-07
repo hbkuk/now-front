@@ -12,10 +12,19 @@ const { currentRouteName } = useRouteWatch();
       <footer class="py-3 my-4">
         <b-nav class="justify-content-center border-bottom pb-3 mb-3">
 
-          <b-nav-item class="nav-item px-3" v-for="group in ROUTE_NAME_GROUP" :key="group.label"
-                      :class="{ 'selected': group.routes.includes(currentRouteName) }">
-            <router-link :to="{ name: group.routes[0] }"
-                         class="router-link text-decoration-none text-secondary">{{ group.label }}</router-link>
+          <b-nav-item
+              class="nav-item px-3"
+              v-for="group in ROUTE_NAME_GROUP"
+              :key="group.label"
+              :class="{ 'selected': group.routes.includes(currentRouteName) }"
+          >
+            <router-link
+                :to="{ name: group.routes[0] }"
+                class="router-link text-decoration-none"
+                :class="{'text-secondary': !group.routes.includes(currentRouteName) }"
+            >
+              {{ group.label }}
+            </router-link>
           </b-nav-item>
 
         </b-nav>

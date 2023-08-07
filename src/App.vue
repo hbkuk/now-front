@@ -36,7 +36,8 @@ body {
 .selected {
   font-weight: bold;
   color: #1E90FF; /* 파란색 */
-  text-shadow: 1px 1px 2px rgba(77, 148, 255, 3); /* 그림자 */
+  //text-shadow: 1px 1px 2px rgba(77, 148, 255, 1); /* 그림자 */
+  text-shadow: 5px 5px 10px rgba(77, 148, 255, 1);
 }
 
 </style>

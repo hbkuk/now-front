@@ -17,10 +17,10 @@ export function useRouteWatch() {
      * @param {Object} updateCurrentRoute - 업데이트된 현재 라우터 객체
      */
     watch(
-        () => router.currentRoute.value,
-        (updateCurrentRoute) => {
-            console.log(updateCurrentRoute.name)
-            currentRouteName.value = updateCurrentRoute.name;
+        () => router.currentRoute.value.name,
+        (updateCurrentRouteName) => {
+            console.log(updateCurrentRouteName)
+            currentRouteName.value = updateCurrentRouteName;
         },
         { deep: true } // deep 옵션을 사용하여 중첩된 객체를 감시합니다.
     );
