@@ -16,6 +16,7 @@ import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
 import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
+import {useInitialCondition} from "@/composable/param/initialCondition";
 
 // 공지 게시글의 하위 코드 그룹 가져오기
 const noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTICE);
@@ -24,15 +25,7 @@ const noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTIC
 const fetchNoticesData = ref(null);
 
 // 초기 검색 조건을 담는 반응성 객체
-const initialCondition = ref({
-  startDate: useGetPastDate(365),
-  endDate: useGetCurrentDate(),
-  categoryIdx: null,
-  keyword: null,
-  pageNo: 1,
-
-  maxNumberOfPosts: 10
-});
+const initialCondition = useInitialCondition();
 
 /**
  * 공지 게시글 목록을 가져오는 함수
@@ -65,13 +58,15 @@ getNotices(initialCondition.value)
         <!-- Main content -->
         <b-col class="3">
           <!-- 검색 폼 컴포넌트 SearchForm 사용 -->
-          <SearchForm/>
-          <!-- 게시글 네비게이션 바 컴포넌트 PostNavbar 사용 -->
-          <PostNavbar :categories="noticeSubCodeGroup"
-                      :postFormRouteName="'NoticeForm'"/>
+          <searchForm :condition="initialCondition"
+                      @search="(updateSearchCondition) => getNotices(updateSearchCondition)"
+                      :categories="noticeSubCodeGroup" :postFormRouteName="'NoticeForm'"/>
+
+
           <!-- 게시글 목록 컴포넌트 PostList 사용 -->
           <PostList :posts="fetchNoticesData"
                     :postRouteName="`NoticePost`"/>
+
           <!-- 페이지네이션 컴포넌트 Pagination 사용 -->
           <Pagination/>
         </b-col>

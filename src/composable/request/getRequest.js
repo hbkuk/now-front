@@ -1,4 +1,4 @@
-import {useFilterParams} from "@/composable/filterParams";
+import {useFilterParams} from "@/composable/param/filterParams";
 import http from "./http"
 
 /**

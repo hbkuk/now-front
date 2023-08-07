@@ -9,6 +9,7 @@ import '@/assest/main.css';
 import {store} from "@/store";
 import CategoryService from "@/service/CategoryService";
 import AuthenticationService from "@/service/AuthenticationService";
+import {useParseJsonItemFromSessionStorage} from "@/composable/parse/parseJsonItemFromSessionStorage";
 
 const app = createApp(App);
 initializeStore();
@@ -33,11 +34,7 @@ function initializeStore() {
  * @returns {Promise<void>} 카테고리 데이터 가져오기와 Store 저장 후 완료
  */
 async function getCategories() {
-    return CategoryService.fetchCategories().then(response => {
-        store.categories = response.data;
-    }).catch(error => {
-        console.log(error)
-    })
+    store.categories = useParseJsonItemFromSessionStorage("categories") || [];
 }
 
 /**

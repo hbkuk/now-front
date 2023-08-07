@@ -3,14 +3,9 @@ import Banner from "@/components/common/Banner.vue";
 import PostList from "@/components/table/PostList.vue";
 import {ref} from "vue";
 import PostService from "@/service/PostService";
-import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
-import {useResponseHandler} from "@/composable/response/responseHandler";
 import Error from "@/components/common/Error.vue";
-import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
 
-
-// TODO: PostController 추가 => 동시에 get
 
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchPostsData = ref({
@@ -24,86 +19,26 @@ const fetchPostsData = ref({
 const fetchPostsError = ref(null)
 
 /** 검색 조건을 담는 반응성 객체 */
-const condition = ref({
+const initialCondition = ref({
   maxNumberOfPosts: 5
 })
 
 /**
- * 공지 게시글 목록을 가져오는 함수
+ * 모든 게시글 목록을 가져오는 함수
  *
  * @param {Record<string, any>} condition - 검색 조건 객체
  * @returns {Promise<void>}
  */
-async function getNotices(condition) {
-  const [response] = await Promise.all([PostService.fetchNotices(condition)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchPostsData.value.notices = result.data.data
-    fetchPostsError.value = null
-  } else {
-    fetchPostsError.value = result?.error;
-  }
+async function getPosts(condition) {
+  return PostService.fetchPosts(condition).then(response => {
+    fetchPostsData.value = response.data
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
-/**
- * 커뮤니티 게시글 목록을 가져오는 함수
- *
- * @param {Record<string, any>} condition - 검색 조건 객체
- * @returns {Promise<void>}
- */
-async function getCommunities(condition) {
-  const [response] = await Promise.all([PostService.fetchCommunities(condition)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchPostsData.value.communities = result.data.data
-    fetchPostsError.value = null
-  } else {
-    fetchPostsError.value = result?.error;
-  }
-}
-
-/**
- * 사진 게시글 목록을 가져오는 함수
- *
- * @param {Record<string, any>} condition - 검색 조건 객체
- * @returns {Promise<void>}
- */
-async function getPhotos(condition) {
-  const [response] = await Promise.all([PostService.fetchPhotos(condition)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchPostsData.value.photos = result.data.data
-    fetchPostsError.value = null
-  } else {
-    fetchPostsError.value = result?.error;
-  }
-}
-
-/**
- * 문의 게시글 목록을 가져오는 함수
- *
- * @param {Record<string, any>} condition - 검색 조건 객체
- * @returns {Promise<void>}
- */
-async function getInquiries(condition) {
-  const [response] = await Promise.all([PostService.fetchInquiries(condition)])
-  const result = await useResponseHandler(response, ResponseSuccessCode.GET);
-
-  if (isResponseSuccess(result.type)) {
-    fetchPostsData.value.inquiries = result.data.data
-    fetchPostsError.value = null
-  } else {
-    fetchPostsError.value = result?.error;
-  }
-}
-
-getNotices(condition.value)
-getCommunities(condition.value)
-getPhotos(condition.value)
-getInquiries(condition.value)
+// 초기 검색 조건을 사용하여 게시글 목록을 가져오기 위해 함수 호출
+getPosts(initialCondition.value)
 
 </script>
 <template>
@@ -134,7 +69,7 @@ getInquiries(condition.value)
           />
         </template>
         <template v-else>
-          <PostListSkeleton :postCount="5" />
+          <PostListSkeleton />
         </template>
       </b-col>
 
@@ -153,7 +88,7 @@ getInquiries(condition.value)
           />
         </template>
         <template v-else>
-          <PostListSkeleton :postCount="5" />
+          <PostListSkeleton />
         </template>
       </b-col>
 
@@ -171,7 +106,7 @@ getInquiries(condition.value)
           />
         </template>
         <template v-else>
-          <PostListSkeleton :postCount="5" />
+          <PostListSkeleton />
         </template>
       </b-col>
 
@@ -189,7 +124,7 @@ getInquiries(condition.value)
           />
         </template>
         <template v-else>
-          <PostListSkeleton :postCount="5" />
+          <PostListSkeleton />
         </template>
       </b-col>
     </b-row>

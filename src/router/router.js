@@ -23,11 +23,13 @@ import ServiceNotAvailable from "@/components/ServiceNotAvailable.vue";
 import {store} from "@/store";
 import Unauthorized from "@/components/Unauthorized.vue";
 import Forbidden from "@/components/Forbidden.vue";
+import Search from "@/pages/home/Search.vue";
 
 const routes = [
     {path: '/', name: 'Home', component: Home},
     {path: '/sign-in', name: 'SignIn', component: SignIn},
     {path: '/sign-up', name: 'SignUp', component: SignUp},
+    {path: '/search', name: 'Search', component: ServiceNotAvailable, props: true},
     {path: '/settings', name: 'Settings', component: ServiceNotAvailable, beforeEnter: requireSignIn},
     {path: '/notification', name: 'Notification', component: ServiceNotAvailable, beforeEnter: requireSignIn},
     {path: '/forgot', name: 'Forgot', component: ServiceNotAvailable, beforeEnter: requireSignIn},

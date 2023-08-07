@@ -1,25 +1,19 @@
 <script setup>
 import PhotoCard from "@/components/card/PhotoCard.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
-import PostNavbar from "@/components/common/PostNavbar.vue";
-import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import Pagination from "@/components/common/Pagination.vue";
 import {ref} from "vue";
 import PostService from "@/service/PostService";
-import {useResponseHandler} from "@/composable/response/responseHandler";
-import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
-import {useGetPastDate} from "@/composable/date/getPastDate";
-import {useGetCurrentDate} from "@/composable/date/getCurrentDate";
-import {isResponseSuccess} from "@/composable/response/ResponseResultType";
 import PostNavbarSkeleton from "@/components/skeleton/PostNavbarSkeleton.vue";
 import SearchFormSkeleton from "@/components/skeleton/SearchFormSkeleton.vue";
 import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
 import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
+import {useInitialCondition} from "@/composable/param/initialCondition";
 
 // useFindSubCodeGroup 커스텀 훅을 사용하여 포토 서브코드 그룹 가져오기
 const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
@@ -28,15 +22,7 @@ const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO)
 const fetchPhotosData = ref(null);
 
 // 초기 검색 조건을 담는 반응성 객체
-const initialCondition = ref({
-  startDate: useGetPastDate(365),
-  endDate: useGetCurrentDate(),
-  categoryIdx: null,
-  keyword: null,
-  pageNo: 1,
-
-  maxNumberOfPosts: 12
-});
+const initialCondition = useInitialCondition();
 
 /**
  * 사진 게시글 목록을 가져오는 함수
@@ -68,12 +54,14 @@ getPhotos(initialCondition.value)
         <!-- Main content -->
         <b-col class="3">
           <!-- 검색 폼 컴포넌트 SearchForm 사용 -->
-          <SearchForm/>
-          <!-- 게시글 네비게이션 바 컴포넌트 PostNavbar 사용 -->
-          <PostNavbar :categories="photoSubCodeGroup" :postFormRouteName="'PhotoForm'"/>
+          <searchForm :condition="initialCondition"
+                      @search="(updateSearchCondition) => getPhotos(updateSearchCondition)"
+                      :categories="photoSubCodeGroup" :postFormRouteName="'PhotoForm'"/>
+
           <b-row>
             <!-- PhotoCard 컴포넌트 사용하여 포토 게시글 카드 표시 -->
             <PhotoCard :posts="fetchPhotosData" :PostRouteName="`PhotoPost`"/>
+
             <!-- 페이지네이션 컴포넌트 Pagination 사용 -->
             <Pagination/>
           </b-row>

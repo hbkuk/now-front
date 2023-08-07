@@ -6,6 +6,16 @@ import {HttpMethod} from "@/composable/request/constants/HttpMethod";
 const PostService = {
 
     /**
+     * 모든 게시글 목록을 가져오는 함수
+     *
+     * @param {object} condition - 조건 정보가 담긴 객체
+     * @returns {Promise<AxiosResponse<any>>} - 게시판 목록
+     */
+    fetchPosts(condition) {
+        return useGetRequest('/api/posts', condition)
+    },
+
+    /**
      * 공지 게시글 목록을 가져오는 함수
      *
      * @param {object} condition - 조건 정보가 담긴 객체

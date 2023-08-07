@@ -1,13 +1,8 @@
 <script setup>
-import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import InquiryEditForm from "@/pages/Inquiry/component/InquiryEditForm.vue";
 import {ref} from "vue";
 import PostService from "@/service/PostService";
-import {useResponseHandler} from "@/composable/response/responseHandler";
-import {ResponseSuccessCode} from "@/composable/response/ResponseSuccessCode";
-import {isResponseSuccess} from "@/composable/response/ResponseResultType";
-import router from "@/router/router";
 import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";

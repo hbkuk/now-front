@@ -1,5 +1,5 @@
-import {useObjectToQueryString} from "@/composable/objectToQueryString";
-import {useFilterParams} from "@/composable/filterParams";
+import {useObjectToQueryString} from "@/composable/param/objectToQueryString";
+import {useFilterParams} from "@/composable/param/filterParams";
 
 /**
  * URL을 업데이트하는 함수

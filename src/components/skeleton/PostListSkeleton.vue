@@ -3,7 +3,7 @@
 const props = defineProps({
   postsCount: {
     type: Number,
-    required: true,
+    required: false,
     default: 5
   }
 })

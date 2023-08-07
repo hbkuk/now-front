@@ -1,7 +1,12 @@
 <script setup>
 import {store} from "@/store";
-import AuthenticationService from "@/service/AuthenticationService";
 import router from "@/router/router";
+import {ref} from "vue";
+import AuthenticationService from "@/service/AuthenticationService";
+import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
+import {useRouteWatch} from "@/composable/router/routeWatch";
+
+const { currentRouteName } = useRouteWatch();
 
 /**
  * 로그아웃 요청하는 함수
@@ -10,10 +15,21 @@ import router from "@/router/router";
  */
 async function logout() {
   await AuthenticationService.logout().then(() => {
-    router.push({ name: "Home"})
+    router.push({name: "Home"})
   }).catch(error => {
     console.log(error)
   })
+}
+
+const keyword = ref('');
+
+/**
+ * 검색을 수행하는 함수
+ *
+ * @returns {Promise<void>}
+ */
+async function searchPosts() {
+  await router.push({ name: 'Search', params: { q: keyword.value } });
 }
 
 </script>
@@ -29,29 +45,21 @@ async function logout() {
 
         <b-navbar-nav class="me-auto mb-2 mb-lg-0 ms-lg-4 text-truncate">
 
-          <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Notices' }" class="router-link text-decoration-none text-secondary">공지사항
-            </router-link>
+          <b-nav-item class="nav-item px-3" v-for="group in ROUTE_NAME_GROUP" :key="group.label"
+                      :class="{ 'selected': group.routes.includes(currentRouteName) }">
+            <router-link :to="{ name: group.routes[0] }"
+                         class="router-link text-decoration-none text-secondary">{{ group.label }}</router-link>
           </b-nav-item>
-          <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Communities' }" class="router-link text-decoration-none text-secondary">커뮤니티
-            </router-link>
-          </b-nav-item>
-          <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Photos' }" class="router-link text-decoration-none text-secondary">사진
-            </router-link>
-          </b-nav-item>
-          <b-nav-item class="nav-item px-3">
-            <router-link :to="{ name: 'Inquiries' }" class="router-link text-decoration-none text-secondary">문의
-            </router-link>
-          </b-nav-item>
+
+
         </b-navbar-nav>
 
         <div class="d-flex px-3">
-          <b-form-input type="text" placeholder="게시글 검색"
-                        class="me-2 d-block d-sm-none d-xxl-block d-xl-block d-lg-block"></b-form-input>
+          <b-form-input type="text" placeholder="게시글 검색..."
+                        class="me-2 d-block d-sm-none d-xxl-block d-xl-block d-lg-block"
+                        v-model="keyword"></b-form-input>
           <b-button variant="primary" pill class="text-nowrap d-block d-sm-none d-xxl-block d-xl-block d-lg-block"
-                    type="button">검색
+                    type="button" @click="searchPosts">검색
           </b-button>
         </div>
 
