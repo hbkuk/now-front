@@ -2,7 +2,6 @@
 import PhotoCard from "@/components/card/PhotoCard.vue";
 import SearchForm from "@/components/common/SearchForm.vue";
 import Pagination from "@/components/common/Pagination.vue";
-import {ref} from "vue";
 import PostService from "@/service/PostService";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
@@ -13,47 +12,29 @@ import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
 import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
-import {useInitialCondition} from "@/composable/param/initialCondition";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
-import {useUpdateUrl} from "@/composable/param/updateUrl";
-import {useConvertKeysToConditionParams} from "@/composable/param/constants/conditionParams";
+import {useGetPostsSubmit} from "@/composable/submitForm/getPostsSubmit";
+import router from "@/router/router";
 
 // useFindSubCodeGroup 커스텀 훅을 사용하여 포토 서브코드 그룹 가져오기
 const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
 
-// 게시글 목록을 담는 반응성 객체
-const fetchPhotosData = ref(null);
+const {
+  fetchPostsData: fetchPhotosData,
+  initialCondition,
+  updateCondition,
+  changePage,
+  useSubmit
+} = useGetPostsSubmit(
+    router.currentRoute.value.query,
+    ROUTE_NAME_GROUP.PHOTO.code,
+    PostService.fetchPhotos,
+    "/photos",
+);
 
-// 초기 검색 조건을 담는 반응성 객체
-const initialCondition = useInitialCondition(ROUTE_NAME_GROUP.PHOTO.code);
+// 초기 검색 조건을 사용하여 게시글 목록을 가져오기 위해 함수 호출
+useSubmit(initialCondition.value)
 
-/**
- * 사진 게시글 목록을 가져오는 함수
- *
- * @param {Record<string, any>} condition - 검색 조건 객체
- * @returns {Promise<void>}
- */
-async function getPhotos(condition) {
-  await PostService.fetchPhotos(condition).then(response => {
-    fetchPhotosData.value = response?.data
-    useUpdateUrl("/photos", useConvertKeysToConditionParams(condition));
-  }).catch(error => {
-    console.log(error)
-  })
-}
-
-// 컴포넌트가 마운트되기 전에 게시글 목록을 가져옴
-getPhotos(initialCondition.value)
-
-/**
- * 페이지 변경 함수
- *
- * @param {number} changePageNo - 변경된 페이지 번호
- */
-function changePage(pageNo) {
-  initialCondition.value.pageNo = pageNo
-  getPhotos(initialCondition.value)
-}
 </script>
 
 <template>
@@ -69,7 +50,7 @@ function changePage(pageNo) {
         <b-col class="3">
           <!-- 검색 폼 컴포넌트 SearchForm 사용 -->
           <searchForm :condition="initialCondition"
-                      @search="(updateSearchCondition) => getPhotos(updateSearchCondition)"
+                      @search="(updateSearchCondition) => updateCondition(updateSearchCondition)"
                       :categories="photoSubCodeGroup" :postFormRouteName="'PhotoForm'"/>
 
           <b-row>
@@ -79,7 +60,7 @@ function changePage(pageNo) {
 
             <!-- Pagination 컴포넌트 사용 -->
             <Pagination :page="fetchPhotosData.page"
-                        @changePageNo="(changePageNo) => changePage(changePageNo)" />
+                        @changePageNo="(changePageNo) => changePage(changePageNo)"/>
           </b-row>
         </b-col>
       </b-row>

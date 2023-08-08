@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 import '@/assest/main.css';
 import {store} from "@/store";
-import CategoryService from "@/service/CategoryService";
 import AuthenticationService from "@/service/AuthenticationService";
 import {useParseJsonItemFromSessionStorage} from "@/composable/parse/parseJsonItemFromSessionStorage";
 
@@ -33,7 +32,7 @@ function initializeStore() {
  *
  * @returns {Promise<void>} 카테고리 데이터 가져오기와 Store 저장 후 완료
  */
-async function getCategories() {
+function getCategories() {
     store.categories = useParseJsonItemFromSessionStorage("categories") || [];
 }
 

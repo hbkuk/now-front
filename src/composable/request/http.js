@@ -46,6 +46,9 @@ instance.interceptors.response.use(function (response) {
     if (errorCode === ErrorType.FORBIDDEN) {
         await router.push({ name: "Forbidden" });
     }
+    if (errorCode === ErrorType.REQUEST_EXCEPTION) {
+        await router.push({ name: "RequestError" });
+    }
     if (errorCode === ErrorType.LOGGED_OUT_TOKEN) {
         store.resetMember();
     }

@@ -76,6 +76,10 @@ const changeCategory = (category) => {
   condition.value.category = category.subCode;
 };
 
+const resetCategory = () => {
+  condition.value.category = null;
+};
+
 /**
  * 검색을 실행하는 함수
  *
@@ -87,7 +91,7 @@ function search() {
 }
 
 /**
- * condition 객체의 startDate, endDate, category, maxNumberOfPosts, sort 필드를 감시합
+ * condition 객체의 startDate, endDate, category, maxNumberOfPosts, sort 필드를 감시
  *
  * @function
  * @param {Array} source - 감시 대상 필드들의 배열
@@ -103,6 +107,7 @@ watch(
         condition.value.sort
     ],
     (newStartDate) => {
+      condition.value.pageNo = 1;
       search();
     },
     { deep: true } // deep 옵션을 사용하여 중첩된 객체를 감시합니다.
@@ -127,7 +132,7 @@ watch(
     </b-col>
   </b-row>
 
-  <nav class="navbar mb-2 navbar-expand navbar-light bg-light rounded-2">
+  <nav class="navbar navbar-expand navbar-light bg-light rounded-2">
     <!-- Left Element -->
     <b-navbar-nav class="me-auto">
       <b-nav-item>
@@ -140,9 +145,21 @@ watch(
 
     <!-- Center Element -->
     <b-navbar-nav class="mx-auto">
-      <b-nav-item v-for="category in categories" :key="category.subCode">
-        <b-link class="nav-link fs-6" @click="changeCategory(category)" :value="category.subCode"
-                :class="{ 'selected': category.subCode === condition.category }">
+
+      <b-nav-item :class="{ 'selected': condition.category === null }">
+        <b-link class="router-link fs-6 text-decoration-none" @click="resetCategory()"
+                :class="{'text-secondary': condition.category !== null }">
+          전체
+        </b-link>
+      </b-nav-item>
+
+
+      <b-nav-item v-for="category in categories" :key="category.subCode"
+                  :class="{ 'selected': category.subCode === condition.category}"
+                  >
+        <b-link class="router-link fs-6 text-decoration-none" @click="changeCategory(category)" :value="category.subCode"
+                :class="{'text-secondary': category.subCode !== condition.category }"
+        >
           {{ category.subCodeTitle }}
         </b-link>
       </b-nav-item>
@@ -177,6 +194,8 @@ watch(
     </b-navbar-nav>
     <!-- End Right Element -->
   </nav>
+
+  <slot></slot>
 </template>
 <script setup>
 </script>

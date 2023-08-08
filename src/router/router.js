@@ -24,6 +24,8 @@ import {store} from "@/store";
 import Unauthorized from "@/components/Unauthorized.vue";
 import Forbidden from "@/components/Forbidden.vue";
 import Search from "@/pages/home/Search.vue";
+import BindingError from "@/components/RequestError.vue";
+import RequestError from "@/components/RequestError.vue";
 
 const routes = [
     {path: '/', name: 'Home', component: Home},
@@ -55,6 +57,7 @@ const routes = [
     {path: '/inquiries/:postIdx/edit', name: 'InquiryEdit', component: InquiryEdit, props: true, beforeEnter: requireSignIn},
 
 
+    {path: '/RequestError', name: 'RequestError', component: RequestError },
     {path: '/Forbidden', name: 'Forbidden', component: Forbidden },
     {path: '/unauthorized', name: 'Unauthorized', component: Unauthorized },
     {path: '/:catchAll(.*)*', name: 'NotFound', component: NotFound}, // 404 페이지로 리다이렉트

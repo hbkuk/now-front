@@ -37,3 +37,20 @@ export function useConvertKeysToConditionParams(obj) {
     }
     return convertedObj;
 }
+
+/**
+ * 주어진 객체의 키를 CONDITION_PARAMS 객체의 값들의 반대로 변환하여 반환
+ *
+ * @param {Object} obj - 변환하고자 하는 객체
+ * @returns {Object} 변환된 객체
+ */
+export function useConvertParamsToKeys(obj) {
+    const convertedObj = {};
+    for (const key in obj) {
+        const conditionKey = Object.keys(CONDITION_PARAMS).find((paramKey) => CONDITION_PARAMS[paramKey] === key);
+        if (conditionKey) {
+            convertedObj[conditionKey] = obj[key];
+        }
+    }
+    return convertedObj;
+}

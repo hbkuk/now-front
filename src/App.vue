@@ -2,6 +2,7 @@
 import Header from "@/components/static/Header.vue";
 import Footer from "@/components/static/Footer.vue";
 import CategoryService from "@/service/CategoryService";
+import {store} from "@/store";
 
 /**
  * 카테고리 데이터를 가져와 sessionStorage 저장
@@ -10,6 +11,7 @@ import CategoryService from "@/service/CategoryService";
  */
 async function getCategories() {
   return CategoryService.fetchCategories().then(response => {
+    store.categories = response.data;
     sessionStorage.setItem("categories", JSON.stringify(response.data));
   }).catch(error => {
     console.log(error)
@@ -36,7 +38,6 @@ body {
 .selected {
   font-weight: bold;
   color: #1E90FF; /* 파란색 */
-  //text-shadow: 1px 1px 2px rgba(77, 148, 255, 1); /* 그림자 */
   text-shadow: 5px 5px 10px rgba(77, 148, 255, 1);
 }
 

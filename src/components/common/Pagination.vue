@@ -1,5 +1,6 @@
 <script setup>
 import {computed, defineProps} from 'vue';
+import PageInfo from "@/components/common/PageInfo.vue";
 
 const emit = defineEmits(['changePageNo'])
 
@@ -35,25 +36,34 @@ const changePage = (changePageNo) => {
 
 <template>
   <div class="pos-relative d-flex justify-content-center mt-5">
-    <ul class="pagination pagination-sm">
-      <li :class="['page-item', { 'disabled': page.pageNo === 1 }]">
-        <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage(1)">처음</a>
+    <ul class="pagination b-pagination-pills">
+      <li :class="['page-item', { 'disabled': page.pageNo === 1 || page.maxPage === 0 }]">
+        <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage(1)">
+          <i class="bi bi-chevron-double-left"></i>
+        </a>
       </li>
-      <li :class="['page-item', { 'disabled': page.pageNo === 1 }]">
-        <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage('prev')">이전</a>
+      <li :class="['page-item', { 'disabled': page.pageNo === 1 || page.maxPage === 0 }]">
+        <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage('prev')">
+          <i class="bi bi-chevron-left"></i>
+        </a>
       </li>
 
       <li v-for="pageNumber in filteredPages" :class="['page-item', { 'active': pageNumber === page.pageNo }]" :key="pageNumber">
         <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage(pageNumber)">{{ pageNumber }}</a>
       </li>
 
-
-      <li :class="['page-item', { 'disabled': page.pageNo === page.maxPage }]">
-        <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage('next')">다음</a>
+      <li :class="['page-item', { 'disabled': page.maxPage === 0 || page.pageNo === page.maxPage }]">
+        <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage('next')">
+          <i class="bi bi-chevron-right"></i>
+        </a>
       </li>
-      <li :class="['page-item', { 'disabled': page.pageNo === page.maxPage }]">
-        <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage(page.maxPage)">끝</a>
+      <li :class="['page-item', { 'disabled': page.maxPage === 0 || page.pageNo === page.maxPage }]">
+        <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage(page.maxPage)">
+          <i class="bi bi-chevron-double-right"></i>
+        </a>
       </li>
     </ul>
   </div>
+  <PageInfo :page="page"/>
 </template>
+
