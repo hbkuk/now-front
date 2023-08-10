@@ -15,6 +15,7 @@ import BannerSub from "@/components/common/BannerSub.vue";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 import {useGetPostsSubmit} from "@/composable/submitForm/getPostsSubmit";
 import router from "@/router/router";
+import PageInfo from "@/components/common/PageInfo.vue";
 
 // 공지 게시글의 하위 코드 그룹 가져오기
 const noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTICE);
@@ -51,8 +52,9 @@ useSubmit(initialCondition.value)
           <!-- 검색 폼 컴포넌트 SearchForm 사용 -->
           <searchForm :condition="initialCondition"
                       @search="(updateSearchCondition) => updateCondition(updateSearchCondition)"
-                      :categories="noticeSubCodeGroup" :postFormRouteName="'NoticeForm'"/>
-
+                      :categories="noticeSubCodeGroup" :postFormRouteName="'NoticeForm'" >
+            <PageInfo :page="fetchNoticesData.page" />
+          </searchForm>
 
           <!-- 게시글 목록 컴포넌트 PostList 사용 -->
           <PostList :posts="fetchNoticesData.notices"

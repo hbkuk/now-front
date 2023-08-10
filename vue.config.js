@@ -5,11 +5,11 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'http://13.125.89.193:4040',
         changeOrigin: true,
       },
       '/attachments': {
-        target: 'http://localhost:8080',
+        target: 'http://13.125.89.193:8080',
         changeOrigin: true,
       }
     }

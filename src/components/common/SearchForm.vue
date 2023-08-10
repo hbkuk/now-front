@@ -144,10 +144,10 @@ watch(
     <!-- End Left Element -->
 
     <!-- Center Element -->
-    <b-navbar-nav class="mx-auto">
+    <b-navbar-nav class="mx-auto text-nowrap">
 
       <b-nav-item :class="{ 'selected': condition.category === null }">
-        <b-link class="router-link fs-6 text-decoration-none" @click="resetCategory()"
+        <b-link class="router-link text-decoration-none" @click="resetCategory()"
                 :class="{'text-secondary': condition.category !== null }">
           전체
         </b-link>
@@ -157,7 +157,7 @@ watch(
       <b-nav-item v-for="category in categories" :key="category.subCode"
                   :class="{ 'selected': category.subCode === condition.category}"
                   >
-        <b-link class="router-link fs-6 text-decoration-none" @click="changeCategory(category)" :value="category.subCode"
+        <b-link class="router-link text-decoration-none" @click="changeCategory(category)" :value="category.subCode"
                 :class="{'text-secondary': category.subCode !== condition.category }"
         >
           {{ category.subCodeTitle }}

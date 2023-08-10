@@ -15,6 +15,7 @@ import BannerSub from "@/components/common/BannerSub.vue";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 import {useGetPostsSubmit} from "@/composable/submitForm/getPostsSubmit";
 import router from "@/router/router";
+import PageInfo from "@/components/common/PageInfo.vue";
 
 // useFindSubCodeGroup 커스텀 훅을 사용하여 포토 서브코드 그룹 가져오기
 const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
@@ -51,7 +52,9 @@ useSubmit(initialCondition.value)
           <!-- 검색 폼 컴포넌트 SearchForm 사용 -->
           <searchForm :condition="initialCondition"
                       @search="(updateSearchCondition) => updateCondition(updateSearchCondition)"
-                      :categories="photoSubCodeGroup" :postFormRouteName="'PhotoForm'"/>
+                      :categories="photoSubCodeGroup" :postFormRouteName="'PhotoForm'" >
+            <PageInfo :page="fetchPhotosData.page" />
+          </searchForm>
 
           <b-row>
             <!-- PhotoCard 컴포넌트 사용하여 포토 게시글 카드 표시 -->

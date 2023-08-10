@@ -40,5 +40,4 @@ body {
   color: #1E90FF; /* 파란색 */
   text-shadow: 5px 5px 10px rgba(77, 148, 255, 1);
 }
-
 </style>

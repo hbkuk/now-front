@@ -15,6 +15,7 @@ import BannerSub from "@/components/common/BannerSub.vue";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 import {useGetPostsSubmit} from "@/composable/submitForm/getPostsSubmit";
 import router from "@/router/router";
+import PageInfo from "@/components/common/PageInfo.vue";
 
 // 문의 게시글의 토픽 하위 코드 그룹 가져오기
 const inquirySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQUIRY);
@@ -49,7 +50,9 @@ useSubmit(initialCondition.value)
           <!-- 검색 폼을 위한 searchForm 컴포넌트 사용 -->
           <searchForm :condition="initialCondition"
                       @search="(updateSearchCondition) => updateCondition(updateSearchCondition)"
-                      :categories="inquirySubCodeGroup" :postFormRouteName="'InquiryForm'"/>
+                      :categories="inquirySubCodeGroup" :postFormRouteName="'InquiryForm'">
+            <PageInfo :page="fetchInquiriesData.page" />
+          </searchForm>
 
           <!-- 문의 게시글 목록을 표시하기 위한 PostList 컴포넌트 사용 -->
           <PostList :posts="fetchInquiriesData.inquiries"
