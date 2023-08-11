@@ -27,7 +27,7 @@ const props = defineProps({
               <div class="float-end align-items-center">
                 <b-badge pill variant="danger me-2" v-if="post.pinned">중요</b-badge>
                 <b-badge pill variant="warning me-2" v-if="useIsNewPost(post.regDate)">NEW</b-badge>
-                <b-badge pill variant="secondary" class="d-inline-block me-2">
+                <b-badge pill variant="primary" class="d-inline-block me-2">
                   {{ useCapitalizeFirstLetter(post.category) }}
                 </b-badge>
                 <b-badge pill variant="success me-2" v-if="post.answerManagerNickname">Answer</b-badge>
