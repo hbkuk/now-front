@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-# /dist
+/dist
 
 
 # local env files
@@ -118,7 +118,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-##dist
+dist
 
 # Gatsby files
 .cache/
@@ -188,7 +188,7 @@ out
 ### Vuejs ###
 # Recommended template: Node.gitignore
 
-#dist/
+dist/
 npm-debug.log
 yarn-error.log
 
