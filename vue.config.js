@@ -10,11 +10,11 @@ module.exports = defineConfig({
         },
         proxy: {
             '/api': {
-                target: 'http://52.79.152.234:4040',
+                target: `${process.env.VUE_APP_BACK}`,
                 changeOrigin: true,
             },
             '/attachments': {
-                target: 'http://52.79.152.234:4040',
+                target: `${process.env.VUE_APP_BACK}`,
                 changeOrigin: true,
             }
         }
