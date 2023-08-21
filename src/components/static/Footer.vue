@@ -10,7 +10,7 @@ const { currentRouteName } = useRouteWatch();
   <footer class="text-muted py-5">
     <b-container>
       <footer class="py-3 my-4">
-        <b-nav class="justify-content-center border-bottom pb-3 mb-3">
+        <b-nav class="justify-content-center border-bottom pb-3 mb-3 flex-nowrap text-nowrap">
 
           <b-nav-item
               class="nav-item px-3"

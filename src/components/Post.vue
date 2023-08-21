@@ -64,7 +64,7 @@ function closeModal() {
 
   <b-container class="py-3">
     <div class="row">
-      <div class="col-md-12 mb-4">
+      <div class="col-md-12">
         <article>
           <div class="post-content">
             <h2 class="title mb-4">{{ post.title }}</h2>
@@ -88,7 +88,7 @@ function closeModal() {
               <i class="btn ms-2 bi-chevron-down icon-1x"></i>
             </div>
 
-            <hr class="my-3"/>
+            <hr/>
           </div>
         </article>
       </div>

@@ -23,8 +23,6 @@ import ServiceNotAvailable from "@/components/ServiceNotAvailable.vue";
 import {store} from "@/store";
 import Unauthorized from "@/components/Unauthorized.vue";
 import Forbidden from "@/components/Forbidden.vue";
-import Search from "@/pages/home/Search.vue";
-import BindingError from "@/components/RequestError.vue";
 import RequestError from "@/components/RequestError.vue";
 
 const routes = [
@@ -34,7 +32,7 @@ const routes = [
     {path: '/search', name: 'Search', component: ServiceNotAvailable, props: true},
     {path: '/settings', name: 'Settings', component: ServiceNotAvailable, beforeEnter: requireSignIn},
     {path: '/notification', name: 'Notification', component: ServiceNotAvailable, beforeEnter: requireSignIn},
-    {path: '/forgot', name: 'Forgot', component: ServiceNotAvailable, beforeEnter: requireSignIn},
+    {path: '/forgot', name: 'Forgot', component: ServiceNotAvailable},
 
     {path: '/notices', name: 'Notices', component: Notices},
     {path: '/notices/:postIdx', name: 'NoticePost', component: NoticePost, props: true},

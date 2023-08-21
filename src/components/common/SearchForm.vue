@@ -102,35 +102,54 @@ function search() {
  */
 watch(
     () => [
-        condition.value.startDate, condition.value.endDate,
-        condition.value.category, condition.value.maxNumberOfPosts,
-        condition.value.sort
+      condition.value.startDate, condition.value.endDate,
+      condition.value.category, condition.value.maxNumberOfPosts,
+      condition.value.sort
     ],
     (newStartDate) => {
       condition.value.pageNo = 1;
       search();
     },
-    { deep: true } // deep 옵션을 사용하여 중첩된 객체를 감시합니다.
+    {deep: true} // deep 옵션을 사용하여 중첩된 객체를 감시합니다.
 );
 
 
 </script>
 <template>
-  <b-row class="mb-2">
-    <b-col cols="3" class="d-flex justify-content-start">
-      <b-form-input class="currentDate text-center me-3" v-model="condition.startDate" type="date"
-                    placeholder="시작 날짜"></b-form-input>
-      <b-form-input class="endDate text-center" v-model="condition.endDate" type="date"
-                    placeholder="끝 날짜"></b-form-input>
-    </b-col>
-    <b-col cols="9" class="d-flex justify-content-end">
-      <b-form-input type="text" placeholder="제목, 내용, 닉네임 ..." class="me-2" v-model="condition.keyword"
-                    style="max-width: 300px;"></b-form-input>
-      <b-button variant="primary" size="sm" class="text-nowrap me-1" @click="search()">검색
-      </b-button>
-      <b-button variant="danger" size="sm" class="text-nowrap" @click="cleanCondition">검색 초기화</b-button>
-    </b-col>
-  </b-row>
+
+  <div>
+    <!-- 화면 크기가 md 보다 클 때 -->
+    <b-row class="mb-2 d-none d-md-flex">
+      <b-col cols="3" class="d-flex justify-content-start">
+        <b-form-input class="currentDate text-center me-3" v-model="condition.startDate" type="date"
+                      placeholder="시작 날짜"></b-form-input>
+        <b-form-input class="endDate text-center" v-model="condition.endDate" type="date"
+                      placeholder="끝 날짜"></b-form-input>
+      </b-col>
+      <b-col cols="9" class="d-flex justify-content-end">
+        <b-form-input type="text" placeholder="제목, 내용, 닉네임 ..." class="me-2" v-model="condition.keyword"
+                      style="max-width: 400px;"></b-form-input>
+        <b-button variant="primary" size="sm" class="text-nowrap me-1" @click="search()">검색</b-button>
+        <b-button variant="danger" size="sm" class="text-nowrap" @click="cleanCondition">검색 초기화</b-button>
+      </b-col>
+    </b-row>
+
+    <!-- 화면 크기가 md 보다 작을 때 -->
+    <b-row class="mb-2 d-flex d-md-none">
+      <b-col cols="12" class="d-flex justify-content-center mb-2">
+        <b-form-input class="currentDate text-center me-3" v-model="condition.startDate" type="date"
+                      placeholder="시작 날짜"></b-form-input>
+        <b-form-input class="endDate text-center" v-model="condition.endDate" type="date"
+                      placeholder="끝 날짜"></b-form-input>
+      </b-col>
+      <b-col cols="12" class="d-flex justify-content-center">
+        <b-form-input type="text" placeholder="제목, 내용, 닉네임 ..." class="me-2" v-model="condition.keyword"
+                      style="max-width: 400px;"></b-form-input>
+        <b-button variant="primary" size="sm" class="text-nowrap me-1" @click="search()">검색</b-button>
+        <b-button variant="danger" size="sm" class="text-nowrap" @click="cleanCondition">검색 초기화</b-button>
+      </b-col>
+    </b-row>
+  </div>
 
   <nav class="navbar navbar-expand navbar-light bg-light rounded-2">
     <!-- Left Element -->
@@ -156,7 +175,7 @@ watch(
 
       <b-nav-item v-for="category in categories" :key="category.subCode"
                   :class="{ 'selected': category.subCode === condition.category}"
-                  >
+      >
         <b-link class="router-link text-decoration-none" @click="changeCategory(category)" :value="category.subCode"
                 :class="{'text-secondary': category.subCode !== condition.category }"
         >
@@ -169,23 +188,24 @@ watch(
     <!-- Right Element -->
     <b-navbar-nav class="ms-auto">
       <b-nav-item>
-        <b-dropdown id="dropdown-1">
+        <b-dropdown id="dropdown-1" class="dropstart">
           <template #button-content>
             <i class="bi bi-sort-numeric-down" style="font-size:20px;"></i>
           </template>
           <b-dropdown-item v-for="numPosts in MAX_NUMBER_OF_POSTS" :key="numPosts"
                            @click="changeMaxNumberOfPosts(numPosts)"
-                           :active="condition.maxNumberOfPosts === numPosts">
+                           :active="parseInt(condition.maxNumberOfPosts) === numPosts">
             {{ numPosts }}개
           </b-dropdown-item>
         </b-dropdown>
       </b-nav-item>
       <b-nav-item>
-        <b-dropdown id="dropdown-1">
+        <b-dropdown id="dropdown-1" class="dropstart">
           <template #button-content>
             <i class="bi bi-sort-alpha-down" style="font-size:20px;"></i>
           </template>
-          <b-dropdown-item v-for="sort in SORT_OPTIONS" :key="sort.key" @click="changeSort(sort.value)"
+          <b-dropdown-item v-for="sort in SORT_OPTIONS" :key="sort.key"
+                           @click="changeSort(sort.value)"
                            :active="condition.sort === sort.value" :disabled="sort.disabled">
             {{ sort.label }}
           </b-dropdown-item>

@@ -4,5 +4,5 @@ import CommonMessage from "@/components/common/CommonMessage.vue";
 <template>
   <CommonMessage :imagePath="`error.png`"
                  :title="`Service Not available`"
-                 :content="`죄송합니다. 현재 서비스가 준비 중이거나 예상치 못한 오류가 발생했습니다`"/>
+                 :content="`죄송합니다. 현재 서비스가 준비 중입니다.`"/>
 </template>

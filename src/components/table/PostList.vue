@@ -18,7 +18,7 @@ const props = defineProps({
          class="rounded-2 row-hover pos-relative mb-2 px-3 mb-1 border-0 rounded-0 border-bottom border-secondary card-hover"
          :class="{ 'pinned-card': post.pinned }">
 
-      <table class="h-100 table table-borderless">
+      <table class="h-100 table table-borderless mb-0">
 
         <tr>
 
