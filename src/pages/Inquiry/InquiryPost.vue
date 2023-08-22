@@ -16,7 +16,6 @@ import {store} from "@/store";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
 import BannerSub from "@/components/common/BannerSub.vue";
-
 // 게시글을 담는 반응성 객체
 const fetchInquiryData = ref(null);
 
@@ -166,16 +165,17 @@ const {deleteSubmitError, useSubmit}
       ref="modal"
       v-model="modalShow"
       title="비밀글 열람"
-      cancel-title="취소하기"
+      cancel-title="목록 이동"
       ok-title="열람하기"
       @show="resetPassword"
       @hidden="resetPassword"
       @ok="handleOk"
-      @cancel="router.go(-1)"
-      @close="router.go(-1)"
+      @cancel="router.push({name:`Inquiries`})"
+      @close="router.push({name:`Inquiries`})"
       centered
       no-close-on-backdrop
   >
+
     <!-- 비밀번호 입력 폼 -->
     <b>비밀번호를 입력해 주세요.</b>
     <form ref="form" class="mt-3">

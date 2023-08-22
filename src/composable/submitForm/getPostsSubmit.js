@@ -3,6 +3,7 @@ import {useInitialCondition} from "@/composable/param/initialCondition";
 import {useUpdateUrl} from "@/composable/param/updateUrl";
 import {useConvertKeysToConditionParams, useConvertParamsToKeys} from "@/composable/param/constants/conditionParams";
 import {useInitialParams} from "@/composable/param/InitialParams";
+import {useUpdateSessionStorage} from "@/composable/param/useUpdateSessionStorage";
 
 /**
  * 게시글 목록을 조회하고 페이지 정보를 관리하는 컴포지션 함수
@@ -19,7 +20,7 @@ export function useGetPostsSubmit(query, code, getPostsFunction, updateUrl) {
     const initialCondition = useInitialCondition(code);
 
     /** 현재 라우터의 파라미터와 확인 후 initialCondition 속성 덮어쓰기 */
-    Object.assign(initialCondition.value, useInitialParams(useConvertParamsToKeys(query)));
+    Object.assign(initialCondition.value, useInitialParams(useConvertParamsToKeys(query), sessionStorage));
 
     /**
      * 조건 변경 함수
@@ -48,6 +49,7 @@ export function useGetPostsSubmit(query, code, getPostsFunction, updateUrl) {
         return getPostsFunction(initialCondition.value).then(response => {
             fetchPostsData.value = response.data
             useUpdateUrl(updateUrl, useConvertKeysToConditionParams(initialCondition.value));
+            useUpdateSessionStorage('condition', initialCondition.value);
         }).catch(error => {
             initialCondition.value = useInitialCondition(code);
         })

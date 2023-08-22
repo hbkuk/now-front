@@ -19,7 +19,6 @@ export function useRouteWatch() {
     watch(
         () => router.currentRoute.value.name,
         (updateCurrentRouteName) => {
-            console.log(updateCurrentRouteName)
             currentRouteName.value = updateCurrentRouteName;
         },
         { deep: true } // deep 옵션을 사용하여 중첩된 객체를 감시합니다.

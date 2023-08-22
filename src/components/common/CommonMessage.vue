@@ -11,7 +11,7 @@ const props = defineProps({
 
   <div class="not-found">
     <div class="mb-lg-5">
-      <b-img :src="require(`@/resources/common/${imagePath}`)" fluid alt="Responsive image" width="500" height="50"></b-img>
+      <b-img :src="require(`@/resources/common/${imagePath}`)" fluid alt="Responsive image" width="450" height="50"></b-img>
     </div>
     <div class="status emphasis">
       {{ title }}

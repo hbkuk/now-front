@@ -92,7 +92,7 @@ async function submitForm() {
 
           <!-- ID 입력 유효성 메시지 -->
           <b-form-invalid-feedback id="input-id-feedback">
-            ID를 입력하세요.
+            ID를 제대로 입력하세요.
           </b-form-invalid-feedback>
         </b-row>
 
@@ -110,7 +110,7 @@ async function submitForm() {
 
           <!-- 비밀번호 입력 유효성 메시지 -->
           <b-form-invalid-feedback id="input-password-feedback">
-            비밀번호를 입력하세요.
+            비밀번호를 제대로 입력하세요.
           </b-form-invalid-feedback>
         </b-row>
 

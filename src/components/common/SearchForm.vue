@@ -163,8 +163,7 @@ watch(
     <!-- End Left Element -->
 
     <!-- Center Element -->
-    <b-navbar-nav class="mx-auto text-nowrap">
-
+    <b-navbar-nav class="mx-auto text-nowrap gap-4">
       <b-nav-item :class="{ 'selected': condition.category === null }">
         <b-link class="router-link text-decoration-none" @click="resetCategory()"
                 :class="{'text-secondary': condition.category !== null }">

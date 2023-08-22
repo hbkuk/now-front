@@ -24,6 +24,7 @@ import {store} from "@/store";
 import Unauthorized from "@/components/Unauthorized.vue";
 import Forbidden from "@/components/Forbidden.vue";
 import RequestError from "@/components/RequestError.vue";
+import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 
 const routes = [
     {path: '/', name: 'Home', component: Home},
@@ -64,6 +65,23 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+});
+
+// 다른 그룹으로 이동 시 검색 조건 삭제
+router.beforeEach((to, from, next) => {
+    const fromRouteGroup = Object.values(ROUTE_NAME_GROUP).find(group =>
+        group.routes.includes(from.name)
+    );
+    const toRouteGroup = Object.values(ROUTE_NAME_GROUP).find(group =>
+        group.routes.includes(to.name)
+    );
+
+    if (fromRouteGroup && toRouteGroup && fromRouteGroup !== toRouteGroup) {
+        // 그룹을 벗어날 때 검색 조건 세션 스토리지에서 삭제
+        sessionStorage.removeItem('condition');
+    }
+
+    next();
 });
 
 export default router;

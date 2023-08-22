@@ -16,6 +16,7 @@ import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 import {useGetPostsSubmit} from "@/composable/submitForm/getPostsSubmit";
 import router from "@/router/router";
 import PageInfo from "@/components/common/PageInfo.vue";
+import CommonMessage from "@/components/common/CommonMessage.vue";
 
 // 커뮤니티 게시글의 하위 코드 그룹을 가져오기 위해 커스텀 훅 사용
 const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
