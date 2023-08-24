@@ -90,6 +90,6 @@ function requireSignIn(to, from, next) {
     if (store.isMemberSignedIn()) {
         next();
     } else {
-        next({ name: 'SignIn' });
+        store.openSignInModal();
     }
 }

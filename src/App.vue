@@ -3,6 +3,7 @@ import Header from "@/components/static/Header.vue";
 import Footer from "@/components/static/Footer.vue";
 import CategoryService from "@/service/CategoryService";
 import {store} from "@/store";
+import SignInModal from "@/components/common/SignInModal.vue";
 
 /**
  * 카테고리 데이터를 가져와 sessionStorage 저장
@@ -26,18 +27,5 @@ getCategories();
   <Header />
   <RouterView/>
   <Footer/>
+  <SignInModal/>
 </template>
-
-<style>
-/* 스크롤바 항상 보이도록 설정 */
-body {
-  overflow: scroll;
-}
-
-/* nav, list 에서 선택된 item */
-.selected {
-  font-weight: bold;
-  color: #1E90FF; /* 파란색 */
-  text-shadow: 5px 5px 10px rgba(77, 148, 255, 1);
-}
-</style>

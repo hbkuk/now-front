@@ -120,7 +120,7 @@ export function useEditPostSubmitWithAttachments(attachmentType, formDataName, s
             await router.push(response.headers.location.replace("/api", ""));
         } catch (error) {
             if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
-                await useRefreshTokenAndRetry(() => useSubmit());
+                await useRefreshTokenAndRetry(() => useSubmit(postIdx));
             }
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;

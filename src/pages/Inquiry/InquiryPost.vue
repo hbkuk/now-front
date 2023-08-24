@@ -16,6 +16,7 @@ import {store} from "@/store";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
 import BannerSub from "@/components/common/BannerSub.vue";
+import {usePostReactionSubmit} from "@/composable/submitForm/reactionSubmit";
 // 게시글을 담는 반응성 객체
 const fetchInquiryData = ref(null);
 
@@ -68,6 +69,38 @@ async function getInquiry(postIdx) {
 
 // 게시글 가져오기 함수 호출
 getInquiry(props.postIdx);
+
+// 커스텀 훅을 사용하여 게시글 반응과 관련된 변수와 함수들을 가져옴
+const {
+  fetchPostReactionData,
+  getPostReact,
+  updatePostReaction,
+  useSubmit : useUpdatePostReactionSubmit,
+} = usePostReactionSubmit(
+    fetchInquiryData,
+    PostService.fetchPostReaction,
+    PostService.savePostReaction)
+
+/**
+ * 게시글 반응 수정
+ *
+ * @param reaction 반응 정보
+ * @returns {Promise<void>}
+ */
+async function handleUpdatePostReactionSubmit(reaction) {
+  updatePostReaction(reaction)
+  try {
+    await useUpdatePostReactionSubmit(props.postIdx);
+  } catch (error) {
+    console.error('요청 실패:', error);
+  }
+}
+
+
+// 게시글 반응 가져오기 함수 호출
+if (store.isMemberSignedIn()) {
+  getPostReact(props.postIdx, false);
+}
 
 // 반환된 에러를 담는 반응성 객체
 const submitError = ref(null)
@@ -135,7 +168,11 @@ const {deleteSubmitError, useSubmit}
         <Error :error="deleteSubmitError"/>
       </template>
       <!-- Post 컴포넌트로 게시글 데이터를 표시하고 삭제 이벤트 처리 -->
-      <Post :post="fetchInquiryData" :postEditRouteName="`InquiryEdit`" @delete="useSubmit(postIdx)" />
+      <Post :post="fetchInquiryData"
+            :postEditRouteName="`InquiryEdit`"
+            :postReaction="fetchPostReactionData"
+            @updatePostReaction="(reaction) => handleUpdatePostReactionSubmit(reaction)"
+            @delete="useSubmit(postIdx)" />
       <template v-if="fetchInquiryData.answerManagerNickname">
         <!-- fetchInquiryData.answerManagerNickname이 존재하는 경우 Answer 컴포넌트로 답변 데이터 표시 -->
         <Answer :post="fetchInquiryData"/>

@@ -1,6 +1,8 @@
-import {reactive} from 'vue';
+import {reactive, ref} from 'vue';
 
 export const store = reactive({
+    isSignInModalVisible : ref(false),
+
     categories: [],
 
     member: {
@@ -46,4 +48,18 @@ export const store = reactive({
     isSameMember(nickname) {
         return this.member.nickname === nickname;
     },
+
+    /**
+     * 로그인 모달 보이기
+     */
+    openSignInModal() {
+        store.isSignInModalVisible = true;
+    },
+
+    /**
+     * 로그인 모달 숨기기
+     */
+    closeSignInModal() {
+        store.isSignInModalVisible = false;
+    }
 });

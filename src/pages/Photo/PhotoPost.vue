@@ -12,6 +12,8 @@ import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
 import Error from "@/components/common/Error.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
+import {usePostReactionSubmit} from "@/composable/submitForm/reactionSubmit";
+import {store} from "@/store";
 
 // 게시글을 담는 반응성 객체
 const fetchPhotoData = ref(null);
@@ -41,6 +43,37 @@ async function getPhoto(postIdx) {
 // 컴포넌트가 마운트되기 전에 게시글 정보를 가져옴
 getPhoto(props.postIdx);
 
+// 커스텀 훅을 사용하여 게시글 반응과 관련된 변수와 함수들을 가져옴
+const {
+  fetchPostReactionData,
+  getPostReact,
+  updatePostReaction,
+  useSubmit : useUpdatePostReactionSubmit,
+} = usePostReactionSubmit(
+    fetchPhotoData,
+    PostService.fetchPostReaction,
+    PostService.savePostReaction)
+
+/**
+ * 게시글 반응 수정
+ *
+ * @param reaction 반응 정보
+ * @returns {Promise<void>}
+ */
+async function handleUpdatePostReactionSubmit(reaction) {
+  updatePostReaction(reaction)
+  try {
+    await useUpdatePostReactionSubmit(props.postIdx);
+  } catch (error) {
+    console.error('요청 실패:', error);
+  }
+}
+
+// 게시글 반응 가져오기 함수 호출
+if (store.isMemberSignedIn()) {
+  getPostReact(props.postIdx, false);
+}
+
 // useDeletePostSubmit 커스텀 훅을 사용하여 게시글 삭제에 필요한 데이터와 함수 가져오기
 const {deleteSubmitError, useSubmit}
     = useDeletePostSubmit("Photos", PostService.deletePhoto);
@@ -60,7 +93,11 @@ const {deleteSubmitError, useSubmit}
         <Error :error="deleteSubmitError"/>
       </template>
       <!-- Post 컴포넌트 사용하여 게시글 표시 -->
-      <Post :post="fetchPhotoData" :postEditRouteName="`PhotoEdit`" @delete="useSubmit(postIdx)">
+      <Post :post="fetchPhotoData"
+            :postEditRouteName="`PhotoEdit`"
+            :postReaction="fetchPostReactionData"
+            @updatePostReaction="(reaction) => handleUpdatePostReactionSubmit(reaction)"
+            @delete="useSubmit(postIdx)">
         <!-- 게시글에 첨부파일이 있을 경우, Carousel과 AttachmentList 컴포넌트 사용하여 표시 -->
         <template v-if="fetchPhotoData.attachments">
           <Carousel :attachments="fetchPhotoData.attachments"/>

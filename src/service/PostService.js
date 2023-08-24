@@ -16,6 +16,28 @@ const PostService = {
     },
 
     /**
+     * 게시글 반응을 가져오는 함수
+     *
+     * @param postIdx 게시물 번호
+     * @param parameters 파라미터
+     * @returns {Promise<AxiosResponse<any>>}
+     */
+    fetchPostReaction(postIdx, parameters) {
+        return useGetRequest(`/api/posts/${postIdx}/reaction`, parameters)
+    },
+
+    /**
+     * 게시글 반응을 저장하는 함수
+     *
+     * @param postIdx - 게시글 번호
+     * @param formData - 저장할 데이터가 담긴 객체
+     * @returns {Promise<AxiosResponse<any>>}
+     */
+    savePostReaction(postIdx, formData) {
+        return useHttpRequest(HttpMethod.POST, `/api/posts/${postIdx}/reaction`, formData, json);
+    },
+
+    /**
      * 공지 게시글 목록을 가져오는 함수
      *
      * @param {object} condition - 조건 정보가 담긴 객체
@@ -54,9 +76,6 @@ const PostService = {
     fetchInquiries(condition) {
         return useGetRequest('/api/inquiries', condition)
     },
-
-    
-
 
 
     /**
@@ -109,10 +128,7 @@ const PostService = {
     fetchSecretInquiry(postIdx, formData) {
         return useHttpRequest(HttpMethod.POST, `/api/inquiries/secret/${postIdx}`, formData, formUrlencoded);
     },
-    
-    
-    
-    
+
 
     /**
      * 수정 공지 게시물 정보를 가져오는 함수
@@ -153,9 +169,6 @@ const PostService = {
     fetchEditInquiry(postIdx) {
         return useGetRequest(`/api/inquiries/${postIdx}/edit`)
     },
-    
-    
-
 
 
     /**
@@ -198,8 +211,7 @@ const PostService = {
     saveInquiry(formData) {
         return useHttpRequest(HttpMethod.POST, '/api/inquiries', formData, json);
     },
-    
-    
+
 
     /**
      * 커뮤니티 게시물을 수정하는 함수
@@ -222,8 +234,6 @@ const PostService = {
     editPhoto(postIdx, formData) {
         return useHttpRequest(HttpMethod.PUT, `/api/photos/${postIdx}`, formData, multipart);
     },
-    
-    
 
 
     /**

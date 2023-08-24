@@ -1,6 +1,5 @@
 <script setup>
 import Post from "@/components/Post.vue";
-import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import {ref} from "vue";
 import PostService from "@/service/PostService";
 import Comments from "@/components/Comments.vue";
@@ -11,6 +10,8 @@ import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import Error from "@/components/common/Error.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
 import BannerSub from "@/components/common/BannerSub.vue";
+import {store} from "@/store";
+import {usePostReactionSubmit} from "@/composable/submitForm/reactionSubmit";
 
 // 게시글을 담는 반응성 객체
 const fetchCommunityData = ref(null);
@@ -37,8 +38,39 @@ async function getCommunity(postIdx) {
   })
 }
 
+// 커스텀 훅을 사용하여 게시글 반응과 관련된 변수와 함수들을 가져옴
+const {
+  fetchPostReactionData,
+  getPostReact,
+  updatePostReaction,
+  useSubmit : useUpdatePostReactionSubmit,
+} = usePostReactionSubmit(
+    fetchCommunityData,
+    PostService.fetchPostReaction,
+    PostService.savePostReaction)
+
+/**
+ * 게시글 반응 수정
+ *
+ * @param reaction 반응 정보
+ * @returns {Promise<void>}
+ */
+async function handleUpdatePostReactionSubmit(reaction) {
+  updatePostReaction(reaction)
+  try {
+    await useUpdatePostReactionSubmit(props.postIdx);
+  } catch (error) {
+    console.error('요청 실패:', error);
+  }
+}
+
 // 게시글 가져오기 함수 호출
 getCommunity(props.postIdx);
+
+// 게시글 반응 가져오기 함수 호출
+if (store.isMemberSignedIn()) {
+  getPostReact(props.postIdx, false);
+}
 
 // 커스텀 훅을 사용하여 게시글 삭제를 위한 변수와 함수들을 가져옴
 const {deleteSubmitError, useSubmit}
@@ -60,7 +92,11 @@ const {deleteSubmitError, useSubmit}
       </template>
 
       <!-- Post 컴포넌트 사용 -->
-      <Post :post="fetchCommunityData" :postEditRouteName="`CommunityEdit`" @delete="useSubmit(postIdx)">
+      <Post :post="fetchCommunityData"
+            :postEditRouteName="`CommunityEdit`"
+            :postReaction="fetchPostReactionData"
+            @updatePostReaction="(reaction) => handleUpdatePostReactionSubmit(reaction)"
+            @delete="useSubmit(postIdx)">
         <!-- 게시글 첨부파일 목록이 있을 경우 AttachmentList 컴포넌트 출력 -->
         <template v-if="fetchCommunityData.attachments">
           <AttachmentList :attachments="fetchCommunityData.attachments"/>
