@@ -6,7 +6,7 @@ import CommentService from "@/service/CommentService";
 /**
  * 댓글 작성, 편집, 삭제 관련 동작을 처리하는 컴포저블 함수
  *
- * @param {Ref<Object>} targetComment - 대상 댓글 정보
+ * @param {null} targetComment - 대상 댓글 정보
  * @param {Function} showSaveCommentNotification - 댓글 저장 알림 표시 함수
  * @param {Function} showEditCommentNotification - 댓글 편집 알림 표시 함수
  * @param {Function} showDeleteCommentNotification - 댓글 삭제 알림 표시 함수
