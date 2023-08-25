@@ -6,7 +6,7 @@ import {PostGroup} from "@/composable/postGroup/PostGroup";
 import PostService from "@/service/PostService";
 import ValidationError from "@/components/common/ValidationError.vue";
 import ErrorType from "@/composable/response/ErrorType";
-import {useSavePostSubmit} from "@/composable/submitForm/savePostSubmit";
+import {useSavePostSubmit} from "@/composable/submitForm/post/savePostSubmit";
 
 // 문의 게시글의 토픽 하위 코드 그룹 가져오기
 const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQUIRY);

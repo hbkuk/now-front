@@ -14,9 +14,9 @@ import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import {store} from "@/store";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
-import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
+import {useDeletePostSubmit} from "@/composable/submitForm/post/deletePostSubmit";
 import BannerSub from "@/components/common/BannerSub.vue";
-import {usePostReactionSubmit} from "@/composable/submitForm/reactionSubmit";
+import {usePostReactionSubmit} from "@/composable/submitForm/reaction/reactionSubmit";
 // 게시글을 담는 반응성 객체
 const fetchInquiryData = ref(null);
 

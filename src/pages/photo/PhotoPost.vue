@@ -9,10 +9,10 @@ import PostSkeleton from "@/components/skeleton/PostSkeleton.vue";
 import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkeleton.vue";
 import AttachmentList from "@/components/AttachmentList.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
-import {useDeletePostSubmit} from "@/composable/submitForm/deletePostSubmit";
+import {useDeletePostSubmit} from "@/composable/submitForm/post/deletePostSubmit";
 import Error from "@/components/common/Error.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
-import {usePostReactionSubmit} from "@/composable/submitForm/reactionSubmit";
+import {usePostReactionSubmit} from "@/composable/submitForm/reaction/reactionSubmit";
 import {store} from "@/store";
 
 // 게시글을 담는 반응성 객체

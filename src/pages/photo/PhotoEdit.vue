@@ -16,7 +16,7 @@ import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import {
   useEditPostSubmitWithAttachmentsAndThumbnail
-} from "@/composable/submitForm/editPostSubmitWithAttachmentsAndThumbnail";
+} from "@/composable/submitForm/post/editPostSubmitWithAttachmentsAndThumbnail";
 import {EditPhotoOptions} from "@/composable/attachment/constants/EditAttachmentType";
 
 // 게시글의 하위 코드 그룹 찾기

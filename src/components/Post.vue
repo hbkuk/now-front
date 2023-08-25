@@ -5,11 +5,10 @@ import {useGetTimeDifference} from "@/composable/date/getTimeDifference";
 import {useRoute} from "vue-router";
 import {store} from "@/store";
 import {useFormatNumber} from "@/composable/number/formatNumber";
-import {Reaction} from "@/composable/reaction/Reaction";
 import ReactionButton from "@/components/common/ReactionButton.vue";
 import {useCloseModal} from "@/composable/modal/closeModal";
 
-const emit = defineEmits(['delete', 'updatePostReaction'])
+const emit = defineEmits(['deletePost', 'updatePostReaction'])
 
 const props = defineProps({
   post: Object,
@@ -17,18 +16,18 @@ const props = defineProps({
   postReaction: Object
 });
 
-const modalShow = ref(false);
+const isShowPostModal = ref(false);
 
 /**
  * 삭제 확인 버튼을 처리하는 함수
  *
  * @param {Event} bvModalEvent - 모달 이벤트
  */
-function handleDeleteOk(bvModalEvent) {
+function handleDeletePost(bvModalEvent) {
   bvModalEvent.preventDefault();
-  emit('delete');
-  modalShow.value = false;
-  useCloseModal('deleteModal');
+  emit('deletePost');
+  isShowPostModal.value = false;
+  useCloseModal('deletePostModal');
 }
 
 /**
@@ -36,8 +35,8 @@ function handleDeleteOk(bvModalEvent) {
  *
  * @param {string} newReaction - 새로운 반응
  */
-function updateReaction(newReaction) {
-  emit('updatePostReaction', newReaction); // Emit the event to parent
+function updatePostReaction(newReaction) {
+  emit('updatePostReaction', newReaction);
 }
 
 </script>
@@ -64,7 +63,7 @@ function updateReaction(newReaction) {
                   <i class="bi bi-eraser"></i> 수정하기
                 </router-link>
               </b-dropdown-item>
-              <b-dropdown-item @click="modalShow = true"><i class="bi bi-trash"></i> 삭제하기</b-dropdown-item>
+              <b-dropdown-item @click="isShowPostModal = true"><i class="bi bi-trash"></i> 삭제하기</b-dropdown-item>
             </b-dropdown>
           </div>
         </b-col>
@@ -100,13 +99,13 @@ function updateReaction(newReaction) {
                   :currentReaction="postReaction?.reaction"
                   :count="post.likeCount"
                   :iconName="`up`"
-                  @updateReaction="updateReaction"
+                  @updateReaction="updatePostReaction"
               />
               <ReactionButton
                   :currentReaction="postReaction?.reaction"
                   :count="post.dislikeCount"
                   :iconName="`down`"
-                  @updateReaction="updateReaction"
+                  @updateReaction="updatePostReaction"
               />
             </div>
 
@@ -119,14 +118,14 @@ function updateReaction(newReaction) {
 
   <!-- 모달 -->
   <b-modal
-      id="deleteModal"
+      id="deletePostModal"
       ref="modal"
-      v-model="modalShow"
+      v-model="isShowPostModal"
       title="게시글 삭제"
       cancel-title="취소하기"
       ok-title="삭제하기"
-      @ok="handleDeleteOk"
       centered
+      @ok="handleDeletePost"
   >
     <b class="mb-0">정말로 삭제하시겠습니까?</b>
   </b-modal>

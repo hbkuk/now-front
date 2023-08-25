@@ -6,7 +6,7 @@ import AuthenticationService from "@/service/AuthenticationService";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
-import {useSavePostSubmit} from "@/composable/submitForm/savePostSubmit";
+import {useSavePostSubmit} from "@/composable/submitForm/post/savePostSubmit";
 import PostService from "@/service/PostService";
 import ValidationError from "@/components/common/ValidationError.vue";
 

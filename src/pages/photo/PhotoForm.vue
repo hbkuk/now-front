@@ -4,7 +4,7 @@ import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import ValidationError from "@/components/common/ValidationError.vue";
-import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/savePostSubmitWithAttachments";
+import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
 import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
 import PostService from "@/service/PostService";
 import {ref} from "vue";

@@ -6,7 +6,7 @@ import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import ValidationError from "@/components/common/ValidationError.vue";
 import {AttachmentType} from '@/composable/attachment/constants/AttachmentType';
-import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/savePostSubmitWithAttachments";
+import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
 
 // 커뮤니티 게시글의 하위 코드 그룹을 가져오기 위해 커스텀 훅 사용
 const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);

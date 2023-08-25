@@ -8,10 +8,7 @@ import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenA
  *
  * @param {string} targetRouteName - 삭제 성공 후 이동할 라우터 이름
  * @param {Function} deletePostFunction - 게시물 삭제 함수
- * @returns {{
- *   submitError: Ref<null>,
- *   useSubmit: (postIdx: string) => Promise<void>
- * }}
+ * @returns {{useSubmit: ((function(string): Promise<void>)|*), deleteSubmitError: null}}
  */
 export function useDeletePostSubmit(targetRouteName, deletePostFunction) {
     const deleteSubmitError = ref(null);
@@ -28,7 +25,7 @@ export function useDeletePostSubmit(targetRouteName, deletePostFunction) {
         } catch (error) {
             console.log(error)
             if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
-                await useRefreshTokenAndRetry(() => useSubmit());
+                await useRefreshTokenAndRetry(() => useSubmit(postIdx));
             }
             if (error.response?.data?.errorCode === ErrorType.CAN_NOT_DELETE_OTHER_MEMBER_POST) {
                 deleteSubmitError.value = error.response.data;

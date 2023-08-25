@@ -1,6 +1,7 @@
 import {reactive, ref} from 'vue';
 
 export const store = reactive({
+    
     isSignInModalVisible : ref(false),
 
     categories: [],

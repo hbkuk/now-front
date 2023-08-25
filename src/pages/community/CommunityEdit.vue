@@ -10,7 +10,7 @@ import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkel
 import {useGetIconTagByExtension} from "@/composable/attachment/getIconTagByExtension";
 import {useFormatBytes} from "@/composable/attachment/formatBytes";
 import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
-import {useEditPostSubmitWithAttachments,} from "@/composable/submitForm/editPostSubmitWithAttachments";
+import {useEditPostSubmitWithAttachments,} from "@/composable/submitForm/post/editPostSubmitWithAttachments";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";

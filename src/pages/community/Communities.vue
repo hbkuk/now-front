@@ -13,7 +13,7 @@ import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
 import PaginationSkeleton from "@/components/skeleton/PaginationSkeleton.vue";
 import BannerSub from "@/components/common/BannerSub.vue";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
-import {useGetPostsSubmit} from "@/composable/submitForm/getPostsSubmit";
+import {useGetPostsSubmit} from "@/composable/submitForm/post/getPostsSubmit";
 import router from "@/router/router";
 import PageInfo from "@/components/common/PageInfo.vue";
 import CommonMessage from "@/components/common/CommonMessage.vue";

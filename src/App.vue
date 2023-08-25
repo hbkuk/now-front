@@ -27,5 +27,6 @@ getCategories();
   <Header />
   <RouterView/>
   <Footer/>
+
   <SignInModal/>
 </template>

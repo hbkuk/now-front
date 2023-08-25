@@ -1,22 +1,22 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Home from "@/pages/home/Home.vue";
-import Photos from "@/pages/Photo/Photos.vue";
+import Photos from "@/pages/photo/Photos.vue";
 import SignIn from "@/pages/home/SignIn.vue";
 import SignUp from "@/pages/home/SignUp.vue";
 import Notices from "@/pages/Notice/Notices.vue";
 import Inquiries from "@/pages/Inquiry/Inquiries.vue";
-import Communities from "@/pages/Community/Communities.vue";
-import CommunityPost from "@/pages/Community/CommunityPost.vue";
+import Communities from "@/pages/community/Communities.vue";
+import CommunityPost from "@/pages/community/CommunityPost.vue";
 import NoticePost from "@/pages/Notice/NoticePost.vue";
-import PhotoPost from "@/pages/Photo/PhotoPost.vue";
+import PhotoPost from "@/pages/photo/PhotoPost.vue";
 import InquiryPost from "@/pages/Inquiry/InquiryPost.vue";
-import CommunityForm from "@/pages/Community/CommunityForm.vue";
+import CommunityForm from "@/pages/community/CommunityForm.vue";
 import NoticeForm from "@/pages/Notice/NoticeForm.vue";
-import PhotoForm from "@/pages/Photo/PhotoForm.vue";
+import PhotoForm from "@/pages/photo/PhotoForm.vue";
 import InquiryForm from "@/pages/Inquiry/InquiryForm.vue";
-import CommunityEdit from "@/pages/Community/CommunityEdit.vue";
+import CommunityEdit from "@/pages/community/CommunityEdit.vue";
 import NoticeEdit from "@/pages/Notice/NoticeEdit.vue";
-import PhotoEdit from "@/pages/Photo/PhotoEdit.vue";
+import PhotoEdit from "@/pages/photo/PhotoEdit.vue";
 import InquiryEdit from "@/pages/Inquiry/InquiryEdit.vue";
 import NotFound from "@/components/NotFound.vue";
 import ServiceNotAvailable from "@/components/ServiceNotAvailable.vue";
@@ -25,6 +25,7 @@ import Unauthorized from "@/components/Unauthorized.vue";
 import Forbidden from "@/components/Forbidden.vue";
 import RequestError from "@/components/RequestError.vue";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
+import TooManyRequest from "@/components/TooManyRequest.vue";
 
 const routes = [
     {path: '/', name: 'Home', component: Home},
@@ -56,6 +57,7 @@ const routes = [
     {path: '/inquiries/:postIdx/edit', name: 'InquiryEdit', component: InquiryEdit, props: true, beforeEnter: requireSignIn},
 
 
+    {path: '/TooManyRequest', name: 'TooManyRequest', component: TooManyRequest },
     {path: '/RequestError', name: 'RequestError', component: RequestError },
     {path: '/Forbidden', name: 'Forbidden', component: Forbidden },
     {path: '/unauthorized', name: 'Unauthorized', component: Unauthorized },

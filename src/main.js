@@ -9,6 +9,8 @@ import '@/assest/main.css';
 import {store} from "@/store";
 import AuthenticationService from "@/service/AuthenticationService";
 import {useParseJsonItemFromSessionStorage} from "@/composable/parse/parseJsonItemFromSessionStorage";
+import ErrorType from "@/composable/response/ErrorType";
+import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 
 const app = createApp(App);
 initializeStore();
@@ -42,9 +44,13 @@ function getCategories() {
  * @returns {Promise<AxiosResponse<any>>} 회원 데이터 가져오기와 Store 저장 후 완료
  */
 async function getMember() {
-    return AuthenticationService.getMember().then(response => {
+    return await AuthenticationService.getMember().then(response => {
         store.saveMember(response.data.id, response.data.nickname);
-    }).catch(error => {
+    }).catch(async error => {
+        if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
+            await useRefreshTokenAndRetry(() => getMember());
+            return;
+        }
         console.log(error)
     })
 }
