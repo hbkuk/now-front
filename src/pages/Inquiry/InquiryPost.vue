@@ -1,7 +1,7 @@
 <script setup>
 import Post from "@/components/Post.vue";
 import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
-import {ref} from "vue";
+import {onBeforeUpdate, ref} from "vue";
 import PostService from "@/service/PostService";
 import Comments from "@/components/Comments.vue";
 import Answer from "@/components/Answer.vue";
@@ -17,6 +17,7 @@ import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {useDeletePostSubmit} from "@/composable/submitForm/post/deletePostSubmit";
 import BannerSub from "@/components/common/BannerSub.vue";
 import {usePostReactionSubmit} from "@/composable/submitForm/reaction/reactionSubmit";
+import {useCommentSubmit} from "@/composable/submitForm/comment/commentSubmit";
 // 게시글을 담는 반응성 객체
 const fetchInquiryData = ref(null);
 
@@ -97,10 +98,12 @@ async function handleUpdatePostReactionSubmit(reaction) {
 }
 
 
-// 게시글 반응 가져오기 함수 호출
-if (store.isMemberSignedIn()) {
-  getPostReact(props.postIdx, false);
-}
+// 컴포넌트의 데이터가 변경되고 화면이 업데이트되기 직전에 실행
+onBeforeUpdate(() => {
+  if (store.isMemberSignedIn()) {
+    getPostReact(props.postIdx, false);
+  }
+});
 
 // 반환된 에러를 담는 반응성 객체
 const submitError = ref(null)
@@ -153,6 +156,41 @@ async function handleSubmit() {
 const {deleteSubmitError, useSubmit}
     = useDeletePostSubmit("Inquiries", PostService.deleteInquiry);
 
+
+const notificationMessage = ref(null);
+const isNotificationVisible = ref(false);
+
+function showNotification(message) {
+  notificationMessage.value = message
+  isNotificationVisible.value = true;
+  setTimeout(() => {
+    isNotificationVisible.value = false;
+  }, 2000); // 2초 후에 알림 숨김
+};
+
+function showSaveCommentNotification() {
+  showNotification('댓글이 성공적으로 작성되었습니다.')
+};
+
+function showEditCommentNotification() {
+  showNotification('댓글이 성공적으로 수정되었습니다.')
+};
+
+function showDeleteCommentNotification() {
+  showNotification('댓글이 성공적으로 삭제되었습니다.')
+};
+
+// 커스텀 훅을 사용하여 댓글과 관련된 변수와 함수들을 가져옴
+const {
+  handleSaveCommentSubmit,
+  handleEditCommentSubmit,
+  saveSubmitError,
+  successSaveComment,
+  editSubmitError,
+  successEditComment,
+  useDeleteSubmit,
+} = useCommentSubmit(fetchInquiryData, showSaveCommentNotification, showEditCommentNotification, showDeleteCommentNotification);
+
 </script>
 
 <template>
@@ -172,14 +210,29 @@ const {deleteSubmitError, useSubmit}
             :postEditRouteName="`InquiryEdit`"
             :postReaction="fetchPostReactionData"
             @updatePostReaction="(reaction) => handleUpdatePostReactionSubmit(reaction)"
-            @delete="useSubmit(postIdx)" />
+            @deletePost="useSubmit(postIdx)" />
       <template v-if="fetchInquiryData.answerManagerNickname">
         <!-- fetchInquiryData.answerManagerNickname이 존재하는 경우 Answer 컴포넌트로 답변 데이터 표시 -->
         <Answer :post="fetchInquiryData"/>
       </template>
+
+      <!-- 댓글 관련 알림 -->
+      <div v-if="isNotificationVisible" class="text-center alert alert-primary" role="alert">
+        <b>{{ notificationMessage }}</b>
+      </div>
+
+
       <template v-if="fetchInquiryData.comments">
         <!-- fetchInquiryData.comments가 존재하는 경우 Comments 컴포넌트로 댓글 데이터 표시 -->
-        <Comments :comments="fetchInquiryData.comments"/>
+        <Comments :comments="fetchInquiryData.comments"
+                  :saveSubmitError="saveSubmitError"
+                  :successSaveComment="successSaveComment"
+                  :editSubmitError="editSubmitError"
+                  :successEditComment="successEditComment"
+                  @saveComment="(newComment) => handleSaveCommentSubmit(newComment)"
+                  @editComment="(commentIdx, editingComment) => handleEditCommentSubmit(commentIdx, editingComment)"
+                  @deleteComment="(commentIdx) => useDeleteSubmit(commentIdx)"
+        />
       </template>
     </b-container>
   </template>

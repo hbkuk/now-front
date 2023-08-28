@@ -30,12 +30,13 @@ window.addEventListener('beforeunload', () => {
  * @returns {object} 카테고리와 멤버 데이터가 포함된 초기화된 스토어를 반환
  */
 function initializeStore() {
+    getCategories();
+
     const isSignedIn = sessionStorage.getItem('isSignedIn');
     if (isSignedIn === 'true') {
         getMember();
         sessionStorage.removeItem('isSignedIn');
     }
-    getCategories();
 }
 
 /**
@@ -43,8 +44,8 @@ function initializeStore() {
  *
  * @returns {Promise<void>} 카테고리 데이터 가져오기와 Store 저장 후 완료
  */
-function getCategories() {
-    CategoryService.fetchCategories().then(response => {
+async function getCategories() {
+    await CategoryService.fetchCategories().then(response => {
         store.categories = response.data;
     }).catch(error => {
         console.log(error)

@@ -8,7 +8,7 @@ const emit = defineEmits(['search'])
 
 const props = defineProps({
   condition: Object,
-  categories: Object,
+  categories: Array,
   postFormRouteName: String
 })
 
@@ -172,7 +172,7 @@ watch(
       </b-nav-item>
 
 
-      <b-nav-item v-for="category in categories" :key="category.subCode"
+      <b-nav-item v-for="category in categories" :key="category?.subCode"
                   :class="{ 'selected': category.subCode === condition.category}"
       >
         <b-link class="router-link text-decoration-none" @click="changeCategory(category)" :value="category.subCode"

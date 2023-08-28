@@ -6,7 +6,6 @@ import {useRoute} from "vue-router";
 import {store} from "@/store";
 import {useFormatNumber} from "@/composable/number/formatNumber";
 import ReactionButton from "@/components/common/ReactionButton.vue";
-import {useCloseModal} from "@/composable/modal/closeModal";
 
 const emit = defineEmits(['deletePost', 'updatePostReaction'])
 
@@ -20,14 +19,10 @@ const isShowPostModal = ref(false);
 
 /**
  * 삭제 확인 버튼을 처리하는 함수
- *
- * @param {Event} bvModalEvent - 모달 이벤트
  */
-function handleDeletePost(bvModalEvent) {
-  bvModalEvent.preventDefault();
+function handleDeletePost() {
   emit('deletePost');
   isShowPostModal.value = false;
-  useCloseModal('deletePostModal');
 }
 
 /**

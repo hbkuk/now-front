@@ -125,7 +125,7 @@ export function useCommentSubmit(targetComment, showSaveCommentNotification,
         } catch (error) {
             successEditComment.value = false;
             if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
-                await useRefreshTokenAndRetry(() => useSaveSubmit(postIdx));
+                await useRefreshTokenAndRetry(() => useEditSubmit(commentIdx, postIdx));
                 return;
             }
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {

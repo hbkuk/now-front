@@ -3,7 +3,6 @@ import {defineProps, ref, watch} from "vue";
 import {useGetTimeDifference} from "@/composable/date/getTimeDifference";
 import ValidationError from "@/components/common/ValidationError.vue";
 import {store} from "@/store";
-import {useCloseModal} from "@/composable/modal/closeModal";
 
 const emit = defineEmits(['saveComment', 'deleteComment', 'editComment'])
 
@@ -84,14 +83,16 @@ function showDeleteModal(commentIdx) {
  * 삭제 모달의 확인 버튼을 클릭할 때 호출되는 함수
  *
  * @function
- * @param {Event} bvModalEvent - BootstrapVue 모달 이벤트 객체
  */
-function handleDeleteOk(bvModalEvent) {
-  bvModalEvent.preventDefault();
-  emit('deleteComment', deleteModalCommentIdx.value);
+function handleDeleteOk() {
   isShowDeleteModal.value = false;
-  useCloseModal('deleteModal');
+  emit('deleteComment', deleteModalCommentIdx.value);
 }
+
+// 댓글 수정 성공 여부를 감시하고, 성공 시 수정 중인 댓글 관련 상태를 초기화하는 watch
+watch(() => isShowDeleteModal.value, (newIsShowDeleteModal) => {
+  console.log(newIsShowDeleteModal)
+});
 
 // 댓글 저장 성공 여부를 감시하고, 성공 시 댓글 내용을 초기화하는 watch
 watch(() => props.successSaveComment, (newSuccessSaveComment) => {
@@ -215,14 +216,14 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
 
   <!-- 모달 -->
   <b-modal
-      id="deleteModal"
-      ref="modal"
-      v-model="isShowDeleteModal"
-      title="댓글 삭제"
-      cancel-title="취소하기"
-      ok-title="삭제하기"
-      @ok="handleDeleteOk"
-      centered
+    id="deleteModal"
+    ref="modal"
+    v-model="isShowDeleteModal"
+    title="댓글 삭제"
+    cancel-title="취소하기"
+    ok-title="삭제하기"
+    @ok="handleDeleteOk"
+    centered
   >
     <b class="mb-0">정말로 삭제하시겠습니까?</b>
   </b-modal>

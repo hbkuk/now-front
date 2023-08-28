@@ -104,7 +104,6 @@ const {
   handleEditCommentSubmit,
   saveSubmitError,
   successSaveComment,
-  editComment,
   editSubmitError,
   successEditComment,
   useDeleteSubmit,
@@ -141,7 +140,7 @@ const {deleteSubmitError, useSubmit}
         </template>
       </Post>
 
-      <!-- 댓글 작성 성공 알림 -->
+      <!-- 댓글 관련 알림 -->
       <div v-if="isNotificationVisible" class="text-center alert alert-primary" role="alert">
         <b>{{ notificationMessage }}</b>
       </div>

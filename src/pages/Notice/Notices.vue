@@ -16,9 +16,15 @@ import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 import {useGetPostsSubmit} from "@/composable/submitForm/post/getPostsSubmit";
 import router from "@/router/router";
 import PageInfo from "@/components/common/PageInfo.vue";
+import {onBeforeUpdate} from "vue";
 
 // 공지 게시글의 하위 코드 그룹 가져오기
-const noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTICE);
+let noticeSubCodeGroup = null;
+
+// 컴포넌트의 데이터가 변경되고 화면이 업데이트되기 직전에 실행
+onBeforeUpdate(() => {
+  noticeSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTICE);
+});
 
 const {
   fetchPostsData: fetchNoticesData,

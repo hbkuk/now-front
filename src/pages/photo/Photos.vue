@@ -16,9 +16,15 @@ import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 import {useGetPostsSubmit} from "@/composable/submitForm/post/getPostsSubmit";
 import router from "@/router/router";
 import PageInfo from "@/components/common/PageInfo.vue";
+import {onBeforeUpdate} from "vue";
 
-// useFindSubCodeGroup 커스텀 훅을 사용하여 포토 서브코드 그룹 가져오기
-const photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
+// 사진 게시글의 하위 코드 그룹 가져오기
+let photoSubCodeGroup = null;
+
+// 컴포넌트의 데이터가 변경되고 화면이 업데이트되기 직전에 실행
+onBeforeUpdate(() => {
+  photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
+});
 
 const {
   fetchPostsData: fetchPhotosData,
