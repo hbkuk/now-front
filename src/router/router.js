@@ -77,12 +77,10 @@ router.beforeEach((to, from, next) => {
     const toRouteGroup = Object.values(ROUTE_NAME_GROUP).find(group =>
         group.routes.includes(to.name)
     );
-
     if (fromRouteGroup && toRouteGroup && fromRouteGroup !== toRouteGroup) {
         // 그룹을 벗어날 때 검색 조건 세션 스토리지에서 삭제
         sessionStorage.removeItem('condition');
     }
-
     next();
 });
 

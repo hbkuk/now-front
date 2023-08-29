@@ -149,6 +149,9 @@ async function handleSubmit() {
     if (error.response?.data?.errorCode === ErrorType.CAN_NOT_VIEW_OTHER_MEMBER_INQUIRIES) {
       submitError.value = error.response?.data;
     }
+    if (error.response?.data?.errorCode === ErrorType.CAN_NOT_VIEW_INQUIRY_PASSWORD_NOT_MATCH) {
+      submitError.value = error.response?.data;
+    }
   }
 }
 
