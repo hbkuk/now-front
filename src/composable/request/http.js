@@ -10,7 +10,9 @@ import {useRateLimitedControl} from "@/composable/request/rateLimitedControl";
  * Axios 인스턴스를 생성
  * @type {import("axios").AxiosInstance}
  */
-const instance = axios.create({});
+const instance = axios.create({
+    baseURL: process.env.VUE_APP_BACK
+});
 
 export default instance;
 
