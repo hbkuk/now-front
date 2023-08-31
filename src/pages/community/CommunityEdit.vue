@@ -1,6 +1,5 @@
 <script setup>
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
-import {ref} from "vue";
 import PostService from "@/service/PostService";
 import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
@@ -63,30 +62,6 @@ const {
     PostService.editCommunity,
     "CommunityPost"
 );
-
-// 요청 중인지 여부를 저장하는 ref 변수
-const isRequesting = ref(false);
-
-/**
- * 게시글 수정 제출을 처리하는 함수
- *
- * 중복 요청 방지와 공통 예외 처리 외 컴포넌트 특화된 에러 처리 로직
- *
- * @param {String} postIdx - 게시글 번호
- * @returns {Promise<void>}
- */
-async function handleEditSubmit(postIdx) {
-  if (isRequesting.value) return;
-  isRequesting.value = true;
-
-  try {
-    await useSubmit(postIdx);
-    isRequesting.value = false;
-  } catch (error) {
-    isRequesting.value = false;
-    console.error('글 수정 실패:', error);
-  }
-}
 
 </script>
 
@@ -166,16 +141,21 @@ async function handleEditSubmit(postIdx) {
                                class="list-group-item list-group-item-action px-3 border-1 ripple d-flex align-items-center">
 
                             <!-- 파일 이름과 기타 내용들을 표시 -->
-                            <div class="flex-grow-1 text-decoration-none text-dark" v-if="!isAttachmentIdxDeleted(attachment.attachmentIdx)">
+                            <div class="flex-grow-1 text-decoration-none text-dark"
+                                 v-if="!isAttachmentIdxDeleted(attachment.attachmentIdx)">
                                     <span v-if="attachment.attachmentExtension"
                                           v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
-                              <a :href="`/attachments/${attachment.attachmentIdx}`" class="text-decoration-none text-dark">
-                                {{ attachment.originalAttachmentName }} ({{ useFormatBytes(attachment.attachmentSize) }})
+                              <a :href="`/attachments/${attachment.attachmentIdx}`"
+                                 class="text-decoration-none text-dark">
+                                {{ attachment.originalAttachmentName }} ({{
+                                  useFormatBytes(attachment.attachmentSize)
+                                }})
                               </a>
                             </div>
                             <!-- 삭제된 파일 이름 표시 -->
                             <div class="flex-grow-1 text-decoration-line-through" v-else style="color: #ff0000;">
-                              <span v-if="attachment.attachmentExtension" v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
+                              <span v-if="attachment.attachmentExtension"
+                                    v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
                               {{ attachment.originalAttachmentName }} ({{ useFormatBytes(attachment.attachmentSize) }})
                             </div>
 
@@ -208,7 +188,7 @@ async function handleEditSubmit(postIdx) {
 
                       <!-- 수정 버튼 -->
                       <div class="d-grid gap-2 mt-4">
-                        <b-button block variant="primary" @click="handleEditSubmit(postIdx)"><i
+                        <b-button block variant="primary" @click="useSubmit(postIdx)"><i
                             class="fa-regular fa-circle-check"></i> 수정
                         </b-button>
                       </div>

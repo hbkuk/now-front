@@ -55,7 +55,6 @@ export function useEditPostSubmit(formDataName, savePostFunction, targetRouteNam
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;
             }
-            return Promise.reject(error)
         }
     }
 

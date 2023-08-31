@@ -63,11 +63,7 @@ const {
  */
 async function handleUpdatePostReactionSubmit(reaction) {
   updatePostReaction(reaction)
-  try {
-    await useUpdatePostReactionSubmit(props.postIdx);
-  } catch (error) {
-    console.error('요청 실패:', error);
-  }
+  await useUpdatePostReactionSubmit(props.postIdx);
 }
 
 // 컴포넌트의 데이터가 변경되고 화면이 업데이트되기 직전에 실행
@@ -80,8 +76,6 @@ onBeforeUpdate(() => {
 // useDeletePostSubmit 커스텀 훅을 사용하여 게시글 삭제에 필요한 데이터와 함수 가져오기
 const {deleteSubmitError, useSubmit}
     = useDeletePostSubmit("Photos", PostService.deletePhoto);
-
-
 
 const notificationMessage = ref(null);
 const isNotificationVisible = ref(false);

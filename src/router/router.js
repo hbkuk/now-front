@@ -89,7 +89,7 @@ export default router;
 async function waitForInitialization() {
     return new Promise(resolve => {
         const checkInitialization = () => {
-            if (store.isInitialized) {
+            if (store.getInitialized()) {
                 resolve();
             } else {
                 setTimeout(checkInitialization, 100); // 적절한 간격으로 조정
@@ -101,7 +101,6 @@ async function waitForInitialization() {
 
 async function requireSignIn(to, from, next) {
     await waitForInitialization().then(() => {
-        console.log(store.isMemberSignedIn())
         if (store.isMemberSignedIn()) {
             next();
         }

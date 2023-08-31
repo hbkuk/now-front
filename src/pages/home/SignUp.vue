@@ -93,8 +93,8 @@ function handleErrors(error) {
     return;
   }
   if ([ErrorType.DUPLICATE_MEMBER_INFO_ID,
-      ErrorType.DUPLICATE_MEMBER_INFO_NICKNAME,
-      ErrorType.DUPLICATE_MEMBER_INFO_ID_AND_NICKNAME].includes(errorCode)) {
+    ErrorType.DUPLICATE_MEMBER_INFO_NICKNAME,
+    ErrorType.DUPLICATE_MEMBER_INFO_ID_AND_NICKNAME].includes(errorCode)) {
     submitError.value = error.response.data;
     resetStates();
   }
@@ -136,111 +136,115 @@ function resetStates() {
       </template>
 
       <b-container>
-        <!-- ID 입력란 -->
-        <b-row class="mb-3">
-          <label class="p-0" for="input-id"><b>ID</b></label>
-          <b-form-input
-              id="input-id"
-              v-model="id"
-              :state="idState"
-              aria-describedby="input-id-help input-id-feedback"
-              trim
-              placeholder="영문자,숫자(1글자~50글자)"
-          ></b-form-input>
+        <b-form>
+          <!-- ID 입력란 -->
+          <b-row class="mb-3">
+            <label class="p-0" for="input-id"><b>ID</b></label>
+            <b-form-input
+                id="input-id"
+                v-model="id"
+                :state="idState"
+                aria-describedby="input-id-help input-id-feedback"
+                trim
+                placeholder="영문자,숫자(1글자~50글자)"
+            ></b-form-input>
 
-          <!-- ID 입력 유효성 메시지 -->
-          <b-form-invalid-feedback id="input-id-feedback">
-            영문자와 숫자로만 구성되어야 합니다.(최소 1글자, 최대 50글자)
-          </b-form-invalid-feedback>
-        </b-row>
+            <!-- ID 입력 유효성 메시지 -->
+            <b-form-invalid-feedback id="input-id-feedback">
+              영문자와 숫자로만 구성되어야 합니다.(최소 1글자, 최대 50글자)
+            </b-form-invalid-feedback>
+          </b-row>
 
-        <!-- 비밀번호 입력란 -->
-        <b-row class="mb-3">
-          <label class="p-0" for="input-password"><b>비밀번호</b></label>
-          <b-form-input
-              id="input-password"
-              type="password"
-              v-model="password"
-              :state="passwordState"
-              aria-describedby="input-password-help input-password-feedback"
-              trim
-              placeholder="영문자,숫자,특수문자(4글자~15글자)"
-          ></b-form-input>
+          <!-- 비밀번호 입력란 -->
+          <b-row class="mb-3">
+            <label class="p-0" for="input-password"><b>비밀번호</b></label>
+            <b-form-input
+                id="input-password"
+                type="password"
+                v-model="password"
+                :state="passwordState"
+                aria-describedby="input-password-help input-password-feedback"
+                trim
+                placeholder="영문자,숫자,특수문자(4글자~15글자)"
+                autocomplete="off"
+            ></b-form-input>
 
-          <!-- 비밀번호 입력란과 유효성 메시지 템플릿 -->
-          <b-form-invalid-feedback id="input-password-feedback">
-            영문자, 숫자, 특수문자를 모두 포함해야 합니다.(최소 4글자, 최대 15글자)
-          </b-form-invalid-feedback>
-        </b-row>
+            <!-- 비밀번호 입력란과 유효성 메시지 템플릿 -->
+            <b-form-invalid-feedback id="input-password-feedback">
+              영문자, 숫자, 특수문자를 모두 포함해야 합니다.(최소 4글자, 최대 15글자)
+            </b-form-invalid-feedback>
+          </b-row>
 
-        <!-- 비밀번호 확인 입력란 -->
-        <b-row class="mb-3">
-          <label class="p-0" for="input-passwordConfirm"><b>비밀번호 확인</b></label>
-          <b-form-input
-              id="input-passwordConfirm"
-              type="password"
-              v-model="passwordConfirm"
-              :state="passwordConfirmState"
-              aria-describedby="input-passwordConfirm-help input-passwordConfirm-feedback"
-              trim
-          ></b-form-input>
+          <!-- 비밀번호 확인 입력란 -->
+          <b-row class="mb-3">
+            <label class="p-0" for="input-passwordConfirm"><b>비밀번호 확인</b></label>
+            <b-form-input
+                id="input-passwordConfirm"
+                type="password"
+                v-model="passwordConfirm"
+                :state="passwordConfirmState"
+                aria-describedby="input-passwordConfirm-help input-passwordConfirm-feedback"
+                trim
+                autocomplete="off"
+            ></b-form-input>
 
-          <!-- 비밀번호 확인 입력란과 유효성 메시지 템플릿 -->
-          <b-form-invalid-feedback id="input-passwordConfirm-feedback">
-            비밀번호가 다릅니다.
-          </b-form-invalid-feedback>
-        </b-row>
+            <!-- 비밀번호 확인 입력란과 유효성 메시지 템플릿 -->
+            <b-form-invalid-feedback id="input-passwordConfirm-feedback">
+              비밀번호가 다릅니다.
+            </b-form-invalid-feedback>
+          </b-row>
 
-        <!-- 성명 입력란 -->
-        <b-row class="mb-3">
-          <label class="p-0" for="input-name"><b>성명</b></label>
-          <b-form-input
-              id="input-name"
-              v-model="name"
-              :state="nameState"
-              aria-describedby="input-name-help input-name-feedback"
-              trim
-              placeholder="한글,영문자(2글자~15글자)"
-          ></b-form-input>
+          <!-- 성명 입력란 -->
+          <b-row class="mb-3">
+            <label class="p-0" for="input-name"><b>성명</b></label>
+            <b-form-input
+                id="input-name"
+                v-model="name"
+                :state="nameState"
+                aria-describedby="input-name-help input-name-feedback"
+                trim
+                placeholder="한글,영문자(2글자~15글자)"
+            ></b-form-input>
 
-          <!-- 성명 입력란과 유효성 메시지 템플릿 -->
-          <b-form-invalid-feedback id="input-name-feedback">
-            한글과 영문자로만 구성되어야 합니다.(최소 2글자, 최대 15글자)
-          </b-form-invalid-feedback>
-        </b-row>
+            <!-- 성명 입력란과 유효성 메시지 템플릿 -->
+            <b-form-invalid-feedback id="input-name-feedback">
+              한글과 영문자로만 구성되어야 합니다.(최소 2글자, 최대 15글자)
+            </b-form-invalid-feedback>
+          </b-row>
 
-        <!-- 닉네임 입력란 -->
-        <b-row class="mb-3">
-          <label class="p-0" for="input-nickname"><b>닉네임</b></label>
-          <b-form-input
-              id="input-nickname"
-              v-model="nickname"
-              :state="nicknameState"
-              aria-describedby="input-nickname-help input-nickname-feedback"
-              trim
-              placeholder="한글,영문자(1글자~50글자)"
-          ></b-form-input>
+          <!-- 닉네임 입력란 -->
+          <b-row class="mb-3">
+            <label class="p-0" for="input-nickname"><b>닉네임</b></label>
+            <b-form-input
+                id="input-nickname"
+                v-model="nickname"
+                :state="nicknameState"
+                aria-describedby="input-nickname-help input-nickname-feedback"
+                trim
+                placeholder="한글,영문자(1글자~50글자)"
+            ></b-form-input>
 
-          <!-- 닉네임 입력란과 유효성 메시지 템플릿 -->
-          <b-form-invalid-feedback id="input-nickname-feedback">
-            한글과 영문자로만 구성되어야 합니다.(최소 1글자, 최대 50글자)
-          </b-form-invalid-feedback>
-        </b-row>
+            <!-- 닉네임 입력란과 유효성 메시지 템플릿 -->
+            <b-form-invalid-feedback id="input-nickname-feedback">
+              한글과 영문자로만 구성되어야 합니다.(최소 1글자, 최대 50글자)
+            </b-form-invalid-feedback>
+          </b-row>
 
-        <!-- 회원가입 버튼 -->
-        <b-row class="mb-1 mt-5">
-          <b-button block @click="validateAndSingUp" variant="primary"><b>회원가입</b></b-button>
-        </b-row>
+          <!-- 회원가입 버튼 -->
+          <b-row class="mb-1 mt-5">
+            <b-button block @click="validateAndSingUp" variant="primary"><b>회원가입</b></b-button>
+          </b-row>
 
-        <hr class="mt-5">
+          <hr class="mt-5">
 
-        <!-- 로그인 링크 -->
-        <b-row class="mb-2">
+          <!-- 로그인 링크 -->
+          <b-row class="mb-2">
         <span class="text-end"> 이미 회원이신가요?
           <router-link class="router-link text-decoration-none text-primary"
                        :to="{ name: `SignIn` }">로그인</router-link>
         </span>
-        </b-row>
+          </b-row>
+        </b-form>
       </b-container>
     </div>
   </div>

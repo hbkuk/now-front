@@ -145,6 +145,7 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
         formData.value.append('updateOption'
                         , new Blob([JSON.stringify(selectedEditOption.value)], {type: 'application/json'}));
 
+        console.log(post.value)
         formData.value.delete(formDataName);
         formData.value.append(formDataName, new Blob([JSON.stringify(post.value)], {type: 'application/json'}));
         return formData.value;
@@ -171,7 +172,6 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;
             }
-            return Promise.reject(error)
         }
     }
 

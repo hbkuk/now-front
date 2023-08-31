@@ -58,11 +58,7 @@ const {
  */
 async function handleUpdatePostReactionSubmit(reaction) {
   updatePostReaction(reaction)
-  try {
-    await useUpdatePostReactionSubmit(props.postIdx);
-  } catch (error) {
-    console.error('요청 실패:', error);
-  }
+  await useUpdatePostReactionSubmit(props.postIdx);
 }
 
 // 게시글 가져오기 함수 호출

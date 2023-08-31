@@ -79,72 +79,74 @@ async function submitForm() {
       </template>
 
       <b-container>
-        <!-- ID 입력란 -->
-        <b-row class="mb-3">
-          <label class="p-0" for="input-id"><b>ID</b></label>
-          <b-form-input
-              id="input-id"
-              v-model="id"
-              :state="idState"
-              aria-describedby="input-id-help input-id-feedback"
-              trim
-          ></b-form-input>
+        <b-form>
+          <!-- ID 입력란 -->
+          <b-row class="mb-3">
+            <label class="p-0" for="input-id"><b>ID</b></label>
+            <b-form-input
+                id="input-id"
+                v-model="id"
+                :state="idState"
+                aria-describedby="input-id-help input-id-feedback"
+                trim
+            ></b-form-input>
 
-          <!-- ID 입력 유효성 메시지 -->
-          <b-form-invalid-feedback id="input-id-feedback">
-            ID를 제대로 입력하세요.
-          </b-form-invalid-feedback>
-        </b-row>
+            <!-- ID 입력 유효성 메시지 -->
+            <b-form-invalid-feedback id="input-id-feedback">
+              ID를 제대로 입력하세요.
+            </b-form-invalid-feedback>
+          </b-row>
 
-        <!-- 비밀번호 입력란 -->
-        <b-row class="mb-3">
-          <label class="p-0" for="input-password"><b>비밀번호</b></label>
-          <b-form-input
-              id="input-password"
-              type="password"
-              v-model="password"
-              :state="passwordState"
-              aria-describedby="input-password-help input-password-feedback"
-              trim
-          ></b-form-input>
+          <!-- 비밀번호 입력란 -->
+          <b-row class="mb-3">
+            <label class="p-0" for="input-password"><b>비밀번호</b></label>
+            <b-form-input
+                id="input-password"
+                type="password"
+                v-model="password"
+                :state="passwordState"
+                aria-describedby="input-password-help input-password-feedback"
+                trim
+                autocomplete="off"
+            ></b-form-input>
 
-          <!-- 비밀번호 입력 유효성 메시지 -->
-          <b-form-invalid-feedback id="input-password-feedback">
-            비밀번호를 제대로 입력하세요.
-          </b-form-invalid-feedback>
-        </b-row>
+            <!-- 비밀번호 입력 유효성 메시지 -->
+            <b-form-invalid-feedback id="input-password-feedback">
+              비밀번호를 제대로 입력하세요.
+            </b-form-invalid-feedback>
+          </b-row>
 
-        <!-- 로그인 버튼 -->
-        <b-row class="mb-1 mt-1">
-          <b-button block @click="validateAndSignIn" variant="primary"
-          ><b>로그인</b></b-button
+          <!-- 로그인 버튼 -->
+          <b-row class="mb-1 mt-1">
+            <b-button block @click="validateAndSignIn" variant="primary"
+            ><b>로그인</b></b-button
+            >
+          </b-row>
+
+          <hr class="mt-5">
+
+          <!-- 회원가입과 계정 찾기 링크 -->
+          <b-row class="mb-2">
+          <span class="text-center"
+          >아직 회원이 아니신가요?
+            <router-link
+                class="router-link text-decoration-none text-primary"
+                :to="{ name: `SignUp` }"
+            >회원가입</router-link
+            ></span
           >
-        </b-row>
+          </b-row>
 
-        <hr class="mt-5">
-
-        <!-- 회원가입과 계정 찾기 링크 -->
-        <b-row class="mb-2">
-        <span class="text-center"
-        >아직 회원이 아니신가요?
-          <router-link
-              class="router-link text-decoration-none text-primary"
-              :to="{ name: `SignUp` }"
-          >회원가입</router-link
-          ></span
-        >
-        </b-row>
-
-        <b-row>
-        <span class="text-center"
-        >계정을 잃어버리셨나요?
-          <router-link
-              class="router-link text-decoration-none text-primary"
-              :to="{ name: `Forgot` }"
-          >계정찾기</router-link
-          ></span
-        >
-        </b-row>
+          <b-row>
+          <span class="text-center"
+          >계정을 잃어버리셨나요?
+            <router-link
+                class="router-link text-decoration-none text-primary"
+                :to="{ name: `Forgot` }"
+            >계정찾기</router-link
+            ></span>
+          </b-row>
+        </b-form>
       </b-container>
     </div>
   </div>

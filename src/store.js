@@ -3,7 +3,9 @@ import {reactive, ref} from 'vue';
 export const store = reactive({
     isInitialized: false,
 
-    isSignInModalVisible : ref(false),
+    isDuplicateRequesting: false,
+
+    isSignInModalVisible: ref(false),
 
     categories: [],
 
@@ -18,8 +20,35 @@ export const store = reactive({
      *
      * @param {boolean} initialized - 초기화 상태 값 (true/false)
      */
-    setInitialized(initialized) {
+    updateInitialized(initialized) {
         this.isInitialized = initialized;
+    },
+
+    /**
+     * 저장된 초기화 상태 반환
+     *
+     * @returns {boolean} 초기화 상태
+     */
+    getInitialized() {
+        return this.isInitialized;
+    },
+
+    /**
+     * 요청 상태 변경
+     *
+     * @param value - 변경할 상태 값
+     */
+    updateIsDuplicateRequesting(value) {
+        this.isDuplicateRequesting = value;
+    },
+
+    /**
+     * 요청 상태 값 반환
+     *
+     * @returns {boolean} 요청 상태 값
+     */
+    getIsDuplicateRequesting() {
+        return this.isDuplicateRequesting;
     },
 
     /**

@@ -43,7 +43,7 @@ async function initializeStore() {
         sessionStorage.removeItem('isSignedIn');
     }
 
-    store.setInitialized(true);
+    store.updateInitialized(true);
 }
 
 /**

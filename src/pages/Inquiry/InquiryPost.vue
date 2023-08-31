@@ -44,7 +44,7 @@ async function getInquiry(postIdx) {
 
     // TODO: 코드 리팩토링
     if (errorCode === ErrorType.CAN_NOT_VIEW_SECRET_INQUIRY) {
-      if(store.isMemberSignedIn()) {
+      if (store.isMemberSignedIn()) {
         try {
           const response = await PostService.fetchSecretInquiry(postIdx);
           fetchInquiryData.value = response?.data;
@@ -60,7 +60,7 @@ async function getInquiry(postIdx) {
           }
         }
       }
-      if(!store.isMemberSignedIn()) {
+      if (!store.isMemberSignedIn()) {
         modalShow.value = true;
       }
     }
@@ -75,7 +75,7 @@ const {
   fetchPostReactionData,
   getPostReact,
   updatePostReaction,
-  useSubmit : useUpdatePostReactionSubmit,
+  useSubmit: useUpdatePostReactionSubmit,
 } = usePostReactionSubmit(
     fetchInquiryData,
     PostService.fetchPostReaction,
@@ -89,11 +89,7 @@ const {
  */
 async function handleUpdatePostReactionSubmit(reaction) {
   updatePostReaction(reaction)
-  try {
-    await useUpdatePostReactionSubmit(props.postIdx);
-  } catch (error) {
-    console.error('요청 실패:', error);
-  }
+  await useUpdatePostReactionSubmit(props.postIdx);
 }
 
 
@@ -212,7 +208,7 @@ const {
             :postEditRouteName="`InquiryEdit`"
             :postReaction="fetchPostReactionData"
             @updatePostReaction="(reaction) => handleUpdatePostReactionSubmit(reaction)"
-            @deletePost="useSubmit(postIdx)" />
+            @deletePost="useSubmit(postIdx)"/>
       <template v-if="fetchInquiryData.answerManagerNickname">
         <!-- fetchInquiryData.answerManagerNickname이 존재하는 경우 Answer 컴포넌트로 답변 데이터 표시 -->
         <Answer :post="fetchInquiryData"/>
@@ -241,14 +237,14 @@ const {
   <template v-else-if="modalShow">
     <!-- 데이터 로딩 중이면서 modalShow 값이 true인 경우 -->
     <!-- CommonMessage 컴포넌트로 비밀글 설정 안내 메시지 표시 -->
-    <CommonMessage :imagePath="`secret.jpg`" :title="`비밀글 설정`" :content="`이 게시글은 비밀글로 설정되어있습니다.`" />
+    <CommonMessage :imagePath="`secret.jpg`" :title="`비밀글 설정`" :content="`이 게시글은 비밀글로 설정되어있습니다.`"/>
   </template>
   <template v-else>
     <!-- 데이터 로딩 중이면서 modalShow 값이 false인 경우 -->
     <!-- BackgroundBannerSkeleton 컴포넌트로 스켈레톤 형식의 배경 이미지 표시 -->
-    <BackgroundBannerSkeleton />
+    <BackgroundBannerSkeleton/>
     <!-- PostSkeleton 컴포넌트로 스켈레톤 형식의 게시글 데이터 표시 -->
-    <PostSkeleton />
+    <PostSkeleton/>
   </template>
 
   <!-- 모달 -->
@@ -270,11 +266,16 @@ const {
 
     <!-- 비밀번호 입력 폼 -->
     <b>비밀번호를 입력해 주세요.</b>
-    <form ref="form" class="mt-3">
-      <b-form-group label-for="password-input" invalid-feedback="비밀번호는 필수입니다.">
-        <b-form-input id="password-input" v-model="password" type="password" required />
-      </b-form-group>
-    </form>
+    <b-form class="mt-3">
+        <b-form-group label-for="new-password-input">
+          <b-form-input
+              v-model="password"
+              id="new-input-password"
+              type="password"
+              autocomplete="off"
+          ></b-form-input>
+        </b-form-group>
+    </b-form>
     <!-- submitError가 null이 아닐 경우 에러 컴포넌트 Error로 에러 메시지 표시 -->
     <div v-if="submitError !== null">
       <Error :error="submitError"/>

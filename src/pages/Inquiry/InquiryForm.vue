@@ -5,7 +5,6 @@ import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import PostService from "@/service/PostService";
 import ValidationError from "@/components/common/ValidationError.vue";
-import ErrorType from "@/composable/response/ErrorType";
 import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
 import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
 
@@ -15,8 +14,7 @@ const inquirySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.I
 const {
   post, submitError, attachmentUploadErrors,
   useHandleAttachment, useSubmit
-}
-    = useSavePostSubmitWithAttachments(AttachmentType.FILE,
+} = useSavePostSubmitWithAttachments(AttachmentType.FILE,
     "inquiry", PostService.saveInquiry, 'InquiryPost')
 
 // 게시글 객체의 비밀글 설정 초기값을 false로 설정
@@ -26,13 +24,7 @@ post.value.secret = false;
  * 게시글을 등록하는 함수
  */
 async function handleSubmit() {
-  try {
-    await useSubmit();
-  } catch (error) {
-    if (error.response?.data?.errorCode === ErrorType.INVALID_SECRET) {
-      submitError.value = {password: "비밀번호를 필수로 설정하셔야 합니다."};
-    }
-  }
+  await useSubmit();
 }
 </script>
 

@@ -1,6 +1,6 @@
 /**
  * 쓰기 요청 제한에 사용되는 객체
- * @type {RateLimit}
+ * @type {{TIME_INTERVAL: number, MAX_WRITE_REQUESTS: number}}
  */
 export const RateLimit = {
     /**

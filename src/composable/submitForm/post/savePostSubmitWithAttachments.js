@@ -93,7 +93,9 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;
             }
-            return Promise.reject(error)
+            if (error.response?.data?.errorCode === ErrorType.INVALID_SECRET) {
+                submitError.value = {password: "비밀번호를 필수로 설정하셔야 합니다."};
+            }
         }
     }
 

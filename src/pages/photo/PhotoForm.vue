@@ -15,7 +15,7 @@ const photoSubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.PHO
 const {post, formData, submitError, attachmentUploadErrors, hasAttachmentUploadErrors,
   useHandleAttachment, useSubmit}
     = useSavePostSubmitWithAttachments(AttachmentType.IMAGE,
-    "photo",  PostService.savePhoto)
+    "photo",  PostService.savePhoto, 'PhotoPost')
 
 // 대표 이미지 파일을 담는 반응성 객체
 const selectedFile = ref(null);

@@ -16,6 +16,15 @@ const {post, submitError, attachmentUploadErrors,
         useHandleAttachment, useSubmit}
     = useSavePostSubmitWithAttachments(AttachmentType.FILE,
           "community",  PostService.saveCommunity, 'CommunityPost')
+
+/**
+ * 게시글을 등록하는 함수
+ */
+async function handleSubmit() {
+  await useSubmit();
+}
+
+
 </script>
 <template>
   <!-- PostFormHeader 컴포넌트 사용 -->
@@ -100,7 +109,7 @@ const {post, submitError, attachmentUploadErrors,
 
                     <!-- 등록 버튼 -->
                     <div class="d-grid gap-2 mt-4">
-                      <b-button block variant="primary" @click="useSubmit()"><i
+                      <b-button block variant="primary" @click="handleSubmit()"><i
                           class="fa-regular fa-circle-check"></i> 등록
                       </b-button>
                     </div>

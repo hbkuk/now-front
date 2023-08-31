@@ -1,6 +1,5 @@
 <script setup>
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
-import {ref} from "vue";
 import PostService from "@/service/PostService";
 import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
@@ -72,28 +71,14 @@ const {
     "PhotoPost"
 );
 
-// 요청 중인지 여부를 저장하는 ref 변수
-const isRequesting = ref(false);
-
 /**
  * 게시글 수정 제출을 처리하는 함수
- *
- * 중복 요청 방지와 공통 예외 처리 외 컴포넌트 특화된 에러 처리 로직
  *
  * @param {String} postIdx - 게시글 번호
  * @returns {Promise<void>}
  */
 async function handleEditSubmit(postIdx) {
-  if (isRequesting.value) return;
-  isRequesting.value = true;
-
-  try {
-    await useSubmit(postIdx);
-    isRequesting.value = false;
-  } catch (error) {
-    isRequesting.value = false;
-    console.error('글 수정 실패:', error);
-  }
+  await useSubmit(postIdx);
 }
 
 </script>
@@ -151,7 +136,7 @@ async function handleEditSubmit(postIdx) {
                       <!-- 내용 입력 폼 -->
                       <b-form-group label="내용">
                         <b-form-textarea
-                            :model-value="post.content"
+                            v-model="post.content"
                             id="contentTextarea"
                             placeholder="4글자 이상, 2000글자 이하여야 합니다"
                             required

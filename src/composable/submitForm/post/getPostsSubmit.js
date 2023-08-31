@@ -11,7 +11,7 @@ import {useUpdateSessionStorage} from "@/composable/param/useUpdateSessionStorag
  * @param {object} query - 라우터 쿼리 파라미터
  * @param {string} code - 초기 검색 조건 코드
  * @param {function} getPostsFunction - 게시글 목록 조회 함수
- * @param {function} updateUrl - URL 업데이트 함수
+ * @param {string} updateUrl - URL 업데이트 함수
  * }}
  */
 export function useGetPostsSubmit(query, code, getPostsFunction, updateUrl) {

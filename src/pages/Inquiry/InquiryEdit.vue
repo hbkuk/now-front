@@ -59,13 +59,7 @@ const {
  * 게시글을 등록하는 함수
  */
 async function handleEditSubmit(postIdx) {
-  try {
-    await useSubmit(postIdx, existSecret);
-  } catch (error) {
-    if (error.response?.data?.errorCode === ErrorType.INVALID_SECRET) {
-      submitError.value = {password: "비밀번호를 필수로 설정하셔야 합니다."};
-    }
-  }
+  await useSubmit(postIdx, existSecret);
 }
 
 let existSecret = false;
@@ -105,8 +99,10 @@ onBeforeUpdate(() => {
                           </b-button>
                           <b-form-input
                               id="exist-input-password"
+                              type="password"
                               placeholder="보안을 위해 암호화되어 확인할 수 없습니다. 변경하기를 통해 다시 설정해 주세요."
                               disabled
+                              autocomplete="off"
                           ></b-form-input>
                         </div>
                       </b-form-group>
@@ -119,6 +115,7 @@ onBeforeUpdate(() => {
                             placeholder="4글자 이상, 15글자 이하여야 합니다"
                             minlength="4"
                             maxlength="15"
+                            autocomplete="off"
                         ></b-form-input>
                       </b-form-group>
                     </template>
@@ -132,6 +129,7 @@ onBeforeUpdate(() => {
                             placeholder="4글자 이상, 15글자 이하여야 합니다"
                             minlength="4"
                             maxlength="15"
+                            autocomplete="off"
                         ></b-form-input>
                       </b-form-group>
                     </template>

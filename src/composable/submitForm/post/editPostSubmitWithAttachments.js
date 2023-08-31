@@ -131,7 +131,6 @@ export function useEditPostSubmitWithAttachments(attachmentType, formDataName, s
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;
             }
-            return Promise.reject(error)
         }
     }
 
