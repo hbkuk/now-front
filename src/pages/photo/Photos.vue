@@ -19,12 +19,7 @@ import PageInfo from "@/components/common/PageInfo.vue";
 import {onBeforeUpdate} from "vue";
 
 // 사진 게시글의 하위 코드 그룹 가져오기
-let photoSubCodeGroup = null;
-
-// 컴포넌트의 데이터가 변경되고 화면이 업데이트되기 직전에 실행
-onBeforeUpdate(() => {
-  photoSubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
-});
+const photoSubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.PHOTO);
 
 const {
   fetchPostsData: fetchPhotosData,

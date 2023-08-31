@@ -1,4 +1,4 @@
-import {useHttpRequest} from "@/composable/request/httpRequest";
+import {useHttpFormDataRequest} from "@/composable/request/httpFormDataRequest";
 import {HttpMethod} from "@/composable/request/constants/HttpMethod";
 import {json} from "@/composable/request/constants/Headers";
 import {store} from "@/store";
@@ -15,7 +15,7 @@ const AuthenticationService = {
      * @returns {Promise} 서버 응답에 대한 Promise 객체
      */
     async signIn(formData) {
-        const response = await useHttpRequest(HttpMethod.POST, '/api/sign-in', formData, json);
+        const response = await useHttpFormDataRequest(HttpMethod.POST, '/api/sign-in', formData, json);
         if (response.status === 200) {
             store.saveMember(response.data.id, response.data.nickname);
         }
@@ -27,7 +27,7 @@ const AuthenticationService = {
      * @returns {Promise} 서버 응답에 대한 Promise 객체
      */
     async logout() {
-        const response = await useHttpRequest(HttpMethod.POST, '/api/log-out');
+        const response = await useHttpFormDataRequest(HttpMethod.POST, '/api/log-out');
         if (response.status === 200) {
             store.resetMember();
         }
@@ -40,7 +40,7 @@ const AuthenticationService = {
      * @returns {Promise<AxiosResponse<any>>} 서버 응답에 대한 Promise 객체
      */
     refresh() {
-        return useHttpRequest(HttpMethod.POST, '/api/refresh');
+        return useHttpFormDataRequest(HttpMethod.POST, '/api/refresh');
     },
 
     /**
@@ -49,7 +49,7 @@ const AuthenticationService = {
      * @returns {Promise<AxiosResponse<any>>} 서버 응답에 대한 Promise 객체
      */
     getMember() {
-        return useHttpRequest(HttpMethod.POST, '/api/member/me');
+        return useHttpFormDataRequest(HttpMethod.POST, '/api/member/me');
     },
 
     /**

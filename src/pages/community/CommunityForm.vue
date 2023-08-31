@@ -8,14 +8,14 @@ import ValidationError from "@/components/common/ValidationError.vue";
 import {AttachmentType} from '@/composable/attachment/constants/AttachmentType';
 import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
 
-// 커뮤니티 게시글의 하위 코드 그룹을 가져오기 위해 커스텀 훅 사용
-const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
+// 게시글의 하위 코드 그룹 찾기
+const communitySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.COMMUNITY);
 
 // 커스텀 훅을 사용하여 게시글 작성을 위해 필요한 변수와 함수들을 가져옴
 const {post, submitError, attachmentUploadErrors,
         useHandleAttachment, useSubmit}
     = useSavePostSubmitWithAttachments(AttachmentType.FILE,
-          "community",  PostService.saveCommunity)
+          "community",  PostService.saveCommunity, 'CommunityPost')
 </script>
 <template>
   <!-- PostFormHeader 컴포넌트 사용 -->
@@ -35,7 +35,7 @@ const {post, submitError, attachmentUploadErrors,
                     <!-- 토픽 선택을 위한 셀렉트 박스 -->
                     <b-form-select v-model="post.category">
                       <b-form-select-option :value="null" selected>모든 토픽</b-form-select-option>
-                      <b-form-select-option v-for="category in subCodeGroup" :key="category.subCode" :value="category.subCode">
+                      <b-form-select-option v-for="category in communitySubCodeGroup" :key="category.subCode" :value="category.subCode">
                         {{ category.subCodeTitle }}
                       </b-form-select-option>
                     </b-form-select>

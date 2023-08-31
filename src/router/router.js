@@ -86,10 +86,28 @@ router.beforeEach((to, from, next) => {
 
 export default router;
 
-function requireSignIn(to, from, next) {
-    if (store.isMemberSignedIn()) {
-        next();
-    } else {
-        store.openSignInModal();
-    }
+async function waitForInitialization() {
+    return new Promise(resolve => {
+        const checkInitialization = () => {
+            if (store.isInitialized) {
+                resolve();
+            } else {
+                setTimeout(checkInitialization, 100); // 적절한 간격으로 조정
+            }
+        };
+        checkInitialization();
+    });
+}
+
+async function requireSignIn(to, from, next) {
+    await waitForInitialization().then(() => {
+        console.log(store.isMemberSignedIn())
+        if (store.isMemberSignedIn()) {
+            next();
+        }
+        if (!store.isMemberSignedIn()) {
+            next(false);
+            store.openSignInModal();
+        }
+    });
 }

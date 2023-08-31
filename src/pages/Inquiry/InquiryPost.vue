@@ -1,6 +1,5 @@
 <script setup>
 import Post from "@/components/Post.vue";
-import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import {onBeforeUpdate, ref} from "vue";
 import PostService from "@/service/PostService";
 import Comments from "@/components/Comments.vue";

@@ -17,15 +17,10 @@ import {useGetPostsSubmit} from "@/composable/submitForm/post/getPostsSubmit";
 import router from "@/router/router";
 import PageInfo from "@/components/common/PageInfo.vue";
 import CommonMessage from "@/components/common/CommonMessage.vue";
-import {onBeforeUpdate} from "vue";
+import {onBeforeUpdate, ref} from "vue";
 
-// 커뮤니티 게시글의 하위 코드 그룹을 가져오기 위해 커스텀 훅 사용
-let communitySubCodeGroup = null;
-
-// 컴포넌트의 데이터가 변경되고 화면이 업데이트되기 직전에 실행
-onBeforeUpdate(() => {
-  communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
-});
+// 게시글의 하위 코드 그룹 찾기
+const communitySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.COMMUNITY);
 
 const {
   fetchPostsData: fetchCommunitiesData,

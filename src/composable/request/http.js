@@ -11,7 +11,8 @@ import {useRateLimitedControl} from "@/composable/request/rateLimitedControl";
  * @type {import("axios").AxiosInstance}
  */
 const instance = axios.create({
-    baseURL: process.env.VUE_APP_BACK
+    baseURL: process.env.VUE_APP_BACK,
+    withCredentials: true,
 });
 
 export default instance;

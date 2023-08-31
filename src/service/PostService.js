@@ -1,5 +1,5 @@
 import {useGetRequest} from "@/composable/request/getRequest";
-import {useHttpRequest} from "@/composable/request/httpRequest";
+import {useHttpFormDataRequest} from "@/composable/request/httpFormDataRequest";
 import {formUrlencoded, json, multipart} from "@/composable/request/constants/Headers";
 import {HttpMethod} from "@/composable/request/constants/HttpMethod";
 
@@ -34,7 +34,7 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>}
      */
     savePostReaction(postIdx, formData) {
-        return useHttpRequest(HttpMethod.POST, `/api/posts/${postIdx}/reaction`, formData, json);
+        return useHttpFormDataRequest(HttpMethod.POST, `/api/posts/${postIdx}/reaction`, formData, json);
     },
 
     /**
@@ -126,7 +126,7 @@ const PostService = {
      * @param formData 폼 데이터
      */
     fetchSecretInquiry(postIdx, formData) {
-        return useHttpRequest(HttpMethod.POST, `/api/inquiries/secret/${postIdx}`, formData, formUrlencoded);
+        return useHttpFormDataRequest(HttpMethod.POST, `/api/inquiries/secret/${postIdx}`, formData, formUrlencoded);
     },
 
 
@@ -174,11 +174,11 @@ const PostService = {
     /**
      * 공지 게시물을 저장하는 함수
      *
-     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @param {object} data - 저장할 게시물 데이터가 담긴 객체
      * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
      */
-    saveNotice(formData) {
-        return useHttpRequest(HttpMethod.POST, '/api/manager/notices', formData, json);
+    saveNotice(data) {
+        return useHttpFormDataRequest(HttpMethod.POST, '/api/manager/notices', data, json);
     },
 
 
@@ -189,7 +189,7 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
      */
     saveCommunity(formData) {
-        return useHttpRequest(HttpMethod.POST, '/api/communities', formData, multipart);
+        return useHttpFormDataRequest(HttpMethod.POST, '/api/communities', formData, multipart);
     },
 
     /**
@@ -199,7 +199,7 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
      */
     savePhoto(formData) {
-        return useHttpRequest(HttpMethod.POST, '/api/photos', formData, multipart);
+        return useHttpFormDataRequest(HttpMethod.POST, '/api/photos', formData, multipart);
     },
 
     /**
@@ -209,9 +209,19 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
      */
     saveInquiry(formData) {
-        return useHttpRequest(HttpMethod.POST, '/api/inquiries', formData, json);
+        return useHttpFormDataRequest(HttpMethod.POST, '/api/inquiries', formData, multipart);
     },
 
+    /**
+     * 커뮤니티 게시물을 수정하는 함수
+     *
+     * @param postIdx 게시글 번호
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
+     */
+    editNotice(postIdx, formData) {
+        return useHttpFormDataRequest(HttpMethod.PUT, `/api/notices/${postIdx}`, formData, multipart);
+    },
 
     /**
      * 커뮤니티 게시물을 수정하는 함수
@@ -221,7 +231,7 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
      */
     editCommunity(postIdx, formData) {
-        return useHttpRequest(HttpMethod.PUT, `/api/communities/${postIdx}`, formData, multipart);
+        return useHttpFormDataRequest(HttpMethod.PUT, `/api/communities/${postIdx}`, formData, multipart);
     },
 
     /**
@@ -232,7 +242,18 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
      */
     editPhoto(postIdx, formData) {
-        return useHttpRequest(HttpMethod.PUT, `/api/photos/${postIdx}`, formData, multipart);
+        return useHttpFormDataRequest(HttpMethod.PUT, `/api/photos/${postIdx}`, formData, multipart);
+    },
+
+    /**
+     * 사진 게시물을 수정하는 함수
+     *
+     * @param postIdx 게시글 번호
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 폼 데이터
+     * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
+     */
+    editInquiry(postIdx, formData) {
+        return useHttpFormDataRequest(HttpMethod.PUT, `/api/inquiries/${postIdx}`, formData, multipart);
     },
 
 
@@ -243,7 +264,7 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 삭제 요청 결과
      */
     deleteNotice(postIdx) {
-        return useHttpRequest(HttpMethod.DELETE, `/api/manager/notices/${postIdx}`);
+        return useHttpFormDataRequest(HttpMethod.DELETE, `/api/manager/notices/${postIdx}`);
     },
 
     /**
@@ -253,7 +274,7 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 삭제 요청 결과
      */
     deleteCommunity(postIdx) {
-        return useHttpRequest(HttpMethod.DELETE, `/api/communities/${postIdx}`);
+        return useHttpFormDataRequest(HttpMethod.DELETE, `/api/communities/${postIdx}`);
     },
 
     /**
@@ -263,7 +284,7 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 삭제 요청 결과
      */
     deletePhoto(postIdx) {
-        return useHttpRequest(HttpMethod.DELETE, `/api/photos/${postIdx}`);
+        return useHttpFormDataRequest(HttpMethod.DELETE, `/api/photos/${postIdx}`);
     },
 
     /**
@@ -273,7 +294,7 @@ const PostService = {
      * @returns {Promise<AxiosResponse<any>>} - 삭제 요청 결과
      */
     deleteInquiry(postIdx) {
-        return useHttpRequest(HttpMethod.DELETE, `/api/inquiries/${postIdx}`);
+        return useHttpFormDataRequest(HttpMethod.DELETE, `/api/inquiries/${postIdx}`);
     },
 
 };

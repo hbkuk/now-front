@@ -5,6 +5,7 @@ import {useValidateAttachmentUploadCount} from "@/composable/attachment/validate
 import router from "@/router/router";
 import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
+import {useExtractIdFromLocationHeader} from "@/composable/param/extractIdFromLocationHeader";
 
 /**
  * 게시글 작성 폼을 관리하는 컴포저블
@@ -12,9 +13,10 @@ import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenA
  * @param {object} attachmentType - AttachmentType 객체 (파일 업로드에 필요한 정보를 가진 객체)
  * @param {string} formDataName - 폼 데이터의 이름
  * @param {Function} savePostFunction - 게시글을 저장하는 서비스 메서드
+ * @param {string} targetRouteName - 저장 성공 후 이동할 라우터 이름
  * @returns {object} 게시글 작성 폼 관련 함수와 상태를 포함한 객체
  */
-export function useSavePostSubmitWithAttachments(attachmentType, formDataName, savePostFunction) {
+export function useSavePostSubmitWithAttachments(attachmentType, formDataName, savePostFunction, targetRouteName) {
     const submitError = ref(null)
 
     const post = ref({category: null});
@@ -78,8 +80,12 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
      */
     async function useSubmit() {
         try {
-            const response = await savePostFunction(getSubmitFormData());
-            await router.push(response.headers.location.replace("/api", ""));
+            await savePostFunction(getSubmitFormData()).then(async (response) => {
+                await router.push({
+                    name: targetRouteName,
+                    params: {postIdx: useExtractIdFromLocationHeader(response.headers.location)}
+                })
+            })
         } catch (error) {
             if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
                 await useRefreshTokenAndRetry(() => useSubmit());
@@ -87,6 +93,7 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;
             }
+            return Promise.reject(error)
         }
     }
 

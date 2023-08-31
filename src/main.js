@@ -10,6 +10,7 @@ import {store} from "@/store";
 import AuthenticationService from "@/service/AuthenticationService";
 import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
+import {useParseJsonItemFromSessionStorage} from "@/composable/parse/parseJsonItemFromSessionStorage";
 import CategoryService from "@/service/CategoryService";
 
 const app = createApp(App);
@@ -25,18 +26,24 @@ window.addEventListener('beforeunload', () => {
 });
 
 /**
- * 세션 스토리지와 로컬 스토리지에서 데이터를 가져와 스토어를 초기화
+ * 스토어 초기화
  *
  * @returns {object} 카테고리와 멤버 데이터가 포함된 초기화된 스토어를 반환
  */
-function initializeStore() {
-    getCategories();
+async function initializeStore() {
+    const category = useParseJsonItemFromSessionStorage("categories");
+    if (Object.keys(category).length === 0) {
+        await getCategories();
+    }
+    store.updateCategory(category);
 
     const isSignedIn = sessionStorage.getItem('isSignedIn');
     if (isSignedIn === 'true') {
-        getMember();
+        await getMember();
         sessionStorage.removeItem('isSignedIn');
     }
+
+    store.setInitialized(true);
 }
 
 /**
@@ -45,15 +52,16 @@ function initializeStore() {
  * @returns {Promise<void>} 카테고리 데이터 가져오기와 Store 저장 후 완료
  */
 async function getCategories() {
-    await CategoryService.fetchCategories().then(response => {
-        store.categories = response.data;
+    return CategoryService.fetchCategories().then(response => {
+        store.updateCategory(response.data)
+        sessionStorage.setItem("categories", JSON.stringify(response.data));
     }).catch(error => {
         console.log(error)
     })
 }
 
 /**
- * 회원 데이터를 가져와 store 저장
+ * 회원 정보를 가져와 store 저장
  *
  * @returns {Promise<AxiosResponse<any>>} 회원 데이터 가져오기와 Store 저장 후 완료
  */

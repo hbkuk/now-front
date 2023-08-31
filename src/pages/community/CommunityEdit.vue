@@ -1,5 +1,4 @@
 <script setup>
-import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {ref} from "vue";
 import PostService from "@/service/PostService";
@@ -17,7 +16,7 @@ import {PostGroup} from "@/composable/postGroup/PostGroup";
 import ValidationError from "@/components/common/ValidationError.vue";
 
 // 게시글의 하위 코드 그룹 찾기
-const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.COMMUNITY);
+const communitySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.COMMUNITY);
 
 // 컴포넌트에 전달된 postIdx prop 정의
 const props = defineProps({
@@ -61,7 +60,8 @@ const {
 } = useEditPostSubmitWithAttachments(
     AttachmentType.FILE,
     "community",
-    PostService.editCommunity
+    PostService.editCommunity,
+    "CommunityPost"
 );
 
 // 요청 중인지 여부를 저장하는 ref 변수

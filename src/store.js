@@ -1,7 +1,8 @@
 import {reactive, ref} from 'vue';
 
 export const store = reactive({
-    
+    isInitialized: false,
+
     isSignInModalVisible : ref(false),
 
     categories: [],
@@ -10,6 +11,33 @@ export const store = reactive({
         id: null,
         nickname: null,
         isSignedIn: false,
+    },
+
+    /**
+     * 초기화 상태 변경
+     *
+     * @param {boolean} initialized - 초기화 상태 값 (true/false)
+     */
+    setInitialized(initialized) {
+        this.isInitialized = initialized;
+    },
+
+    /**
+     * 카테고리 데이터를 업데이트
+     *
+     * @param {Array} category 업데이트할 카테고리 데이터 배열
+     */
+    updateCategory(category) {
+        this.categories = category;
+    },
+
+    /**
+     * 저장된 카테고리 데이터를 반환
+     *
+     * @returns {Array} 카테고리 데이터 배열
+     */
+    getCategory() {
+        return this.categories;
     },
 
     /**

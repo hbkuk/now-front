@@ -9,7 +9,7 @@ import http from "./http"
  * @param {Object} requestHeader - 요청 헤더
  * @returns {object} - 응답 객체
  */
-export function useHttpRequest(method, url, formData = null, requestHeader = null) {
+export function useHttpFormDataRequest(method, url, formData = null, requestHeader = null) {
     return http.request({
         method,
         url,

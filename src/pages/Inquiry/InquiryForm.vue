@@ -6,14 +6,18 @@ import {PostGroup} from "@/composable/postGroup/PostGroup";
 import PostService from "@/service/PostService";
 import ValidationError from "@/components/common/ValidationError.vue";
 import ErrorType from "@/composable/response/ErrorType";
-import {useSavePostSubmit} from "@/composable/submitForm/post/savePostSubmit";
+import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
+import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
 
-// 문의 게시글의 토픽 하위 코드 그룹 가져오기
-const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.INQUIRY);
+const inquirySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.INQUIRY);
 
-// useSavePostSubmit 커스텀 훅을 사용하여 게시글 저장에 필요한 데이터와 함수 가져오기
-const {post, submitError, useSubmit}
-    = useSavePostSubmit("inquiry", PostService.saveInquiry)
+// 커스텀 훅을 사용하여 게시글 작성을 위해 필요한 변수와 함수들을 가져옴
+const {
+  post, submitError, attachmentUploadErrors,
+  useHandleAttachment, useSubmit
+}
+    = useSavePostSubmitWithAttachments(AttachmentType.FILE,
+    "inquiry", PostService.saveInquiry, 'InquiryPost')
 
 // 게시글 객체의 비밀글 설정 초기값을 false로 설정
 post.value.secret = false;
@@ -26,7 +30,7 @@ async function handleSubmit() {
     await useSubmit();
   } catch (error) {
     if (error.response?.data?.errorCode === ErrorType.INVALID_SECRET) {
-      submitError.value.password = "비밀번호를 설정하셔야 합니다.";
+      submitError.value = {password: "비밀번호를 필수로 설정하셔야 합니다."};
     }
   }
 }
@@ -75,7 +79,8 @@ async function handleSubmit() {
                   <b-form-group label="토픽">
                     <b-form-select v-model="post.category">
                       <b-form-select-option :value="null" selected>모든 토픽</b-form-select-option>
-                      <b-form-select-option v-for="category in subCodeGroup" :key="category.subCode" :value="category.subCode">
+                      <b-form-select-option v-for="category in inquirySubCodeGroup" :key="category.subCode"
+                                            :value="category.subCode">
                         {{ category.subCodeTitle }}
                       </b-form-select-option>
                     </b-form-select>

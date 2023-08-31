@@ -6,6 +6,7 @@ import router from "@/router/router";
 import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import {EditPhotoOptions} from "@/composable/attachment/constants/EditAttachmentType";
+import {useExtractIdFromLocationHeader} from "@/composable/param/extractIdFromLocationHeader";
 
 /**
  * 사진 게시글의 수정 폼을 관리하는 컴포저블
@@ -13,9 +14,10 @@ import {EditPhotoOptions} from "@/composable/attachment/constants/EditAttachment
  * @param {object} attachmentType - AttachmentType 객체 (파일 업로드에 필요한 정보를 가진 객체)
  * @param {string} formDataName - 폼 데이터의 이름
  * @param {Function} savePostFunction - 게시글을 저장하는 서비스 메서드
+ * @param {string} targetRouteName - 수정 성공 후 이동할 라우터 이름
  * @returns {object} 게시글 작성 폼 관련 함수와 상태를 포함한 객체
  */
-export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, formDataName, savePostFunction) {
+export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, formDataName, savePostFunction, targetRouteName) {
 
     // 선택된 편집 옵션
     const selectedEditOption = ref(EditPhotoOptions.EDIT_EXISTING.code);
@@ -156,8 +158,12 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
      */
     async function useSubmit(postIdx) {
         try {
-            const response = await savePostFunction(postIdx, getSubmitFormData());
-            await router.push(response.headers.location.replace("/api", ""));
+            await savePostFunction(postIdx, getSubmitFormData()).then(async (response) => {
+                await router.push({
+                    name: targetRouteName,
+                    params: {postIdx: useExtractIdFromLocationHeader(response.headers.location)}
+                })
+            })
         } catch (error) {
             if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
                 await useRefreshTokenAndRetry(() => useSubmit(postIdx));

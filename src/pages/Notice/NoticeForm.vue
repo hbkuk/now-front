@@ -6,15 +6,19 @@ import AuthenticationService from "@/service/AuthenticationService";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
-import {useSavePostSubmit} from "@/composable/submitForm/post/savePostSubmit";
 import PostService from "@/service/PostService";
 import ValidationError from "@/components/common/ValidationError.vue";
+import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
+import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
 
 // 문의 게시글의 토픽 하위 코드 그룹 가져오기
 const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTICE);
 
-// useSavePostSubmit 커스텀 훅을 사용하여 게시글 저장에 필요한 데이터와 함수 가져오기
-const {post, submitError, useSubmit} = useSavePostSubmit("notice", PostService.saveNotice);
+// 커스텀 훅을 사용하여 게시글 작성을 위해 필요한 변수와 함수들을 가져옴
+const {post, submitError, attachmentUploadErrors,
+  useHandleAttachment, useSubmit}
+    = useSavePostSubmitWithAttachments(AttachmentType.FILE,
+    "notice",  PostService.saveNotice, 'NoticePost')
 
 // 상단 고정 설정 초기값을 false로 설정
 post.value.pinned = false;

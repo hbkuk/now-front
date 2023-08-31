@@ -1,5 +1,4 @@
 <script setup>
-import BackgroundBanner from "@/components/common/BackgroundBanner.vue";
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
 import {ref} from "vue";
 import PostService from "@/service/PostService";
@@ -19,8 +18,7 @@ import {
 } from "@/composable/submitForm/post/editPostSubmitWithAttachmentsAndThumbnail";
 import {EditPhotoOptions} from "@/composable/attachment/constants/EditAttachmentType";
 
-// 게시글의 하위 코드 그룹 찾기
-const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
+const photoSubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.PHOTO);
 
 // props 설정, postIdx를 props로 전달받음.
 const props = defineProps({
@@ -70,7 +68,8 @@ const {
 } = useEditPostSubmitWithAttachmentsAndThumbnail(
     AttachmentType.IMAGE,
     "photo",
-    PostService.editPhoto
+    PostService.editPhoto,
+    "PhotoPost"
 );
 
 // 요청 중인지 여부를 저장하는 ref 변수
@@ -121,7 +120,7 @@ async function handleEditSubmit(postIdx) {
                       <!-- 토픽 선택을 위한 셀렉트 박스 -->
                       <b-form-select v-model="post.category">
                         <b-form-select-option :value="null" selected>모든 토픽</b-form-select-option>
-                        <b-form-select-option v-for="category in subCodeGroup" :key="category.subCode"
+                        <b-form-select-option v-for="category in photoSubCodeGroup" :key="category.subCode"
                                               :value="category.subCode">
                           {{ category.subCodeTitle }}
                         </b-form-select-option>

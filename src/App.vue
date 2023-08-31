@@ -8,6 +8,6 @@ import SignInModal from "@/components/common/SignInModal.vue";
   <Header />
   <RouterView/>
   <Footer/>
-
   <SignInModal/>
 </template>
+

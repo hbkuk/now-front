@@ -9,8 +9,7 @@ import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
 import PostService from "@/service/PostService";
 import {ref} from "vue";
 
-// 토픽 하위 코드 그룹 가져오기
-const communitySubCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.PHOTO);
+const photoSubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.PHOTO);
 
 // useSavePostSubmitWithAttachments 커스텀 훅을 사용하여 게시글 저장에 필요한 데이터와 함수 가져오기
 const {post, formData, submitError, attachmentUploadErrors, hasAttachmentUploadErrors,
@@ -71,7 +70,7 @@ const useHandleThumbnail = (event) => {
                   <b-form-group label="토픽">
                     <b-form-select v-model="post.category">
                       <b-form-select-option :value="null" selected>모든 토픽</b-form-select-option>
-                      <b-form-select-option v-for="category in communitySubCodeGroup" :key="category.subCode"
+                      <b-form-select-option v-for="category in photoSubCodeGroup" :key="category.subCode"
                                             :value="category.subCode">
                         {{ category.subCodeTitle }}
                       </b-form-select-option>
