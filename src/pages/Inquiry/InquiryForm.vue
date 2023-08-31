@@ -59,6 +59,7 @@ async function handleSubmit() {
                           placeholder="4글자 이상, 15글자 이하여야 합니다"
                           minlength="4"
                           maxlength="15"
+                          autocomplete="false"
                       ></b-form-input>
                     </b-form-group>
                   </template>

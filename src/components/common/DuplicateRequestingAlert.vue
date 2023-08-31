@@ -10,6 +10,6 @@ import {store} from "@/store";
       variant="success"
       dismissible
   >
-    <h4><b>이전과 동일한 요청입니다. 잠시후 다시 시도해주세요.</b></h4>
+    <h4><b>동일한 요청을 반복할 경우 예고없이 차단될 수 있습니다. 잠시후 다시 시도해주세요.</b></h4>
   </b-alert>
 </template>

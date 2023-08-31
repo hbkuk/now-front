@@ -38,16 +38,19 @@ async function submitForm() {
   formData.append("id", id.value)
   formData.append("password", password.value)
 
-  // 로그인 요청 보내기
-  await AuthenticationService.signIn(formData).then(response => {
-    // 로그인 성공 시 홈 페이지로 이동
-    router.push({name: "Home"})
-  }).catch(error => {
-    // 로그인 실패 시 에러 메시지 처리
-    if (error.response.data.errorCode === 2001) {
-      submitError.value = error.response.data;
-    }
-  })
+  try {
+    // 로그인 요청 보내기
+    await AuthenticationService.signIn(formData).then(response => {
+      // 로그인 성공 시 홈 페이지로 이동
+      router.push({name: "Home"})
+    }).catch(error => {
+      // 로그인 실패 시 에러 메시지 처리
+      if (error.response.data.errorCode === 2001) {
+        submitError.value = error.response.data;
+      }
+    })
+  } catch(error) {
+  }
 }
 
 </script>
