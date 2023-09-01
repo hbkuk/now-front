@@ -34,7 +34,7 @@ const useHandleThumbnail = (event) => {
 
   formData.value.delete('thumbnail');
   for (const file of event.target.files) {
-    formData.value.append('attachments', file)
+    formData.value.append('thumbnail', file)
   }
 
   const fileInput = event.target;
