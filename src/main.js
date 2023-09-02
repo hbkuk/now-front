@@ -34,8 +34,9 @@ async function initializeStore() {
     const category = useParseJsonItemFromSessionStorage("categories");
     if (Object.keys(category).length === 0) {
         await getCategories();
+    } else {
+        store.updateCategory(category);
     }
-    store.updateCategory(category);
 
     const isSignedIn = sessionStorage.getItem('isSignedIn');
     if (isSignedIn === 'true') {

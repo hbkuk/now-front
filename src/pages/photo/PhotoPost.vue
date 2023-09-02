@@ -134,7 +134,8 @@ const {
             @deletePost="useSubmit(postIdx)">
         <!-- 게시글에 첨부파일이 있을 경우, Carousel과 AttachmentList 컴포넌트 사용하여 표시 -->
         <template v-if="fetchPhotoData.attachments">
-          <Carousel :attachments="fetchPhotoData.attachments"/>
+          <Carousel :thumbnailAttachmentIdx="fetchPhotoData.thumbnailAttachmentIdx"
+                    :attachments="fetchPhotoData.attachments"/>
           <AttachmentList :attachments="fetchPhotoData.attachments"/>
         </template>
       </Post>

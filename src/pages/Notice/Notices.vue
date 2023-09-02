@@ -17,7 +17,6 @@ import {useGetPostsSubmit} from "@/composable/submitForm/post/getPostsSubmit";
 import router from "@/router/router";
 import PageInfo from "@/components/common/PageInfo.vue";
 import {onBeforeUpdate} from "vue";
-
 const noticeSubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.NOTICE);
 
 const {

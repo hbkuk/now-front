@@ -1,7 +1,7 @@
 <script setup>
 import {computed, defineProps, onBeforeUnmount, onMounted, ref} from "vue";
 import {useIsNewPost} from "@/composable/date/isNewPost";
-import {useGetTimeDifference} from "../../composable/date/getTimeDifference";
+import {useGetTimeDifference} from "@/composable/date/getTimeDifference";
 import CommonMessage from "@/components/common/CommonMessage.vue";
 
 const props = defineProps({
@@ -10,7 +10,6 @@ const props = defineProps({
 });
 
 const screenWidth = ref(window.innerWidth);
-
 
 /**
  * 컬럼 클래스 Computed 속성
@@ -44,6 +43,8 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
 });
 
+const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
+
 </script>
 
 <template>
@@ -59,12 +60,23 @@ onBeforeUnmount(() => {
         <div class="text-center mt-2 p-2">
           <router-link class="text-decoration-none"
                        :to="{ name: `${PostRouteName}`, params: { postIdx: post.postIdx } }">
-            <b-img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRn_xsMTOHm_yD30lIt0MZwvggJS2BPPhuLg&usqp=CAU"
-                fluid
-                alt="Google Logo"
-                aspect-ratio="1/1"
-            ></b-img>
+
+            <div style="display: flex; justify-content: center; align-items: center; height: 150px; width: 100%;">
+              <div style="width: 150px;">
+                <div>
+                  <b-img
+                      v-if="post.thumbnailSavedAttachmentName"
+                      :src="`${bucketPath}${post.thumbnailSavedAttachmentName}`"
+                      fluid
+                  ></b-img>
+                  <b-img
+                      v-else
+                      fluid
+                  ></b-img>
+                </div>
+              </div>
+            </div>
+
             <b-card-text class="text-dark fw-bold text-truncate">
               {{ post.title }}
             </b-card-text>
