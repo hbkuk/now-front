@@ -83,7 +83,6 @@ function nextSlide() {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 600px; /* 이미지의 최대 높이를 조절하세요. */
   overflow: hidden;
 }
 
@@ -97,4 +96,18 @@ function nextSlide() {
 .carousel-control-next-icon {
   color: #0056b3; /* 원하는 색상으로 변경하세요 */
 }
+
+/* 화면 크기에 따른 이미지 컨테이너 높이 조정 */
+@media (max-width: 768px) {
+  .image-container {
+    height: 300px; /* 화면 너비가 768px 이하인 경우 이미지 컨테이너 높이를 300px로 설정합니다. */
+  }
+}
+
+@media (min-width: 769px) {
+  .image-container {
+    height: 600px; /* 화면 너비가 769px 이상인 경우 이미지 컨테이너 높이를 600px로 설정합니다. */
+  }
+}
 </style>
+

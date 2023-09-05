@@ -38,16 +38,18 @@ const props = defineProps({
                 <b>
                   <router-link class="text-decoration-none text-dark font-weight-bold"
                                :to="{ name: `${postRouteName}`, params: { postIdx: post.postIdx } }">
-                    {{ post.title }}
+                    <div class="truncate-text">{{ post.title }}</div>
                   </router-link>
                 </b>
               </div>
               <div class="p-0 d-flex align-items-center">
                 <div class="text-sm">{{ useGetTimeDifference(post.regDate) }} &middot;
                   <b-link class="text-black text-decoration-none" href="#" v-if="post.memberNickname">
-                    {{ post.memberNickname }}
+                    <span class="truncate-text">{{ post.memberNickname }}</span>
                   </b-link>
-                  <b-link class="text-black text-decoration-none" v-if="post.managerNickname">{{ post.managerNickname }}</b-link>
+                  <b-link class="text-black text-decoration-none" v-if="post.managerNickname">
+                    <span class="truncate-text">{{ post.managerNickname }}</span>
+                  </b-link>
                 </div>
               </div>
             </div>
@@ -118,4 +120,5 @@ const props = defineProps({
 .pinned-card:hover {
   box-shadow: 0 5px 10px rgba(51, 170, 255, 1);
 }
+
 </style>

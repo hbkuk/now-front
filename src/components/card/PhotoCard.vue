@@ -27,6 +27,22 @@ const getColumnClass = computed(() => {
 });
 
 /**
+ * 브라우저 크기에 따라 이미지 높이 조절할 수 있게 이미지 크기 반환
+ *
+ * @returns {string} 이미지 크기 반환
+ */
+const getImageHeight = () => {
+  const columnClass = getColumnClass.value;
+  if (screenWidth.value >= 992) {
+    return '180px'; // 큰 화면일 때 높이
+  } else if (screenWidth.value >= 768) {
+    return '125px'; // 중간 화면일 때 높이
+  } else {
+    return '100px'; // 작은 화면일 때 높이
+  }
+};
+
+/**
  * 화면 크기 변경 이벤트 핸들러
  */
 const handleResize = () => {
@@ -61,21 +77,20 @@ const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
           <router-link class="text-decoration-none"
                        :to="{ name: `${PostRouteName}`, params: { postIdx: post.postIdx } }">
 
-            <div style="display: flex; justify-content: center; align-items: center; height: 150px; width: 100%;">
-              <div style="width: 150px;">
-                <div>
-                  <b-img
-                      v-if="post.thumbnailSavedAttachmentName"
-                      :src="`${bucketPath}${post.thumbnailSavedAttachmentName}`"
-                      fluid
-                  ></b-img>
-                  <b-img
-                      v-else
-                      fluid
-                  ></b-img>
-                </div>
+            <div
+                style="display: flex; justify-content: center; align-items: center; width: 100%;"
+                :style="{ height: getImageHeight() }"
+            >
+              <div>
+                <b-img
+                    v-if="post.thumbnailSavedAttachmentName"
+                    :src="`${bucketPath}${post.thumbnailSavedAttachmentName}`"
+                    :fluid="true"
+                ></b-img>
+                <b-img v-else :fluid="true"></b-img>
               </div>
             </div>
+
 
             <b-card-text class="text-dark fw-bold text-truncate">
               {{ post.title }}

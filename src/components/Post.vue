@@ -72,12 +72,21 @@ function updatePostReaction(newReaction) {
       <div class="col-md-12">
         <article>
           <div class="post-content">
-            <h2 class="title mb-4">{{ post.title }}</h2>
+
+            <div class="row">
+              <div class="col-md-12 text-container-wrap">
+                <h2>{{ post.title }}</h2>
+              </div>
+            </div>
 
             <nav style="--bs-breadcrumb-divider: 'ㆍ';" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li v-if="post.memberNickname" class="breadcrumb-item text-secondary">{{ post.memberNickname }}</li>
-                <li v-if="post.managerNickname" class="breadcrumb-item text-secondary">{{ post.managerNickname }}</li>
+                <li v-if="post.memberNickname" class="breadcrumb-item text-secondary truncate-text">
+                  <span class="text-container-wrap">{{ post.memberNickname }}</span>
+                </li>
+                <li v-if="post.managerNickname" class="breadcrumb-item text-secondary truncate-text">
+                  <span class="text-container-wrap">{{ post.managerNickname }}</span>
+                </li>
                 <li class="breadcrumb-item text-secondary">{{ useGetTimeDifference(post.regDate) }}</li>
                 <li v-if="post.comments" class="breadcrumb-item text-secondary">댓글
                   {{ useFormatNumber(post.comments.length) }}개
@@ -85,7 +94,11 @@ function updatePostReaction(newReaction) {
               </ol>
             </nav>
 
-            <p class="mt-5 mb-lg-5">{{ post.content }}</p>
+            <div class="row">
+              <div class="col-md-12 text-container-wrap mt-3">
+                <p>{{ post.content }}</p>
+              </div>
+            </div>
 
             <slot></slot>
 

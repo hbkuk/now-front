@@ -153,77 +153,73 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
           </div>
         </div>
 
-        <table v-else class="table table-borderless mb-0">
+        <b-container class="py-3">
 
-          <tr>
-
-            <td>
-              <div class="d-flex justify-content-start p-3 flex-column gap-2">
-
-                <b-row align-h="between" class="justify-content-start">
-                  <b-col cols="2">
-                    <div class="text-nowrap">
-                      <i class="bi bi-person-circle pe-2"></i>
-                      <span v-if="comment.memberNickname" class="text-secondary">{{ comment.memberNickname }}</span>
-                      <span v-if="comment.managerrNickname" class="text-secondary">{{ comment.managerNickname }}</span>
-                    </div>
-                  </b-col>
-
-                  <b-col cols="2" class="d-flex justify-content-end">
-                    <div :class="{'text-nowrap flex-row align-items-end': store.isSameMember(comment.memberNickname), 'invisible': !store.isSameMember(comment.memberNickname)}">
-                      <b-button @click="handleEditClick(comment.commentIdx, comment.content)" variant="link"
-                                class="text-secondary">
-                        <i class="bi bi-eraser"></i> 수정
-                      </b-button>
-                      <b-button @click="showDeleteModal(comment.commentIdx)" variant="link" class="text-secondary">
-                        <i class="bi bi-trash"></i> 삭제
-                      </b-button>
-                    </div>
-                  </b-col>
-
-
-
-                </b-row>
-
-                <div class="pt-2 d-flex align-items-center">
-                  <b class="text-decoration-none text-dark">
-                    {{ comment.content }}
-                  </b>
-                </div>
-
-                <b-row align-h="between" class="justify-content-start">
-                  <b-col cols="2">
-                  <div class="p-0 d-flex align-items-center">
-                    {{ useGetTimeDifference(comment.regDate) }}
-                  </div>
-                  </b-col>
-                  <b-col cols="2" class="d-flex justify-content-end">
-                    <div class="d-flex flex-row align-items-center">
-                      <i class="bi bi-chevron-up mx-2"></i>
-                      <p class="small text-muted mb-0">기능 준비중</p>
-                      <i class="ms-2 bi-chevron-down"></i>
-                    </div>
-                  </b-col>
-                </b-row>
+          <b-row align-h="between" class="justify-content-start mb-3">
+            <b-col v-if="store.isSameMember(comment.memberNickname)" cols="6">
+              <div>
+                <i class="bi bi-person-circle pe-2"></i>
+                <span class="text-secondary truncate-text">{{ comment.memberNickname }}</span>
               </div>
-            </td>
-          </tr>
-        </table>
+            </b-col>
 
+            <b-col v-else cols="12">
+              <div>
+                <i class="bi bi-person-circle pe-2"></i>
+                <span class="text-secondary truncate-text">{{ comment.managerNickname }}</span>
+              </div>
+            </b-col>
+
+            <b-col v-if="store.isSameMember(comment.memberNickname)" cols="6" class="d-flex justify-content-end">
+              <div class="text-nowrap flex-row align-items-end">
+                <b-button @click="handleEditClick(comment.commentIdx, comment.content)" variant="link"
+                          class="text-secondary">
+                  <i class="bi bi-eraser"></i> 수정
+                </b-button>
+                <b-button @click="showDeleteModal(comment.commentIdx)" variant="link" class="text-secondary">
+                  <i class="bi bi-trash"></i> 삭제
+                </b-button>
+              </div>
+            </b-col>
+          </b-row>
+
+
+          <b-row align-h="between" class="justify-content-start mb-3">
+            <b-col cols="12" class="text-container-wrap">
+              <span>{{ comment.content }}</span>
+            </b-col>
+          </b-row>
+
+          <b-row align-h="between" class="justify-content-start">
+            <b-col cols="6">
+              <div class="p-0 d-flex align-items-center">
+                {{ useGetTimeDifference(comment.regDate) }}
+              </div>
+            </b-col>
+            <b-col cols="6" class="d-flex justify-content-end">
+              <div class="d-flex flex-row align-items-center">
+                <i class="bi bi-chevron-up mx-2"></i>
+                <p class="small text-muted mb-0">기능 준비중</p>
+                <i class="ms-2 bi-chevron-down"></i>
+              </div>
+            </b-col>
+          </b-row>
+
+        </b-container>
       </div>
     </div>
   </div>
 
   <!-- 모달 -->
   <b-modal
-    id="deleteModal"
-    ref="modal"
-    v-model="isShowDeleteModal"
-    title="댓글 삭제"
-    cancel-title="취소하기"
-    ok-title="삭제하기"
-    @ok="handleDeleteOk"
-    centered
+      id="deleteModal"
+      ref="modal"
+      v-model="isShowDeleteModal"
+      title="댓글 삭제"
+      cancel-title="취소하기"
+      ok-title="삭제하기"
+      @ok="handleDeleteOk"
+      centered
   >
     <b class="mb-0">정말로 삭제하시겠습니까?</b>
   </b-modal>

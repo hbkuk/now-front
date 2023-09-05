@@ -151,70 +151,149 @@ watch(
     </b-row>
   </div>
 
-  <nav class="navbar navbar-expand navbar-light bg-light rounded-2">
-    <!-- Left Element -->
-    <b-navbar-nav class="me-auto">
-      <b-nav-item>
-        <b-button variant="primary" class="mr-3" @click="$router.push({name:`${postFormRouteName}`})">
-          <i class="bi bi-pencil-square" style="font-size:24px;"></i>
-        </b-button>
-      </b-nav-item>
-    </b-navbar-nav>
-    <!-- End Left Element -->
+  <div class="d-none d-md-block">
+    <nav class="navbar navbar-expand navbar-light bg-light rounded-2">
+      <!-- Left Element -->
+      <b-navbar-nav class="me-auto">
+        <b-nav-item>
+          <b-button variant="primary" class="mr-3" @click="$router.push({name:`${postFormRouteName}`})">
+            <i class="bi bi-pencil-square" style="font-size:24px;"></i>
+          </b-button>
+        </b-nav-item>
+      </b-navbar-nav>
+      <!-- End Left Element -->
 
-    <!-- Center Element -->
-    <b-navbar-nav class="mx-auto text-nowrap gap-4">
-      <b-nav-item :class="{ 'selected': condition.category === null }">
-        <b-link class="router-link text-decoration-none" @click="resetCategory()"
-                :class="{'text-secondary': condition.category !== null }">
-          전체
-        </b-link>
-      </b-nav-item>
+      <!-- Center Element -->
+      <b-navbar-nav class="mx-auto text-nowrap gap-4">
+        <b-nav-item :class="{ 'selected': condition.category === null }">
+          <b-link class="router-link text-decoration-none" @click="resetCategory()"
+                  :class="{'text-secondary': condition.category !== null }">
+            전체
+          </b-link>
+        </b-nav-item>
 
 
-      <b-nav-item v-for="category in categories" :key="category?.subCode"
-                  :class="{ 'selected': category.subCode === condition.category}"
-      >
-        <b-link class="router-link text-decoration-none" @click="changeCategory(category)" :value="category.subCode"
-                :class="{'text-secondary': category.subCode !== condition.category }"
+        <b-nav-item v-for="category in categories" :key="category?.subCode"
+                    :class="{ 'selected': category.subCode === condition.category}"
         >
-          {{ category.subCodeTitle }}
-        </b-link>
-      </b-nav-item>
-    </b-navbar-nav>
+          <b-link class="router-link text-decoration-none" @click="changeCategory(category)" :value="category.subCode"
+                  :class="{'text-secondary': category.subCode !== condition.category }"
+          >
+            {{ category.subCodeTitle }}
+          </b-link>
+        </b-nav-item>
+      </b-navbar-nav>
 
-    <!-- End Center Element -->
-    <!-- Right Element -->
-    <b-navbar-nav class="ms-auto">
-      <b-nav-item>
-        <b-dropdown id="dropdown-1" class="dropstart">
-          <template #button-content>
-            <i class="bi bi-sort-numeric-down" style="font-size:20px;"></i>
-          </template>
-          <b-dropdown-item v-for="numPosts in MAX_NUMBER_OF_POSTS" :key="numPosts"
-                           @click="changeMaxNumberOfPosts(numPosts)"
-                           :active="parseInt(condition.maxNumberOfPosts) === numPosts">
-            {{ numPosts }}개
-          </b-dropdown-item>
-        </b-dropdown>
-      </b-nav-item>
-      <b-nav-item>
-        <b-dropdown id="dropdown-1" class="dropstart">
-          <template #button-content>
-            <i class="bi bi-sort-alpha-down" style="font-size:20px;"></i>
-          </template>
-          <b-dropdown-item v-for="sort in SORT_OPTIONS" :key="sort.key"
-                           @click="changeSort(sort.value)"
-                           :active="condition.sort === sort.value" :disabled="sort.disabled">
-            {{ sort.label }}
-          </b-dropdown-item>
-        </b-dropdown>
-      </b-nav-item>
-    </b-navbar-nav>
-    <!-- End Right Element -->
-  </nav>
+      <!-- End Center Element -->
+      <!-- Right Element -->
+      <b-navbar-nav class="ms-auto">
+        <b-nav-item>
+          <b-dropdown id="dropdown-1" class="dropstart">
+            <template #button-content>
+              <i class="bi bi-sort-numeric-down" style="font-size:20px;"></i>
+            </template>
+            <b-dropdown-item v-for="numPosts in MAX_NUMBER_OF_POSTS" :key="numPosts"
+                             @click="changeMaxNumberOfPosts(numPosts)"
+                             :active="parseInt(condition.maxNumberOfPosts) === numPosts">
+              {{ numPosts }}개
+            </b-dropdown-item>
+          </b-dropdown>
+        </b-nav-item>
+        <b-nav-item>
+          <b-dropdown id="dropdown-1" class="dropstart">
+            <template #button-content>
+              <i class="bi bi-sort-alpha-down" style="font-size:20px;"></i>
+            </template>
+            <b-dropdown-item v-for="sort in SORT_OPTIONS" :key="sort.key"
+                             @click="changeSort(sort.value)"
+                             :active="condition.sort === sort.value" :disabled="sort.disabled">
+              {{ sort.label }}
+            </b-dropdown-item>
+          </b-dropdown>
+        </b-nav-item>
+      </b-navbar-nav>
+      <!-- End Right Element -->
+    </nav>
+    <slot></slot>
+  </div>
 
-  <slot></slot>
+  <!-- 화면 크기가 md 보다 작을 때 -->
+  <div class="d-md-none">
+    <!-- Left Element -->
+    <b-row class="mb-2 bg-light">
+
+      <b-col cols="6" class="d-flex justify-content-start mb-2">
+        <nav class="navbar navbar-expand navbar-light rounded-2">
+        <b-navbar-nav class="me-auto">
+          <b-nav-item>
+            <b-button variant="primary" class="mr-3" @click="$router.push({name:`${postFormRouteName}`})">
+              <i class="bi bi-pencil-square" style="font-size:24px;"></i>
+            </b-button>
+          </b-nav-item>
+        </b-navbar-nav>
+        </nav>
+      </b-col>
+
+      <b-col cols="6" class="d-flex justify-content-end mb-2">
+        <nav class="navbar navbar-expand navbar-light rounded-2">
+          <b-navbar-nav>
+            <b-nav-item>
+              <b-dropdown id="dropdown-1" class="dropstart">
+                <template #button-content>
+                  <i class="bi bi-sort-numeric-down" style="font-size:24px;"></i>
+                </template>
+                <b-dropdown-item v-for="numPosts in MAX_NUMBER_OF_POSTS" :key="numPosts"
+                                 @click="changeMaxNumberOfPosts(numPosts)"
+                                 :active="parseInt(condition.maxNumberOfPosts) === numPosts">
+                  {{ numPosts }}개
+                </b-dropdown-item>
+              </b-dropdown>
+            </b-nav-item>
+            <b-nav-item>
+              <b-dropdown id="dropdown-1" class="dropstart">
+                <template #button-content>
+                  <i class="bi bi-sort-alpha-down" style="font-size:24px;"></i>
+                </template>
+                <b-dropdown-item v-for="sort in SORT_OPTIONS" :key="sort.key"
+                                 @click="changeSort(sort.value)"
+                                 :active="condition.sort === sort.value" :disabled="sort.disabled">
+                  {{ sort.label }}
+                </b-dropdown-item>
+              </b-dropdown>
+            </b-nav-item>
+          </b-navbar-nav>
+        </nav>
+      </b-col>
+    </b-row>
+
+    <b-row class="mb-2 bg-light">
+      <b-col cols="12" class="d-flex justify-content-center mb-2">
+        <!-- Center Element -->
+        <nav class="navbar navbar-expand navbar-light rounded-2">
+          <b-navbar-nav>
+            <b-nav-item :class="{ 'selected': condition.category === null }">
+              <b-link class="router-link text-decoration-none" @click="resetCategory()"
+                      :class="{'text-secondary': condition.category !== null }">
+                전체
+              </b-link>
+            </b-nav-item>
+
+
+            <b-nav-item v-for="category in categories" :key="category?.subCode"
+                        :class="{ 'selected': category.subCode === condition.category}"
+            >
+              <b-link class="router-link text-decoration-none" @click="changeCategory(category)"
+                      :value="category.subCode"
+                      :class="{'text-secondary': category.subCode !== condition.category }"
+              >
+                {{ category.subCodeTitle }}
+              </b-link>
+            </b-nav-item>
+          </b-navbar-nav>
+        </nav>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 <script setup>
 </script>

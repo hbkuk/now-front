@@ -160,7 +160,6 @@ async function handleEditSubmit(postIdx) {
                               v-model="selectedEditOption"
                               :options="editOptions"
                               button-variant="outline-primary"
-                              size="lg"
                               name="radio-btn-outline"
                               buttons
                           ></b-form-radio-group>
