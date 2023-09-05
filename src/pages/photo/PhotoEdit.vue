@@ -169,7 +169,7 @@ async function handleEditSubmit(postIdx) {
 
 
                       <!-- Show the form for 기존 이미지 수정 -->
-                      <div v-if="selectedEditOption === EditPhotoOptions.EDIT_EXISTING.value">
+                      <div v-if="selectedEditOption === EditPhotoOptions.EDIT_EXISTING.code">
                         <b-form-group label="기존 이미지 수정"
                                       v-if=" post.attachments && post.attachments.length > 0">
                           <b-card class="my-3">
@@ -227,7 +227,7 @@ async function handleEditSubmit(postIdx) {
                       </div>
 
                       <!-- Show the form for 새로운 이미지 추가 -->
-                      <div v-if="selectedEditOption === EditPhotoOptions.ADD_NEW.value">
+                      <div v-if="selectedEditOption === EditPhotoOptions.ADD_NEW.code">
                         <b-form-group label="새로운 이미지 추가">
                           <b-card class="my-3">
                             <!-- 대표 이미지 업로드 -->

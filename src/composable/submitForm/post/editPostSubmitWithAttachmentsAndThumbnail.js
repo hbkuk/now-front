@@ -133,7 +133,7 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
      * @returns {FormData} 폼 데이터 객체
      */
     function getSubmitFormData() {
-        if( selectedEditOption.value === EditPhotoOptions.EDIT_EXISTING.value ) {
+        if( selectedEditOption.value === EditPhotoOptions.EDIT_EXISTING.code ) {
 
             formData.value.delete('notDeletedIndexes');
             formData.value.append('notDeletedIndexes', notDeletedIndexes.value);
@@ -145,7 +145,6 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
         formData.value.append('updateOption'
                         , new Blob([JSON.stringify(selectedEditOption.value)], {type: 'application/json'}));
 
-        console.log(post.value)
         formData.value.delete(formDataName);
         formData.value.append(formDataName, new Blob([JSON.stringify(post.value)], {type: 'application/json'}));
         return formData.value;
