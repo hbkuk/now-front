@@ -12,7 +12,7 @@ import { useRefreshTokenAndRetry } from "@/composable/authentication/refreshToke
  */
 export function usePostReactionSubmit(targetPost, getPostReactionFunction, savePostReactionFunction) {
     const fetchPostReactionData = ref(null);
-    const updatedReaction = ref(null);
+    const updatedReaction = ref({reaction: null});
 
     /**
      * 게시물의 반응 정보를 가져오는 함수
@@ -37,19 +37,9 @@ export function usePostReactionSubmit(targetPost, getPostReactionFunction, saveP
      * @param {string} reaction - 반응
      */
     function updatePostReaction(reaction) {
-        updatedReaction.value = reaction;
+        updatedReaction.value.reaction = reaction;
     }
 
-    /**
-     * 제출용 폼 데이터를 가져오는 함수
-     *
-     * @returns {FormData} - 제출용 폼 데이터
-     */
-    function getSubmitFormData() {
-        const formData = new FormData();
-        formData.append('reaction', updatedReaction.value);
-        return formData;
-    }
 
     /**
      * 업데이트할 게시글 반응정보를 서버에 전송하는 함수
@@ -58,7 +48,7 @@ export function usePostReactionSubmit(targetPost, getPostReactionFunction, saveP
      */
     async function useSubmit(postIdx) {
         try {
-            await savePostReactionFunction(postIdx, getSubmitFormData());
+            await savePostReactionFunction(postIdx, new Blob([JSON.stringify(updatedReaction.value)], {type: 'application/json'}));
 
             const response = await getPostReactionFunction(postIdx, { isReactionDetails: true });
             fetchPostReactionData.value = response.data;

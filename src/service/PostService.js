@@ -174,11 +174,11 @@ const PostService = {
     /**
      * 공지 게시물을 저장하는 함수
      *
-     * @param {object} data - 저장할 게시물 데이터가 담긴 객체
+     * @param {object} formData - 저장할 게시물 데이터가 담긴 객체
      * @returns {Promise<AxiosResponse<any>>} - 저장된 게시물 정보
      */
-    saveNotice(data) {
-        return useHttpFormDataRequest(HttpMethod.POST, '/api/manager/notices', data, json);
+    saveNotice(formData) {
+        return useHttpFormDataRequest(HttpMethod.POST, '/api/manager/notices', formData, multipart);
     },
 
 
