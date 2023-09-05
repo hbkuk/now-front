@@ -11,8 +11,6 @@
     <!-- Center Element -->
     <b-navbar-nav class="mx-auto">
         <b-skeleton variant="link" class="nav-link fs-6" height="1.5rem" width="8rem"></b-skeleton>
-        <b-skeleton variant="link" class="nav-link fs-6" height="1.5rem" width="8rem"></b-skeleton>
-        <b-skeleton variant="link" class="nav-link fs-6" height="1.5rem" width="8rem"></b-skeleton>
     </b-navbar-nav>
     <!-- End Center Element -->
 
