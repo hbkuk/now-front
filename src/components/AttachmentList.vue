@@ -24,7 +24,7 @@ function fileDownload(attachmentIdx, originalAttachmentName) {
     <li v-for="(attachment, attachmentIdx) in attachments" :key="attachmentIdx"
         class="list-group-item list-group-item-action px-3 border-0 ripple">
       <span v-if="attachment.attachmentExtension"
-            v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
+            v-dompurify-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
       <b-button variant="outline-light"
                 @click="fileDownload(attachment.attachmentIdx, attachment.originalAttachmentName)"
                 class="text-decoration-none text-dark">{{ attachment.originalAttachmentName }}

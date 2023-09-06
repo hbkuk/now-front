@@ -12,12 +12,14 @@ import ErrorType from "@/composable/response/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import {useParseJsonItemFromSessionStorage} from "@/composable/parse/parseJsonItemFromSessionStorage";
 import CategoryService from "@/service/CategoryService";
+import VueDOMPurifyHTML from 'vue-dompurify-html'
 
 const app = createApp(App);
 initializeStore();
 
 app.use(BootstrapVue3);
 app.use(router);
+app.use(VueDOMPurifyHTML)
 app.mount('#app');
 
 // 사용자가 앱을 종료하기 전에 로그인 상태를 세션 스토리지에 저장

@@ -144,7 +144,7 @@ const {
                             <div class="flex-grow-1 text-decoration-none text-dark"
                                  v-if="!isAttachmentIdxDeleted(attachment.attachmentIdx)">
                                     <span v-if="attachment.attachmentExtension"
-                                          v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
+                                          v-dompurify-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
                               <a :href="`/attachments/${attachment.attachmentIdx}`"
                                  class="text-decoration-none text-dark">
                                 {{ attachment.originalAttachmentName }} ({{
@@ -155,7 +155,7 @@ const {
                             <!-- 삭제된 파일 이름 표시 -->
                             <div class="flex-grow-1 text-decoration-line-through" v-else style="color: #ff0000;">
                               <span v-if="attachment.attachmentExtension"
-                                    v-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
+                                    v-dompurify-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
                               {{ attachment.originalAttachmentName }} ({{ useFormatBytes(attachment.attachmentSize) }})
                             </div>
 

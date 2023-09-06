@@ -246,7 +246,7 @@ async function useFeedbackSubmit(data) {
 .bottom-sticky {
   position: sticky;
   bottom: 0;
-  background-color: white; /* Adjust as needed */
+  background-color: transparent; /* Adjust as needed */
   z-index: 100; /* Adjust as needed */
 }
 </style>

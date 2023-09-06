@@ -190,7 +190,7 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
 
           <b-row align-h="between" class="justify-content-start my-3">
             <b-col cols="12" class="text-container-wrap">
-              <div v-html="comment.content"></div>
+              <div v-dompurify-html="comment.content"></div>
             </b-col>
           </b-row>
 

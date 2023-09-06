@@ -96,7 +96,7 @@ function updatePostReaction(newReaction) {
 
             <div class="row">
               <div class="col-md-12 text-container-wrap my-3">
-                <div v-html="post.content"></div>
+                <div v-dompurify-html="post.content"></div>
               </div>
             </div>
 
