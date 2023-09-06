@@ -3,6 +3,7 @@ import {defineProps, ref, watch} from "vue";
 import {useGetTimeDifference} from "@/composable/date/getTimeDifference";
 import ValidationError from "@/components/common/ValidationError.vue";
 import {store} from "@/store";
+import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 const emit = defineEmits(['saveComment', 'deleteComment', 'editComment'])
 
@@ -121,8 +122,19 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
 
   <div>
     <div class="form-outline mb-2">
-      <b-form-textarea v-model="comment.content" class="form-control p-3 mt-2" rows="2" id="comment" name="text"
-                       placeholder="댓글 입력(최대 2000자) ..."></b-form-textarea>
+      <b-form-textarea v-model="comment.content"
+                       class="form-control p-3 mt-2"
+                       rows="2"
+                       id="comment"
+                       name="text"
+                       minlength="1"
+                       maxlength="2000"
+                       placeholder="댓글 입력(최대 2000자) ...">
+      </b-form-textarea>
+      <CharacterCounter
+          :currentCharacterCount="comment.content?.length"
+          :maxCharacterCount="2000"
+      />
     </div>
     <div class="mb-4 text-end">
       <b-button @click="saveComment" variant="primary" size="sm">댓글 등록</b-button>
@@ -145,7 +157,12 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
                 rows="2"
                 id="comment"
                 name="text"
-                placeholder="댓글 수정(최대 2000자) ..."></b-form-textarea>
+                placeholder="댓글 수정(최대 2000자) ...">
+            </b-form-textarea>
+            <CharacterCounter
+                :currentCharacterCount="editingComment.content?.length"
+                :maxCharacterCount="2000"
+            />
           </div>
           <div class="d-flex justify-content-end">
             <div class="me-3">

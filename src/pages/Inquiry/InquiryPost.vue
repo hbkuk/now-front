@@ -255,6 +255,7 @@ const {
       title="비밀글 열람"
       cancel-title="목록 이동"
       ok-title="열람하기"
+      button-size="sm"
       @show="resetPassword"
       @hidden="resetPassword"
       @ok="handleOk"

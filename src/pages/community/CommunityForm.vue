@@ -7,15 +7,18 @@ import {PostGroup} from "@/composable/postGroup/PostGroup";
 import ValidationError from "@/components/common/ValidationError.vue";
 import {AttachmentType} from '@/composable/attachment/constants/AttachmentType';
 import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
+import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 // 게시글의 하위 코드 그룹 찾기
 const communitySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.COMMUNITY);
 
 // 커스텀 훅을 사용하여 게시글 작성을 위해 필요한 변수와 함수들을 가져옴
-const {post, submitError, attachmentUploadErrors,
-        useHandleAttachment, useSubmit}
+const {
+  post, submitError, attachmentUploadErrors,
+  useHandleAttachment, useSubmit
+}
     = useSavePostSubmitWithAttachments(AttachmentType.FILE,
-          "community",  PostService.saveCommunity, 'CommunityPost')
+    "community", PostService.saveCommunity, 'CommunityPost')
 
 /**
  * 게시글을 등록하는 함수
@@ -44,7 +47,8 @@ async function handleSubmit() {
                     <!-- 토픽 선택을 위한 셀렉트 박스 -->
                     <b-form-select v-model="post.category">
                       <b-form-select-option :value="null" selected>모든 토픽</b-form-select-option>
-                      <b-form-select-option v-for="category in communitySubCodeGroup" :key="category.subCode" :value="category.subCode">
+                      <b-form-select-option v-for="category in communitySubCodeGroup" :key="category.subCode"
+                                            :value="category.subCode">
                         {{ category.subCodeTitle }}
                       </b-form-select-option>
                     </b-form-select>
@@ -65,6 +69,10 @@ async function handleSubmit() {
                           minlength="4"
                           maxlength="100"
                       ></b-form-input>
+                      <CharacterCounter
+                          :currentCharacterCount="post.title?.length"
+                          :maxCharacterCount="100"
+                      />
                     </b-form-group>
                     <template v-if="submitError && submitError.title">
                       <!-- 제목 에러 메시지 출력 -->
@@ -82,6 +90,10 @@ async function handleSubmit() {
                           maxlength="2000"
                           style="height: 300px;"
                       ></b-form-textarea>
+                      <CharacterCounter
+                          :currentCharacterCount="post.content?.length"
+                          :maxCharacterCount="2000"
+                      />
                     </b-form-group>
                     <template v-if="submitError && submitError.content">
                       <!-- 내용 에러 메시지 출력 -->
@@ -91,7 +103,8 @@ async function handleSubmit() {
                     <!-- 파일 업로드 입력 폼 -->
                     <div class="mb-5">
                       <label for="formFileMultiple" class="form-label">파일 업로드</label>
-                      <input @change="useHandleAttachment" class="form-control" type="file" id="formFileMultiple" multiple
+                      <input @change="useHandleAttachment" class="form-control" type="file" id="formFileMultiple"
+                             multiple
                              ref="fileInput">
                     </div>
                     <template v-if="attachmentUploadErrors.hasUnsupportedExtensions">

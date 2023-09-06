@@ -3,6 +3,7 @@ import {ref} from "vue";
 import ErrorType from "@/composable/response/ErrorType";
 import ReportService from "@/service/ReportService";
 import ValidationError from "@/components/common/ValidationError.vue";
+import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 const submitError = ref(null);
 const isSuccessSubmit = ref(false);
@@ -172,6 +173,7 @@ async function useFeedbackSubmit(data) {
       @show="resetBugContent()"
       @hidden="resetBugContent()"
       @ok="handleBugOk"
+      button-size="sm"
       centered
       no-close-on-backdrop
   >
@@ -188,6 +190,10 @@ async function useFeedbackSubmit(data) {
             maxlength="2000"
             style="height: 100px;"
         ></b-form-textarea>
+        <CharacterCounter
+            :currentCharacterCount="bug.content?.length"
+            :maxCharacterCount="2000"
+        />
       </b-form-group>
     </b-form>
     <template v-if="submitError !== null && submitError.content !== null">
@@ -206,11 +212,12 @@ async function useFeedbackSubmit(data) {
       @show="resetFeedbackContent()"
       @hidden="resetFeedbackContent()"
       @ok="handleFeedbackOk"
+      button-size="sm"
       centered
       no-close-on-backdrop
   >
 
-    <b class="mb-0"> 서비스에 의견을 듣고 싶습니다</b>
+    <b class="mb-0"> 서비스에 대한 소중한 의견을 듣고 싶습니다</b>
     <b-form class="mt-3">
 
       <b-form-group label-for="feedback-content-input">
@@ -223,6 +230,10 @@ async function useFeedbackSubmit(data) {
             maxlength="2000"
             style="height: 100px;"
         ></b-form-textarea>
+        <CharacterCounter
+            :currentCharacterCount="feedback.content?.length"
+            :maxCharacterCount="2000"
+        />
       </b-form-group>
     </b-form>
     <template v-if="submitError !== null && submitError.content !== null">
@@ -236,8 +247,9 @@ async function useFeedbackSubmit(data) {
       style="z-index: 2000;"
       variant="success"
       dismissible
+      size="sm"
   >
-    <b>소중한 의견 감사합니다.</b>
+    <small><b>감사합니다. 더 나은 서비스를 제공하도록 노력하겠습니다.</b></small>
   </b-alert>
 
 </template>

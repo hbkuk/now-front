@@ -10,6 +10,7 @@ import PostService from "@/service/PostService";
 import ValidationError from "@/components/common/ValidationError.vue";
 import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
 import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
+import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 // 문의 게시글의 토픽 하위 코드 그룹 가져오기
 const subCodeGroup = useFindSubCodeGroup(store.categories, PostGroup.NOTICE);
@@ -89,6 +90,10 @@ isManager();
                           minlength="4"
                           maxlength="100"
                       ></b-form-input>
+                      <CharacterCounter
+                          :currentCharacterCount="post.title?.length"
+                          :maxCharacterCount="100"
+                      />
                     </b-form-group>
                     <!-- 제목 입력 오류가 있을 경우, 오류 메시지 출력 -->
                     <template v-if="submitError && submitError.title">
@@ -106,6 +111,10 @@ isManager();
                           maxlength="2000"
                           style="height: 300px;"
                       ></b-form-textarea>
+                      <CharacterCounter
+                          :currentCharacterCount="post.content?.length"
+                          :maxCharacterCount="2000"
+                      />
                     </b-form-group>
                     <!-- 내용 입력 오류가 있을 경우, 오류 메시지 출력 -->
                     <template v-if="submitError && submitError.content">

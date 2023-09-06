@@ -26,6 +26,15 @@ export function useCommentSubmit(targetComment, showSaveCommentNotification,
     const deleteSubmitError = ref(null);
 
     /**
+     * 모든 에러 응답 객체를 초기화
+     */
+    function resetSubmitError() {
+        deleteSubmitError.value = null;
+        editSubmitError.value = null;
+        saveSubmitError.value = null;
+    }
+
+    /**
      * 저장할 댓글 정보를 업데이트
      *
      * @param {Object} comment - 업데이트할 댓글 정보
@@ -72,7 +81,7 @@ export function useCommentSubmit(targetComment, showSaveCommentNotification,
 
             const response = await CommentService.fetchAllCommentsByPostIdx(postIdx);
             targetComment.value.comments = response.data.comments;
-            saveSubmitError.value = null;
+            resetSubmitError();
             successSaveComment.value = true;
             showSaveCommentNotification()
         } catch (error) {
@@ -119,7 +128,7 @@ export function useCommentSubmit(targetComment, showSaveCommentNotification,
 
             const response = await CommentService.fetchAllCommentsByPostIdx(postIdx);
             targetComment.value.comments = response.data.comments;
-            editSubmitError.value = null;
+            resetSubmitError();
             successEditComment.value = true;
             showEditCommentNotification()
         } catch (error) {
@@ -146,11 +155,12 @@ export function useCommentSubmit(targetComment, showSaveCommentNotification,
      * @param {number} commentIdx - 삭제할 댓글의 인덱스
      */
     async function useDeleteSubmit(commentIdx) {
+
         try {
             await CommentService.deleteComment(targetComment.value.postIdx, commentIdx);
             const response = await CommentService.fetchAllCommentsByPostIdx(targetComment.value.postIdx);
             targetComment.value.comments = response.data.comments;
-            deleteSubmitError.value = null;
+            resetSubmitError();
             showDeleteCommentNotification()
         } catch (error) {
             if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {

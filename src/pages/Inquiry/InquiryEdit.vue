@@ -8,10 +8,10 @@ import BackgroundBannerSkeleton from "@/components/skeleton/BackgroundBannerSkel
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";
 import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
-import {useEditPostSubmit} from "@/composable/submitForm/post/editPostSubmit";
 import ValidationError from "@/components/common/ValidationError.vue";
-import {onBeforeUpdate, ref} from "vue";
+import {onBeforeUpdate} from "vue";
 import {useEditPrivacyPostSubmit} from "@/composable/submitForm/post/editPrivacyPostSubmit";
+import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 const inquirySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.INQUIRY);
 
@@ -59,6 +59,7 @@ const {
  * 게시글을 등록하는 함수
  */
 async function handleEditSubmit(postIdx) {
+  console.log(post.value)
   await useSubmit(postIdx, existSecret);
 }
 
@@ -94,7 +95,8 @@ onBeforeUpdate(() => {
                     <template v-if="existSecret">
                       <b-form-group v-if="post.secret" label="기존 비밀글 비밀번호">
                         <div class="d-flex align-items-center text-nowrap gap-1">
-                          <b-button @click="handlePasswordSetting()" :variant="isPasswordChanging ? 'danger' : 'outline-warning'">
+                          <b-button @click="handlePasswordSetting()"
+                                    :variant="isPasswordChanging ? 'danger' : 'outline-warning'">
                             {{ isPasswordChanging ? '변경취소' : '변경하기' }}
                           </b-button>
                           <b-form-input
@@ -117,6 +119,10 @@ onBeforeUpdate(() => {
                             maxlength="15"
                             autocomplete="off"
                         ></b-form-input>
+                        <CharacterCounter
+                            :currentCharacterCount="post.password?.length"
+                            :maxCharacterCount="15"
+                        />
                       </b-form-group>
                     </template>
 
@@ -131,6 +137,10 @@ onBeforeUpdate(() => {
                             maxlength="15"
                             autocomplete="off"
                         ></b-form-input>
+                        <CharacterCounter
+                            :currentCharacterCount="post.password?.length"
+                            :maxCharacterCount="15"
+                        />
                       </b-form-group>
                     </template>
 
@@ -157,13 +167,17 @@ onBeforeUpdate(() => {
                     <b-form>
                       <b-form-group label="제목">
                         <b-form-input
-                            :model-value="post.title"
+                            v-model="post.title"
                             id="titleInput"
                             placeholder="4글자 이상, 100글자 이하여야 합니다"
                             required
                             minlength="4"
                             maxlength="100"
                         ></b-form-input>
+                        <CharacterCounter
+                            :currentCharacterCount="post.title?.length"
+                            :maxCharacterCount="100"
+                        />
                       </b-form-group>
                       <template v-if="submitError && submitError.title">
                         <!-- 제목 에러 메시지 출력 -->
@@ -172,7 +186,7 @@ onBeforeUpdate(() => {
 
                       <b-form-group label="내용">
                         <b-form-textarea
-                            :model-value="post.content"
+                            v-model="post.content"
                             id="contentTextarea"
                             placeholder="4글자 이상, 2000글자 이하여야 합니다"
                             required
@@ -180,6 +194,10 @@ onBeforeUpdate(() => {
                             maxlength="2000"
                             style="height: 300px;"
                         ></b-form-textarea>
+                        <CharacterCounter
+                            :currentCharacterCount="post.content?.length"
+                            :maxCharacterCount="2000"
+                        />
                       </b-form-group>
                       <template v-if="submitError && submitError.content">
                         <!-- 내용 에러 메시지 출력 -->

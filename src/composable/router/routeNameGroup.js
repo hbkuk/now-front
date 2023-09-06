@@ -24,6 +24,6 @@ export const ROUTE_NAME_GROUP = {
     INQUIRY: {
         code: "INQUIRY",
         label: "문의",
-        routes: ['Inquiries', 'InquiryPost', 'InquiryForm']
+        routes: ['Inquiries', 'InquiryPost', 'InquiryForm', 'InquiryEdit']
     },
 };

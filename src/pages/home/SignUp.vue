@@ -43,7 +43,7 @@ const isValidFormat = (value, regex) => {
 
 // 폼 유효성을 검증하고 회원가입을 시도하는 함수
 const validateAndSingUp = () => {
-
+  console.log("시발 왜안돼")
   idState.value = isValidFormat(id.value, ID_REGEX);
   passwordState.value = isValidFormat(password.value, PASSWORD_REGEX);
   passwordConfirmState.value = passwordState.value !== false && passwordConfirm.value === password.value;
@@ -121,7 +121,7 @@ function resetStates() {
            alt="Main image"/>
   </div>
 
-  <div class="d-flex justify-content-center mt-2">
+  <div class="d-flex justify-content-center mt-2 p-2">
     <div role="group">
       <div class="text-center mb-lg-4 text-nowrap text-truncate">
         <h3 class="emphasis">NOW에 오신것을 환영합니다.</h3>

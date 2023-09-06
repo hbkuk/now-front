@@ -81,7 +81,7 @@ export function useEditPrivacyPostSubmit(formDataName, savePostFunction, targetR
             })
         } catch (error) {
             if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
-                await useRefreshTokenAndRetry(() => useSubmit(postIdx));
+                await useRefreshTokenAndRetry(() => useSubmit(postIdx, existSecret));
             }
             if (error.response?.data?.errorCode === ErrorType.UNPROCESSABLE_ENTITY) {
                 submitError.value = error.response.data.message;

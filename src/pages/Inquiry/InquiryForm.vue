@@ -7,6 +7,7 @@ import PostService from "@/service/PostService";
 import ValidationError from "@/components/common/ValidationError.vue";
 import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
 import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
+import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 const inquirySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.INQUIRY);
 
@@ -61,6 +62,10 @@ async function handleSubmit() {
                           maxlength="15"
                           autocomplete="false"
                       ></b-form-input>
+                      <CharacterCounter
+                          :currentCharacterCount="post.password?.length"
+                          :maxCharacterCount="15"
+                      />
                     </b-form-group>
                   </template>
                   <!-- 비밀번호 설정 오류가 있을 경우, 오류 메시지 출력 -->
@@ -94,6 +99,10 @@ async function handleSubmit() {
                           minlength="4"
                           maxlength="100"
                       ></b-form-input>
+                      <CharacterCounter
+                          :currentCharacterCount="post.title?.length"
+                          :maxCharacterCount="100"
+                      />
                     </b-form-group>
                     <!-- 제목 입력 오류가 있을 경우, 오류 메시지 출력 -->
                     <template v-if="submitError&&submitError.title">
@@ -111,6 +120,10 @@ async function handleSubmit() {
                           maxlength="2000"
                           style="height: 300px;"
                       ></b-form-textarea>
+                      <CharacterCounter
+                          :currentCharacterCount="post.content?.length"
+                          :maxCharacterCount="2000"
+                      />
                     </b-form-group>
                     <!-- 내용 입력 오류가 있을 경우, 오류 메시지 출력 -->
                     <template v-if="submitError&&submitError.content">

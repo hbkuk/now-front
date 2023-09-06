@@ -11,6 +11,7 @@ import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import {useEditPostSubmit} from "@/composable/submitForm/post/editPostSubmit";
 import ValidationError from "@/components/common/ValidationError.vue";
+import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 const noticeSubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.NOTICE);
 
@@ -107,6 +108,10 @@ const {
                             minlength="4"
                             maxlength="100"
                         ></b-form-input>
+                        <CharacterCounter
+                            :currentCharacterCount="post.title?.length"
+                            :maxCharacterCount="100"
+                        />
                       </b-form-group>
                       <template v-if="submitError && submitError.title">
                         <!-- 제목 에러 메시지 출력 -->
@@ -123,6 +128,10 @@ const {
                             maxlength="2000"
                             style="height: 300px;"
                         ></b-form-textarea>
+                        <CharacterCounter
+                            :currentCharacterCount="post.content?.length"
+                            :maxCharacterCount="2000"
+                        />
                       </b-form-group>
                       <template v-if="submitError && submitError.content">
                         <!-- 내용 에러 메시지 출력 -->

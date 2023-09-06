@@ -67,7 +67,7 @@ async function submitForm() {
     />
   </div>
 
-  <div class="d-flex justify-content-center mt-2">
+  <div class="d-flex justify-content-center mt-2 p-3">
     <div role="group">
       <div class="text-center mb-lg-4 text-nowrap text-truncate">
         <h3 class="emphasis">NOW에 오신것을 환영합니다.</h3>

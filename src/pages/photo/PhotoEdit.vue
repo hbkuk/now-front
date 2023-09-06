@@ -16,6 +16,7 @@ import {
   useEditPostSubmitWithAttachmentsAndThumbnail
 } from "@/composable/submitForm/post/editPostSubmitWithAttachmentsAndThumbnail";
 import {EditPhotoOptions} from "@/composable/attachment/constants/EditAttachmentType";
+import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 const photoSubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.PHOTO);
 
@@ -127,6 +128,10 @@ async function handleEditSubmit(postIdx) {
                             minlength="4"
                             maxlength="100"
                         ></b-form-input>
+                        <CharacterCounter
+                            :currentCharacterCount="post.title?.length"
+                            :maxCharacterCount="100"
+                        />
                       </b-form-group>
                       <template v-if="submitError && submitError.title">
                         <!-- 제목 에러 메시지 출력 -->
@@ -144,6 +149,10 @@ async function handleEditSubmit(postIdx) {
                             maxlength="2000"
                             style="height: 300px;"
                         ></b-form-textarea>
+                        <CharacterCounter
+                            :currentCharacterCount="post.content?.length"
+                            :maxCharacterCount="2000"
+                        />
                       </b-form-group>
                       <template v-if="submitError && submitError.content">
                         <!-- 내용 에러 메시지 출력 -->

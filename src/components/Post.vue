@@ -133,6 +133,7 @@ function updatePostReaction(newReaction) {
       cancel-title="취소하기"
       ok-title="삭제하기"
       centered
+      button-size="sm"
       @ok="handleDeletePost"
   >
     <b class="mb-0">정말로 삭제하시겠습니까?</b>
