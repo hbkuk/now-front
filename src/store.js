@@ -1,6 +1,8 @@
 import {reactive, ref} from 'vue';
 
 export const store = reactive({
+    isShowWelcomeModal: ref(false),
+
     isInitialized: false,
 
     isDuplicateRequesting: false,
@@ -13,6 +15,10 @@ export const store = reactive({
         id: null,
         nickname: null,
         isSignedIn: false,
+    },
+
+    updateIsShowWelcomeModal(value) {
+        this.isShowWelcomeModal = value;
     },
 
     /**

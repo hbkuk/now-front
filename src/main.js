@@ -22,7 +22,7 @@ app.use(router);
 app.use(VueDOMPurifyHTML)
 app.mount('#app');
 
-// 사용자가 앱을 종료하기 전에 로그인 상태를 세션 스토리지에 저장
+// 사용자가 앱을 종료하기 전에 회원의 로그인 정보를 세션 스토리지에 저장
 window.addEventListener('beforeunload', () => {
     sessionStorage.setItem('isSignedIn', store.member.isSignedIn.toString());
 });
@@ -46,6 +46,11 @@ async function initializeStore() {
         sessionStorage.removeItem('isSignedIn');
     }
 
+    const isShowWelcomeModal = localStorage.getItem('isShowWelcomeModal');
+    console.log(isShowWelcomeModal);
+    if (isShowWelcomeModal === 'null' || isShowWelcomeModal !== 'false') {
+        store.updateIsShowWelcomeModal(true);
+    }
     store.updateInitialized(true);
 }
 
