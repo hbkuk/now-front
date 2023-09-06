@@ -13,10 +13,6 @@ module.exports = defineConfig({
                 target: `${process.env.VUE_APP_BACK_URL}`,
                 changeOrigin: true,
             },
-            '/attachments': {
-                target: `${process.env.VUE_APP_BACK_URL}`,
-                changeOrigin: true,
-            }
         }
     }
 });

@@ -8,6 +8,6 @@ const props = defineProps({
 
 <template>
   <b-list-group class="mb-3">
-    <b-list-group-item class="text-center" variant="danger"><b>{{ message }}</b></b-list-group-item>
+    <small><b-list-group-item class="text-center" variant="danger"><b>{{ message }}</b></b-list-group-item></small>
   </b-list-group>
 </template>

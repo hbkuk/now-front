@@ -34,6 +34,10 @@ const isShowDeleteModal = ref(false);
  * @function
  */
 function saveComment() {
+  if(!store.isMemberSignedIn()) {
+    store.openSignInModal();
+    return;
+  }
   emit('saveComment', comment.value);
 }
 
@@ -184,9 +188,9 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
           </b-row>
 
 
-          <b-row align-h="between" class="justify-content-start mb-3">
+          <b-row align-h="between" class="justify-content-start my-3">
             <b-col cols="12" class="text-container-wrap">
-              <span>{{ comment.content }}</span>
+              <div v-html="comment.content"></div>
             </b-col>
           </b-row>
 

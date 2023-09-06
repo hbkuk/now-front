@@ -3,7 +3,7 @@ import axios from "axios";
 const AttachmentService = {
 
     downloadFile(attachmentIdx) {
-        return axios.get(`/attachments/${attachmentIdx}`, {responseType: "blob"}
+        return axios.get(`/api/attachments/${attachmentIdx}`, {responseType: "blob"}
     )},
 
 };

@@ -95,8 +95,8 @@ function updatePostReaction(newReaction) {
             </nav>
 
             <div class="row">
-              <div class="col-md-12 text-container-wrap mt-3">
-                <p>{{ post.content }}</p>
+              <div class="col-md-12 text-container-wrap my-3">
+                <div v-html="post.content"></div>
               </div>
             </div>
 
