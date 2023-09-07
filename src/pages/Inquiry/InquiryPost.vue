@@ -194,7 +194,7 @@ const {
 <template>
   <template v-if="fetchInquiryData">
     <!-- 게시글 배경 배너와 헤더 컴포넌트 사용 -->
-    <BannerSub :banner-path="`good-post.png`"/>
+    <BannerSub :image-name="`good-post.png`"/>
     <PostFormHeader :routeNameForPush="'Inquiries'"/>
 
     <!-- 게시글 데이터가 로딩되었을 경우 -->

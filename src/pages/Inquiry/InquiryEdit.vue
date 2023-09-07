@@ -59,7 +59,6 @@ const {
  * 게시글을 등록하는 함수
  */
 async function handleEditSubmit(postIdx) {
-  console.log(post.value)
   await useSubmit(postIdx, existSecret);
 }
 

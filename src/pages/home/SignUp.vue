@@ -43,7 +43,6 @@ const isValidFormat = (value, regex) => {
 
 // 폼 유효성을 검증하고 회원가입을 시도하는 함수
 const validateAndSingUp = () => {
-  console.log("시발 왜안돼")
   idState.value = isValidFormat(id.value, ID_REGEX);
   passwordState.value = isValidFormat(password.value, PASSWORD_REGEX);
   passwordConfirmState.value = passwordState.value !== false && passwordConfirm.value === password.value;

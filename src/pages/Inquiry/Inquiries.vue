@@ -42,7 +42,7 @@ useSubmit(initialCondition.value)
   <!-- 문의 게시글이 로딩되었을 때 -->
   <template v-if="fetchInquiriesData !== null">
     <!-- BannerSub 컴포넌트 사용 -->
-    <BannerSub :banner-path="`home-inquiry.png`"/>
+    <BannerSub :image-name="`home-inquiry.png`"/>
 
     <b-container class="mt-3">
       <b-row>

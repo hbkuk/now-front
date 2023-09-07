@@ -43,7 +43,7 @@ useSubmit(initialCondition.value)
   <!-- 게시글 목록이 있을 경우 -->
   <template v-if="fetchPhotosData !== null">
     <!-- 포토 배너와 검색 폼, 포스트 네비게이션 바 사용 -->
-    <BannerSub :banner-path="`home-photo.png`"/>
+    <BannerSub :image-name="`home-photo.png`"/>
 
     <!-- 컨테이너 -->
     <b-container class="mt-3">

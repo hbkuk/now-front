@@ -41,7 +41,7 @@ useSubmit(initialCondition.value)
   <!-- 게시글 목록 정보가 있을 경우 -->
   <template v-if="fetchNoticesData !== null">
     <!-- 배경 배너 컴포넌트 BackgroundBanner 사용 -->
-    <BannerSub :banner-path="`home-notice.png`"/>
+    <BannerSub :image-name="`home-notice.png`"/>
 
     <!-- 컨테이너 -->
     <b-container class="mt-3">

@@ -118,7 +118,7 @@ const {
   <!-- 게시글 정보가 있을 경우 -->
   <template v-if="fetchPhotoData">
     <!-- 게시글 배경 배너와 헤더 컴포넌트 사용 -->
-    <BannerSub :banner-path="`good-post.png`"/>
+    <BannerSub :image-name="`good-post.png`"/>
     <PostFormHeader :routeNameForPush="'Photos'"/>
 
     <b-container class="mt-3">

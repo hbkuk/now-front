@@ -47,7 +47,6 @@ async function initializeStore() {
     }
 
     const isShowWelcomeModal = localStorage.getItem('isShowWelcomeModal');
-    console.log(isShowWelcomeModal);
     if (isShowWelcomeModal === 'null' || isShowWelcomeModal !== 'false') {
         store.updateIsShowWelcomeModal(true);
     }

@@ -214,7 +214,6 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
     watch(
         () => post.value?.thumbnailAttachmentIdx, // post.value 객체를 반환하는 함수를 사용합니다.
         (updateAttachmentIdx) => {
-            console.log(updateAttachmentIdx)
             if(updateAttachmentIdx === null || updateAttachmentIdx === undefined) {
                 post.value.thumbnailAttachmentIdx = 0;
             }

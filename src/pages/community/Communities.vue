@@ -43,7 +43,7 @@ useSubmit(initialCondition.value)
 <template>
   <template v-if="fetchCommunitiesData !== null">
     <!-- BannerSub 컴포넌트 사용 -->
-    <BannerSub :banner-path="`home-community.png`"/>
+    <BannerSub :image-name="`home-community.png`"/>
 
     <b-container class="mt-3">
       <b-row>

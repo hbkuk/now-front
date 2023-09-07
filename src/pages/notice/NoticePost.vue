@@ -117,7 +117,7 @@ const {
   <template v-if="fetchNoticeData">
 
     <!-- 게시글 배경 배너와 헤더 컴포넌트 사용 -->
-    <BannerSub :banner-path="`good-post.png`"/>
+    <BannerSub :image-name="`good-post.png`"/>
     <PostFormHeader :routeNameForPush="'Notices'"/>
 
     <b-container class="mt-3">

@@ -6,7 +6,6 @@ import PostService from "@/service/PostService";
 import Error from "@/components/common/Error.vue";
 import PostListSkeleton from "@/components/skeleton/PostListSkeleton.vue";
 
-
 /** 게시글 목록을 담는 반응성 객체 */
 const fetchPostsData = ref({
   notices: null,
@@ -44,7 +43,7 @@ getPosts(initialCondition.value)
 <template>
   <Banner
       :router-name="`Home`"
-      :banner-path="`home.png`"
+      :image-name="`home.png`"
   />
 
   <!-- 조건부 렌더링 1: 서버 통신 fail -->
@@ -60,7 +59,7 @@ getPosts(initialCondition.value)
       >
         <Banner
             :router-name="`Notices`"
-            :banner-path="`home-notice.png`"
+            :image-name="`home-notice.png`"
         />
         <template v-if="fetchPostsData.notices !== null">
           <PostList
@@ -79,7 +78,7 @@ getPosts(initialCondition.value)
       >
         <Banner
             :router-name="`Communities`"
-            :banner-path="`home-community.png`"
+            :image-name="`home-community.png`"
         />
         <template v-if="fetchPostsData.communities !== null">
           <PostList
@@ -98,7 +97,7 @@ getPosts(initialCondition.value)
       >
         <Banner
             :router-name="`Photos`"
-            :banner-path="`home-photo.png`"/>
+            :image-name="`home-photo.png`"/>
         <template v-if="fetchPostsData.photos !== null">
           <PostList
               :posts="fetchPostsData.photos"
@@ -116,7 +115,7 @@ getPosts(initialCondition.value)
       >
         <Banner
             :router-name="`Inquiries`"
-            :banner-path="`home-inquiry.png`"/>
+            :image-name="`home-inquiry.png`"/>
         <template v-if="fetchPostsData.inquiries !== null">
           <PostList
               :posts="fetchPostsData.inquiries"

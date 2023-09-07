@@ -1,14 +1,15 @@
 <script setup>
 import {ref} from "vue";
 
+const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
+const uploadDirectoryName = process.env.VUE_APP_UPLOAD_DIRECTORY_NAME;
+
 const props = defineProps({
   thumbnailAttachmentIdx: Number,
   attachments: Array
 });
 
 const activeIndex = ref(0);
-
-const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
 
 let slides = props.attachments.map((attachment) => ({
   idx: attachment.attachmentIdx,
@@ -54,7 +55,7 @@ function nextSlide() {
           <div class="image-container" :class="{ 'hidden': !isImageVisible }">
             <b-img
                 v-if="index === activeIndex"
-                :src="`${bucketPath}${slide.src}`"
+                :src="`${bucketPath}${uploadDirectoryName}${slide.src}`"
                 :alt="slide.alt"
                 class="carousel-image"
                 fluid

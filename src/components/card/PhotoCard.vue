@@ -5,6 +5,9 @@ import {useGetTimeDifference} from "@/composable/date/getTimeDifference";
 import CommonMessage from "@/components/common/CommonMessage.vue";
 import {useFormatNumber} from "@/composable/number/formatNumber";
 
+const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
+const uploadDirectoryName = process.env.VUE_APP_UPLOAD_DIRECTORY_NAME;
+
 const props = defineProps({
   posts: Object,
   PostRouteName: String,
@@ -59,9 +62,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
 });
-
-const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
-
 </script>
 
 <template>
@@ -85,7 +85,7 @@ const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
               <div>
                 <b-img
                     v-if="post.thumbnailSavedAttachmentName"
-                    :src="`${bucketPath}${post.thumbnailSavedAttachmentName}`"
+                    :src="`${bucketPath}${uploadDirectoryName}${post.thumbnailSavedAttachmentName}`"
                     :fluid="true"
                 ></b-img>
                 <b-img v-else :fluid="true"></b-img>

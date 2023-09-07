@@ -200,3 +200,4 @@ public/file/*
 .env.localhost
 .env.development
 public/upload/
+public/resources/

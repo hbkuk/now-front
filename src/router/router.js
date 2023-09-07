@@ -1,31 +1,31 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Home from "@/pages/home/Home.vue";
-import Photos from "@/pages/photo/Photos.vue";
-import SignIn from "@/pages/home/SignIn.vue";
-import SignUp from "@/pages/home/SignUp.vue";
-import Notices from "@/pages/notice/Notices.vue";
-import Inquiries from "@/pages/Inquiry/Inquiries.vue";
-import Communities from "@/pages/community/Communities.vue";
-import CommunityPost from "@/pages/community/CommunityPost.vue";
-import NoticePost from "@/pages/notice/NoticePost.vue";
-import PhotoPost from "@/pages/photo/PhotoPost.vue";
-import InquiryPost from "@/pages/Inquiry/InquiryPost.vue";
-import CommunityForm from "@/pages/community/CommunityForm.vue";
-import NoticeForm from "@/pages/notice/NoticeForm.vue";
-import PhotoForm from "@/pages/photo/PhotoForm.vue";
-import InquiryForm from "@/pages/Inquiry/InquiryForm.vue";
-import CommunityEdit from "@/pages/community/CommunityEdit.vue";
-import NoticeEdit from "@/pages/notice/NoticeEdit.vue";
-import PhotoEdit from "@/pages/photo/PhotoEdit.vue";
-import InquiryEdit from "@/pages/Inquiry/InquiryEdit.vue";
-import NotFound from "@/components/NotFound.vue";
-import ServiceNotAvailable from "@/components/ServiceNotAvailable.vue";
+const Home = () => import(/* webpackChunkName: "Home"*/`@/pages/home/Home.vue`);
+const Photos = () => import(/* webpackChunkName: "Photos"*/ "@/pages/photo/Photos.vue");
+const SignIn = () => import(/* webpackChunkName: "SignIn"*/ "@/pages/home/SignIn.vue");
+const SignUp = () => import(/* webpackChunkName: "SignUp"*/ "@/pages/home/SignUp.vue");
+const Notices = () => import(/* webpackChunkName: "Notices"*/ "@/pages/notice/Notices.vue");
+const Inquiries = () => import(/* webpackChunkName: "Inquiries"*/ "@/pages/Inquiry/Inquiries.vue");
+const Communities = () => import(/* webpackChunkName: "Communities"*/ "@/pages/community/Communities.vue");
+const CommunityPost = () => import(/* webpackChunkName: "CommunityPost"*/ "@/pages/community/CommunityPost.vue");
+const NoticePost = () => import(/* webpackChunkName: "NoticePost"*/ "@/pages/notice/NoticePost.vue");
+const PhotoPost = () => import(/* webpackChunkName: "PhotoPost"*/ "@/pages/photo/PhotoPost.vue");
+const InquiryPost = () => import(/* webpackChunkName: "InquiryPost"*/ "@/pages/Inquiry/InquiryPost.vue");
+const CommunityForm = () => import(/* webpackChunkName: "CommunityForm"*/ "@/pages/community/CommunityForm.vue");
+const NoticeForm = () => import(/* webpackChunkName: "NoticeForm"*/ "@/pages/notice/NoticeForm.vue");
+const PhotoForm = () => import(/* webpackChunkName: "PhotoForm"*/ "@/pages/photo/PhotoForm.vue");
+const InquiryForm = () => import(/* webpackChunkName: "InquiryForm"*/ "@/pages/Inquiry/InquiryForm.vue");
+const CommunityEdit = () => import(/* webpackChunkName: "CommunityEdit"*/ "@/pages/community/CommunityEdit.vue");
+const NoticeEdit = () => import(/* webpackChunkName: "NoticeEdit"*/ "@/pages/notice/NoticeEdit.vue");
+const PhotoEdit = () => import(/* webpackChunkName: "PhotoEdit"*/ "@/pages/photo/PhotoEdit.vue");
+const InquiryEdit = () => import(/* webpackChunkName: "InquiryEdit"*/ "@/pages/Inquiry/InquiryEdit.vue");
+const NotFound = () => import(/* webpackChunkName: "NotFound"*/ "@/components/NotFound.vue");
+const ServiceNotAvailable = () => import(/* webpackChunkName: "ServiceNotAvailable"*/ "@/components/ServiceNotAvailable.vue");
+const Unauthorized = () => import(/* webpackChunkName: "Unauthorized"*/ "@/components/Unauthorized.vue");
+const Forbidden = () => import(/* webpackChunkName: "Forbidden"*/ "@/components/Forbidden.vue");
+const RequestError = () => import(/* webpackChunkName: "RequestError"*/ "@/components/RequestError.vue");
+const TooManyRequest = () => import(/* webpackChunkName: "TooManyRequest"*/ "@/components/TooManyRequest.vue");
 import {store} from "@/store";
-import Unauthorized from "@/components/Unauthorized.vue";
-import Forbidden from "@/components/Forbidden.vue";
-import RequestError from "@/components/RequestError.vue";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
-import TooManyRequest from "@/components/TooManyRequest.vue";
 
 const routes = [
     {path: '/', name: 'Home', component: Home},
@@ -71,8 +71,6 @@ const router = createRouter({
 
 // 다른 그룹으로 이동 시 검색 조건 삭제
 router.beforeEach((to, from, next) => {
-    console.log(to.name);
-    console.log(from.name);
     const fromRouteGroup = Object.values(ROUTE_NAME_GROUP).find(group =>
         group.routes.includes(from.name)
     );
