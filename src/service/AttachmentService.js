@@ -1,10 +1,10 @@
-import axios from "axios";
+import http from "@/composable/request/http";
 
 const AttachmentService = {
 
     downloadFile(attachmentIdx) {
-        return axios.get(`/api/attachments/${attachmentIdx}`, {responseType: "blob"}
-    )},
+        return http.get(`/api/attachments/${attachmentIdx}`, {responseType: "blob"});
+    },
 
 };
 export default AttachmentService;

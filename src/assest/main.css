@@ -3,17 +3,47 @@ body {
   overflow: scroll;
 }
 
-
-/* 화면 크기가 768px 이하일 때 */
-@media (max-width: 768px) {
+/* 화면 크기가 576px 이하일 때 */
+@media (max-width: 576px) {
   body {
-    font-size: 14px; /* 폰트 크기 조절 */
+    font-size: 13px; /* 폰트 크기 조절 */
+  }
+  .b-sm-icon {
+    font-size: 11px;
+  }
+  .b-md-icon {
+    font-size: 17px;
+  }
+  .b-btn {
+    font-size: 13px; /* 원하는 폰트 크기로 설정 */
   }
   .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px; /* 제목의 최대 너비 설정 */
+    max-width: 250px; /* 제목의 최대 너비 설정 */
+  }
+}
+
+/* 화면 크기가 577px에서 768px 사이일 때 */
+@media (min-width: 577px) and (max-width: 768px) {
+  body {
+    font-size: 14px; /* 폰트 크기 조절 */
+  }
+  .b-sm-icon {
+    font-size: 13px;
+  }
+  .b-md-icon {
+    font-size: 18px;
+  }
+  .b-btn {
+    font-size: 16px; /* 원하는 폰트 크기로 설정 */
+  }
+  .truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px; /* 제목의 최대 너비 설정 */
   }
 }
 
@@ -22,6 +52,15 @@ body {
   body {
     font-size: 16px; /* 폰트 크기 조절 */
   }
+  .b-sm-icon {
+    font-size: 15px;
+  }
+  .b-md-icon {
+    font-size: 20px;
+  }
+  .b-btn {
+    font-size: 20px; /* 원하는 폰트 크기로 설정 */
+  }
   .truncate-text {
     white-space: nowrap;
     overflow: hidden;
@@ -29,6 +68,7 @@ body {
     max-width: 310px; /* 제목의 최대 너비 설정 */
   }
 }
+
 
 /* nav, list 에서 선택된 item */
 .selected {
@@ -43,7 +83,8 @@ body {
   overflow-wrap: break-word; /* 긴 단어나 문자열을 wrap */
 }
 
-/*.text-container {*/
-/*  max-width: 300px; !* 원하는 최대 너비 설정 *!*/
-/*  overflow-wrap: break-word; !* 긴 단어나 문자열을 wrap *!*/
-/*}*/
+.emphasis {
+  font-weight: bold;
+  text-shadow: 10px 0px 20px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}

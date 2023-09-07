@@ -115,9 +115,11 @@ function resetStates() {
 </script>
 
 <template>
-  <div class="bg-white py-1 mt-5">
-    <b-img center style="height: 100px" class="img-fluid rounded d-block"
-           :src="require(`@/resources/banner/now-icon-login-signup.png`)"
+  <div class="bg-white mt-4 mb-5">
+    <b-img center
+           style="height: 60px"
+           class="img-fluid rounded d-block"
+           :src="require(`@/resources/banner/now-logo-name.png`)"
            alt="Main image"/>
   </div>
 
@@ -249,11 +251,3 @@ function resetStates() {
     </div>
   </div>
 </template>
-
-<style scoped>
-.emphasis {
-  font-weight: bold;
-  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-  padding: 10px;
-}
-</style>

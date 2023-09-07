@@ -12,7 +12,7 @@ const props = defineProps({
       <b-navbar-nav class="me-auto">
         <b-nav-item>
           <b-button variant="primary" class="mr-3" @click="$router.push({name:`${postFormRouteName}`})">
-            <i class="bi bi-pencil-square" style="font-size:24px;"></i>
+            <i class="bi bi-pencil-square b-md-icon"></i>
           </b-button>
         </b-nav-item>
       </b-navbar-nav>
@@ -30,7 +30,7 @@ const props = defineProps({
         <b-nav-item>
           <b-dropdown id="dropdown-1">
             <template #button-content>
-              <i class="bi bi-sort-numeric-down" style="font-size:20px;"></i>
+              <i class="bi bi-sort-numeric-down b-md-icon"></i>
             </template>
             <b-dropdown-item>First Action</b-dropdown-item>
             <b-dropdown-item>Second Action</b-dropdown-item>
@@ -43,7 +43,7 @@ const props = defineProps({
         <b-nav-item>
           <b-dropdown id="dropdown-1">
             <template #button-content>
-              <i class="bi bi-sort-alpha-down" style="font-size:20px;"></i>
+              <i class="bi bi-sort-alpha-down b-md-icon"></i>
             </template>
             <b-dropdown-item>First Action</b-dropdown-item>
             <b-dropdown-item>Second Action</b-dropdown-item>

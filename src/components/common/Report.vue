@@ -148,14 +148,14 @@ async function useFeedbackSubmit(data) {
       <b-col cols="6">
         <div class="bug-report-button p-3">
           <b-button size="sm" variant="danger" pill @click="openBugReportModal">
-            <i class="bi bi-bug"></i>&nbsp; <b>오류 제보</b>
+            <i class="bi bi-bug b-sm-icon"></i>&nbsp; <b>오류 제보</b>
           </b-button>
         </div>
       </b-col>
       <b-col cols="6" class="d-flex justify-content-end">
         <div class="bug-report-button p-3">
           <b-button size="sm" variant="primary" pill @click="openFeedbackReportModal">
-            <i class="bi bi-clipboard-check"></i>&nbsp; <b>서비스 의견</b>
+            <i class="bi bi-clipboard-check b-sm-icon"></i>&nbsp; <b>서비스 의견</b>
           </b-button>
         </div>
       </b-col>

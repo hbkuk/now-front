@@ -38,7 +38,14 @@ async function searchPosts() {
   <div class="header">
     <b-container>
       <b-navbar toggleable="lg" class="bg-white text-black header">
-        <b-navbar-brand to="/"><b>NOW</b></b-navbar-brand>
+        <b-navbar-brand to="/">
+          <b-img
+              style="height: 30px"
+              class="rounded d-block"
+              :src="require(`@/resources/banner/now-name.png`)"
+              alt="Main image"
+          />
+        </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -78,7 +85,7 @@ async function searchPosts() {
             <b-nav-item>
               <b-dropdown class="p-0" variant="variant" size="sm" toggle-class="text-decoration-none" no-caret>
                 <template #button-content>
-                  <i class="bi bi-chat-left-dots" style="font-size:24px;"></i>
+                  <i class="bi bi-chat-left-dots b-md-icon"></i>
                 </template>
                 <b-dropdown-item>
                   Service Not available..
@@ -93,14 +100,14 @@ async function searchPosts() {
             <b-nav-item class="px-3">
               <b-dropdown variant="variant" size="sm" toggle-class="text-decoration-none" no-caret>
                 <template #button-content>
-                  <i class="bi bi-person" style="font-size:24px;"></i>
+                  <i class="bi bi-person b-md-icon"></i>
                 </template>
                 <b-dropdown-item>
-                  <i class="bi bi-person-circle"></i>&nbsp;&nbsp;마이페이지
+                  <i class="bi bi-person-circle b-md-icon"></i>&nbsp;&nbsp;마이페이지
                 </b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item @click="logout()">
-                  <i class="bi bi-box-arrow-right"></i>&nbsp;&nbsp;로그아웃
+                  <i class="bi bi-box-arrow-right b-md-icon"></i>&nbsp;&nbsp;로그아웃
                 </b-dropdown-item>
               </b-dropdown>
             </b-nav-item>

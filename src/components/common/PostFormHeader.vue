@@ -10,7 +10,7 @@ const props = defineProps({
     <b-row class="mt-3 mb-3">
       <b-col cols="auto">
         <b-button variant="secondary" size="sm" @click="$router.push({name:`${routeNameForPush}`})">
-          <i class="fa-solid fa-arrow-left"></i> 목록 보기
+          <i class="fa-solid fa-arrow-left b-md-icon"></i> 목록 보기
         </b-button>
       </b-col>
     </b-row>

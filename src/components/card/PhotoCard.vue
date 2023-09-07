@@ -3,6 +3,7 @@ import {computed, defineProps, onBeforeUnmount, onMounted, ref} from "vue";
 import {useIsNewPost} from "@/composable/date/isNewPost";
 import {useGetTimeDifference} from "@/composable/date/getTimeDifference";
 import CommonMessage from "@/components/common/CommonMessage.vue";
+import {useFormatNumber} from "@/composable/number/formatNumber";
 
 const props = defineProps({
   posts: Object,
@@ -112,9 +113,19 @@ const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
           </div>
 
           <b-row class="text-center mt-3">
-            <b-col class="p-0"><i class="bi bi-emoji-smile"></i> 1</b-col>
-            <b-col class="p-0"><i class="bi bi-chat-square-text"></i> 1</b-col>
-            <b-col class="p-0"><i class="bi bi-hand-index-thumb"></i> 1</b-col>
+            <b-col class="p-0"><i class="bi bi-emoji-smile b-md-icon"></i>&nbsp;
+              <span>
+                {{ useFormatNumber(post.likeCount - post.dislikeCount) }}
+              </span>
+            </b-col>
+            <b-col class="p-0"><i class="bi bi-chat-square-text b-md-icon"></i>&nbsp;
+              <span v-if="post.comments">
+                {{ useFormatNumber(post.comments.length) }}
+              </span></b-col>
+            <b-col class="p-0">
+              <i class="bi bi-hand-index-thumb b-md-icon"></i>&nbsp;
+              <span>{{ useFormatNumber(post.viewCount) }}</span>
+            </b-col>
           </b-row>
 
         </div>

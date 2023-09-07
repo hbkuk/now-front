@@ -41,8 +41,10 @@ function updatePostReaction(newReaction) {
     <b-container class="mt-3">
       <b-row align-h="between" class="justify-content-start">
         <b-col cols="2">
-          <b class="text-nowrap"><i
-              class="bi bi-three-dots-vertical pe-2"></i>{{ useCapitalizeFirstLetter(post.category) }}</b>
+          <b class="text-nowrap">
+            <i class="bi bi-three-dots-vertical pe-2 b-md-icon"></i>
+            {{ useCapitalizeFirstLetter(post.category) }}
+          </b>
         </b-col>
 
         <b-col cols="2" class="d-flex justify-content-end">
@@ -50,15 +52,15 @@ function updatePostReaction(newReaction) {
             <b-dropdown v-if="store.isSameMember(post.memberNickname)" size="lg" variant="link"
                         toggle-class="text-decoration-none" no-caret>
               <template #button-content>
-                <i class="bi bi-exclamation-circle" style="font-size:20px;"></i> &nbsp;
+                <i class="bi bi-exclamation-circle b-md-icon"></i> &nbsp;
               </template>
               <b-dropdown-item>
                 <router-link class="text-decoration-none text-dark"
                              :to="{ name: `${postEditRouteName}`, params: { postIdx: useRoute().params.postIdx } }">
-                  <i class="bi bi-eraser"></i> 수정하기
+                  <i class="bi bi-eraser b-md-icon"></i> 수정하기
                 </router-link>
               </b-dropdown-item>
-              <b-dropdown-item @click="isShowPostModal = true"><i class="bi bi-trash"></i> 삭제하기</b-dropdown-item>
+              <b-dropdown-item @click="isShowPostModal = true"><i class="bi bi-trash b-md-icon"></i> 삭제하기</b-dropdown-item>
             </b-dropdown>
           </div>
         </b-col>

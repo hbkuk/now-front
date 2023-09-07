@@ -28,11 +28,11 @@
       <b-col md="2">
         <b-row class="text-center float-end align-items-center flex-column">
           <b-col class="p-0 d-flex align-items-center" style="height: 100px;">
-            <i class="bi bi-emoji-smile me-1"></i>
+            <i class="bi bi-emoji-smile me-1 b-md-icon"></i>
             <span>10</span>
           </b-col>
           <b-col class="p-0 d-flex align-items-center" style="height: 100px;">
-            <i class="bi bi-chat-square-text me-1"></i>
+            <i class="bi bi-chat-square-text me-1 b-md-icon"></i>
             <span>1000</span>
           </b-col>
           <b-col class="p-0 d-flex align-items-center" style="height: 100px;">

@@ -57,17 +57,17 @@ async function submitForm() {
 
 <template>
   <!-- 로그인 화면 템플릿 -->
-  <div class="bg-white py-1 mt-5">
+  <div class="bg-white mt-4 mb-5">
     <b-img
         center
-        style="height: 100px"
+        style="height: 60px"
         class="img-fluid rounded d-block"
-        :src="require(`@/resources/banner/now-icon-login-signup.png`)"
+        :src="require(`@/resources/banner/now-logo-name.png`)"
         alt="Main image"
     />
   </div>
 
-  <div class="d-flex justify-content-center mt-2 p-3">
+  <div class="d-flex justify-content-center mt-2 p-2">
     <div role="group">
       <div class="text-center mb-lg-4 text-nowrap text-truncate">
         <h3 class="emphasis">NOW에 오신것을 환영합니다.</h3>
@@ -154,11 +154,3 @@ async function submitForm() {
     </div>
   </div>
 </template>
-
-<style scoped>
-.emphasis {
-  font-weight: bold;
-  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-  padding: 10px;
-}
-</style>

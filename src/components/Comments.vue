@@ -179,14 +179,14 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
           <b-row align-h="between" class="justify-content-start mb-3">
             <b-col v-if="store.isSameMember(comment.memberNickname)" cols="6">
               <div>
-                <i class="bi bi-person-circle pe-2"></i>
+                <i class="bi bi-person-circle pe-2 b-md-icon"></i>
                 <span class="text-secondary truncate-text">{{ comment.memberNickname }}</span>
               </div>
             </b-col>
 
             <b-col v-else cols="12">
               <div>
-                <i class="bi bi-person-circle pe-2"></i>
+                <i class="bi bi-person-circle pe-2 b-md-icon"></i>
                 <span class="text-secondary truncate-text">{{ comment.managerNickname }}</span>
               </div>
             </b-col>
@@ -195,10 +195,10 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
               <div class="text-nowrap flex-row align-items-end">
                 <b-button @click="handleEditClick(comment.commentIdx, comment.content)" variant="link"
                           class="text-secondary">
-                  <i class="bi bi-eraser"></i> 수정
+                  <i class="bi bi-eraser b-md-icon"></i> 수정
                 </b-button>
                 <b-button @click="showDeleteModal(comment.commentIdx)" variant="link" class="text-secondary">
-                  <i class="bi bi-trash"></i> 삭제
+                  <i class="bi bi-trash b-md-icon"></i> 삭제
                 </b-button>
               </div>
             </b-col>
@@ -219,9 +219,9 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
             </b-col>
             <b-col cols="6" class="d-flex justify-content-end">
               <div class="d-flex flex-row align-items-center">
-                <i class="bi bi-chevron-up mx-2"></i>
+                <i class="bi bi-chevron-up mx-2 b-md-icon"></i>
                 <p class="small text-muted mb-0">기능 준비중</p>
-                <i class="ms-2 bi-chevron-down"></i>
+                <i class="ms-2 bi-chevron-down b-md-icon"></i>
               </div>
             </b-col>
           </b-row>

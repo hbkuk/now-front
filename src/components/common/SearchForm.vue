@@ -157,7 +157,7 @@ watch(
       <b-navbar-nav class="me-auto">
         <b-nav-item>
           <b-button variant="primary" class="mr-3" @click="$router.push({name:`${postFormRouteName}`})">
-            <i class="bi bi-pencil-square" style="font-size:24px;"></i>
+            <i class="bi bi-pencil-square b-md-icon"></i>
           </b-button>
         </b-nav-item>
       </b-navbar-nav>
@@ -190,7 +190,7 @@ watch(
         <b-nav-item>
           <b-dropdown id="dropdown-1" class="dropstart">
             <template #button-content>
-              <i class="bi bi-sort-numeric-down" style="font-size:20px;"></i>
+              <i class="bi bi-sort-numeric-down b-md-icon b-md-icon"></i>
             </template>
             <b-dropdown-item v-for="numPosts in MAX_NUMBER_OF_POSTS" :key="numPosts"
                              @click="changeMaxNumberOfPosts(numPosts)"
@@ -202,7 +202,7 @@ watch(
         <b-nav-item>
           <b-dropdown id="dropdown-1" class="dropstart">
             <template #button-content>
-              <i class="bi bi-sort-alpha-down" style="font-size:20px;"></i>
+              <i class="bi bi-sort-alpha-down b-md-icon"></i>
             </template>
             <b-dropdown-item v-for="sort in SORT_OPTIONS" :key="sort.key"
                              @click="changeSort(sort.value)"
@@ -227,7 +227,7 @@ watch(
         <b-navbar-nav class="me-auto">
           <b-nav-item>
             <b-button variant="primary" class="mr-3" @click="$router.push({name:`${postFormRouteName}`})">
-              <i class="bi bi-pencil-square" style="font-size:24px;"></i>
+              <i class="bi bi-pencil-square b-md-icon"></i>
             </b-button>
           </b-nav-item>
         </b-navbar-nav>
@@ -240,7 +240,7 @@ watch(
             <b-nav-item>
               <b-dropdown id="dropdown-1" class="dropstart">
                 <template #button-content>
-                  <i class="bi bi-sort-numeric-down" style="font-size:24px;"></i>
+                  <i class="bi bi-sort-numeric-down b-md-icon"></i>
                 </template>
                 <b-dropdown-item v-for="numPosts in MAX_NUMBER_OF_POSTS" :key="numPosts"
                                  @click="changeMaxNumberOfPosts(numPosts)"
@@ -252,7 +252,7 @@ watch(
             <b-nav-item>
               <b-dropdown id="dropdown-1" class="dropstart">
                 <template #button-content>
-                  <i class="bi bi-sort-alpha-down" style="font-size:24px;"></i>
+                  <i class="bi bi-sort-alpha-down b-md-icon"></i>
                 </template>
                 <b-dropdown-item v-for="sort in SORT_OPTIONS" :key="sort.key"
                                  @click="changeSort(sort.value)"

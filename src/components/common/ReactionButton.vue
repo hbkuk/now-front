@@ -100,7 +100,7 @@ function updateReaction(reaction) {
 
 <template>
   <div class="reaction-icon icon-1x" @click="handleUpdateReaction">
-    <i class="bi pe-1" :class="iconClass()"></i>
+    <i class="bi pe-1 b-md-icon" :class="iconClass()"></i>
     <b-badge variant="light">{{ useFormatNumber(count) }}</b-badge>
   </div>
 </template>

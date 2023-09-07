@@ -39,12 +39,12 @@ const changePage = (changePageNo) => {
     <ul class="pagination b-pagination-pills">
       <li :class="['page-item', { 'disabled': page.pageNo === 1 || page.maxPage === 0 }]">
         <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage(1)">
-          <i class="bi bi-chevron-double-left"></i>
+          <i class="bi bi-chevron-double-left b-md-icon"></i>
         </a>
       </li>
       <li :class="['page-item', { 'disabled': page.pageNo === 1 || page.maxPage === 0 }]">
         <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage('prev')">
-          <i class="bi bi-chevron-left"></i>
+          <i class="bi bi-chevron-left b-md-icon"></i>
         </a>
       </li>
 
@@ -54,12 +54,12 @@ const changePage = (changePageNo) => {
 
       <li :class="['page-item', { 'disabled': page.maxPage === 0 || page.pageNo === page.maxPage }]">
         <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage('next')">
-          <i class="bi bi-chevron-right"></i>
+          <i class="bi bi-chevron-right b-md-icon"></i>
         </a>
       </li>
       <li :class="['page-item', { 'disabled': page.maxPage === 0 || page.pageNo === page.maxPage }]">
         <a class="page-link border-0 mx-1 pg-font-sm" href="#" @click.prevent="changePage(page.maxPage)">
-          <i class="bi bi-chevron-double-right"></i>
+          <i class="bi bi-chevron-double-right b-md-icon"></i>
         </a>
       </li>
     </ul>

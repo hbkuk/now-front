@@ -23,13 +23,18 @@ function fileDownload(attachmentIdx, originalAttachmentName) {
   <ul class="list-group list-group-light">
     <li v-for="(attachment, attachmentIdx) in attachments" :key="attachmentIdx"
         class="list-group-item list-group-item-action px-3 border-0 ripple">
-      <span v-if="attachment.attachmentExtension"
-            v-dompurify-html="useGetIconTagByExtension(attachment.attachmentExtension)"></span>&nbsp;
-      <b-button variant="outline-light"
-                @click="fileDownload(attachment.attachmentIdx, attachment.originalAttachmentName)"
-                class="text-decoration-none text-dark">{{ attachment.originalAttachmentName }}
-        ({{ useFormatBytes(attachment.attachmentSize) }})
-      </b-button>
+
+      <div class="text-container-wrap">
+        <b-button variant="outline-light"
+                  @click="fileDownload(attachment.attachmentIdx, attachment.originalAttachmentName)"
+                  class="text-decoration-none text-dark text-start">
+          <span v-if="attachment.attachmentExtension"
+                v-dompurify-html="useGetIconTagByExtension(attachment.attachmentExtension)">
+          </span>
+          {{ attachment.originalAttachmentName }} ({{ useFormatBytes(attachment.attachmentSize) }})
+        </b-button>
+
+      </div>
     </li>
   </ul>
 </template>

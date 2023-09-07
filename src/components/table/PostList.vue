@@ -45,10 +45,10 @@ const props = defineProps({
               <div class="p-0 d-flex align-items-center">
                 <div class="text-sm">{{ useGetTimeDifference(post.regDate) }} &middot;
                   <b-link class="text-black text-decoration-none" href="#" v-if="post.memberNickname">
-                    <span class="truncate-text">{{ post.memberNickname }}</span>
+                    <div class="truncate-text">{{ post.memberNickname }}</div>
                   </b-link>
                   <b-link class="text-black text-decoration-none" v-if="post.managerNickname">
-                    <span class="truncate-text">{{ post.managerNickname }}</span>
+                    <div class="truncate-text">{{ post.managerNickname }}</div>
                   </b-link>
                 </div>
               </div>
@@ -60,7 +60,7 @@ const props = defineProps({
               <td>
                 <b-list-group class="border-0">
                   <b-list-group-item class="d-flex justify-content-center align-items-center border-0 py-sm-1">
-                    <i class="bi bi-emoji-smile me-1"></i>
+                    <i class="bi bi-emoji-smile me-1 b-md-icon"></i>
                     <b-badge pill variant="secondary"><span>{{
                         useFormatNumber(post.likeCount - post.dislikeCount)
                       }}</span></b-badge>
@@ -72,7 +72,7 @@ const props = defineProps({
               <td>
                 <b-list-group class="border-0">
                   <b-list-group-item class="d-flex justify-content-center align-items-center border-0 py-sm-1">
-                    <i class="bi bi-chat-square-text me-1"></i>
+                    <i class="bi bi-chat-square-text me-1 b-md-icon"></i>
                     <b-badge pill variant="secondary"><span
                         v-if="post.comments">{{ useFormatNumber(post.comments.length) }}</span></b-badge>
                   </b-list-group-item>
@@ -83,7 +83,7 @@ const props = defineProps({
               <td>
                 <b-list-group class="border-0">
                   <b-list-group-item class="d-flex justify-content-center align-items-center border-0 py-sm-1">
-                    <i class="bi bi-hand-index-thumb me-1"></i>
+                    <i class="bi bi-hand-index-thumb me-1 b-md-icon"></i>
                     <b-badge pill variant="secondary"><span>{{ useFormatNumber(post.viewCount) }}</span></b-badge>
                   </b-list-group-item>
                 </b-list-group>
