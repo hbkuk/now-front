@@ -21,7 +21,7 @@ const slides = [
 </script>
 
 <template>
-  <BackgroundBanner :title="`Photo`" :bannerPath="`community.png`"/>
+  <BackgroundBanner :title="`Photo`" :imageName="`community.png`"/>
 
   <b-container class="mt-3">
     <Post>

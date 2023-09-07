@@ -3,6 +3,10 @@ import {computed, ref} from "vue";
 import Error from "@/components/common/Error.vue";
 import AuthenticationService from "@/service/AuthenticationService";
 import router from "@/router/router";
+import LogoImage from "@/components/common/LogoImage.vue";
+
+const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
+const imagesDirectoryName = process.env.VUE_APP_IMAGES_DIRECTORY_NAME;
 
 const id = ref(''); // ID 입력을 담는 반응성 객체
 const password = ref(''); // 비밀번호 입력을 담는 반응성 객체
@@ -58,13 +62,7 @@ async function submitForm() {
 <template>
   <!-- 로그인 화면 템플릿 -->
   <div class="bg-white mt-4 mb-5">
-    <b-img
-        center
-        style="height: 60px"
-        class="img-fluid rounded d-block"
-        :src="require(`@/resources/banner/now-logo-name.png`)"
-        alt="Main image"
-    />
+    <LogoImage :image-name="`now-logo-name.png`"/>
   </div>
 
   <div class="d-flex justify-content-center mt-2 p-2">

@@ -1,6 +1,7 @@
 <script setup>
 import {store} from "@/store";
 import {useHandleWelcomeOk} from "@/composable/modal/handleWelcomeModal";
+import LogoImage from "@/components/common/LogoImage.vue";
 </script>
 
 <template>
@@ -18,9 +19,7 @@ import {useHandleWelcomeOk} from "@/composable/modal/handleWelcomeModal";
   >
     <div class="text-center">
       <div class="bg-white">
-        <b-img center style="height: 70px" class="img-fluid rounded d-block"
-               :src="require(`@/resources/banner/now-logo-name.png`)"
-               alt="Main image"/>
+        <LogoImage :image-name="`now-logo-name.png`"/>
       </div>
       <div class="my-4">
         환영합니다. <br/> <b>NOW</b>는 <b>정보 공유와 소통을 위한 플랫폼</b>입니다.

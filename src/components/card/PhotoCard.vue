@@ -134,7 +134,7 @@ onBeforeUnmount(() => {
   </template>
   <template v-else>
     <CommonMessage
-        :imagePath="`emptyList.png`"
+        :imageName="`emptyList.png`"
         :title="`게시글이 없어요`"
         :content="`새로운 게시글을 작성하거나 검색어를 확인해 주세요.`"
     />

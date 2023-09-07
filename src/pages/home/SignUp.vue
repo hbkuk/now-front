@@ -5,6 +5,7 @@ import ErrorType from "@/composable/response/ErrorType";
 import router from "@/router/router";
 import Error from "@/components/common/Error.vue";
 import AuthenticationService from "@/service/AuthenticationService";
+import LogoImage from "@/components/common/LogoImage.vue";
 
 const ID_REGEX = /^[A-Za-z0-9]{1,50}$/;
 const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{4,15}$/;
@@ -115,11 +116,7 @@ function resetStates() {
 
 <template>
   <div class="bg-white mt-4 mb-5">
-    <b-img center
-           style="height: 60px"
-           class="img-fluid rounded d-block"
-           :src="require(`@/resources/banner/now-logo-name.png`)"
-           alt="Main image"/>
+    <LogoImage :image-name="`now-logo-name.png`"/>
   </div>
 
   <div class="d-flex justify-content-center mt-2 p-2">

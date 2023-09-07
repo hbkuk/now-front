@@ -237,7 +237,7 @@ const {
   <template v-else-if="modalShow">
     <!-- 데이터 로딩 중이면서 modalShow 값이 true인 경우 -->
     <!-- CommonMessage 컴포넌트로 비밀글 설정 안내 메시지 표시 -->
-    <CommonMessage :imagePath="`secret.jpg`" :title="`비밀글 설정`" :content="`이 게시글은 비밀글로 설정되어있습니다.`"/>
+    <CommonMessage :imageName="`secret.jpg`" :title="`비밀글 설정`" :content="`이 게시글은 비밀글로 설정되어있습니다.`"/>
   </template>
   <template v-else>
     <!-- 데이터 로딩 중이면서 modalShow 값이 false인 경우 -->

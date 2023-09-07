@@ -6,6 +6,9 @@ import AuthenticationService from "@/service/AuthenticationService";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 import {useRouteWatch} from "@/composable/router/routeWatch";
 
+const bucketPath = process.env.VUE_APP_PUBLIC_BUCKET_URL;
+const imagesDirectoryName = process.env.VUE_APP_IMAGES_DIRECTORY_NAME;
+
 const {currentRouteName} = useRouteWatch();
 
 /**
@@ -42,7 +45,7 @@ async function searchPosts() {
           <b-img
               style="height: 30px"
               class="rounded d-block"
-              :src="require(`@/resources/banner/now-name.png`)"
+              :src="`${bucketPath}${imagesDirectoryName}now-name.png`"
               alt="Main image"
           />
         </b-navbar-brand>
