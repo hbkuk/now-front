@@ -27,6 +27,7 @@ let previousRequestUrl = null;
  * 요청을 처리하는 Axios 인터셉터 함수
  */
 instance.interceptors.request.use(function (config) {
+    store.updateIsCurrentRequesting(true);
     if (config.method === HttpMethod.POST || config.method === HttpMethod.PUT || config.method === HttpMethod.DELETE) {
 
         if (previousRequestUrl === config.url) {
@@ -62,10 +63,12 @@ instance.interceptors.request.use(function (config) {
  * @throws {import("axios").AxiosError} - 응답이 실패한 경우 예외를 던짐
  */
 instance.interceptors.response.use(function (response) {
+    store.updateIsCurrentRequesting(false);
     return response;
 }, async function (error) {
-    const errorCode = error?.response?.data?.errorCode;
+    store.updateIsCurrentRequesting(false);
 
+    const errorCode = error?.response?.data?.errorCode;
     // 전역 에러 핸들링
     if (errorCode === ErrorType.NOT_FOUND_POST) {
         await router.push({name: "NotFound"});

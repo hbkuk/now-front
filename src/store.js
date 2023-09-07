@@ -5,6 +5,8 @@ export const store = reactive({
 
     isInitialized: false,
 
+    isCurrentRequesting: false,
+
     isDuplicateRequesting: false,
 
     isSignInModalVisible: ref(false),
@@ -37,6 +39,15 @@ export const store = reactive({
      */
     getInitialized() {
         return this.isInitialized;
+    },
+
+    /**
+     * 현재 요청 상태 변경
+     *
+     * @param value - 변경할 상태 값
+     */
+    updateIsCurrentRequesting(value) {
+        this.isCurrentRequesting = value;
     },
 
     /**

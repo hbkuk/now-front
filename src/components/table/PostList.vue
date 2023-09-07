@@ -24,7 +24,7 @@ const props = defineProps({
         <tr>
 
           <td colspan="8">
-            <div class="d-flex justify-content-start pt-2 pe-2 flex-column gap-2">
+            <div class="d-flex justify-content-start pe-2 flex-column gap-2">
               <div class="float-end align-items-center">
                 <b-badge pill variant="danger me-2" v-if="post.pinned">중요</b-badge>
                 <b-badge pill variant="warning me-2" v-if="useIsNewPost(post.regDate)">NEW</b-badge>

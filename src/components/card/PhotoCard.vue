@@ -87,6 +87,7 @@ onBeforeUnmount(() => {
                     v-if="post.thumbnailSavedAttachmentName"
                     :src="`${bucketPath}${uploadDirectoryName}${post.thumbnailSavedAttachmentName}`"
                     :fluid="true"
+                    rounded
                 ></b-img>
                 <b-img v-else :fluid="true"></b-img>
               </div>
