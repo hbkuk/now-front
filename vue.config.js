@@ -1,5 +1,4 @@
 const { defineConfig } = require('@vue/cli-service');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = defineConfig({
     transpileDependencies: true,
@@ -16,7 +15,4 @@ module.exports = defineConfig({
             },
         }
     },
-    configureWebpack: {
-        plugins: [new BundleAnalyzerPlugin()]
-    }
 });
