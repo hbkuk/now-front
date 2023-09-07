@@ -223,7 +223,7 @@ watch(
     <b-row class="mb-2 bg-light">
 
       <b-col cols="6" class="d-flex justify-content-start mb-2">
-        <nav class="navbar navbar-expand navbar-light rounded-2">
+        <nav class="navbar navbar-expand rounded-2">
         <b-navbar-nav class="me-auto">
           <b-nav-item>
             <b-button variant="primary" class="mr-3" @click="$router.push({name:`${postFormRouteName}`})">
@@ -235,7 +235,7 @@ watch(
       </b-col>
 
       <b-col cols="6" class="d-flex justify-content-end mb-2">
-        <nav class="navbar navbar-expand navbar-light rounded-2">
+        <nav class="navbar navbar-expand rounded-2">
           <b-navbar-nav>
             <b-nav-item>
               <b-dropdown id="dropdown-1" class="dropstart">

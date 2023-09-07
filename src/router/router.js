@@ -71,6 +71,8 @@ const router = createRouter({
 
 // 다른 그룹으로 이동 시 검색 조건 삭제
 router.beforeEach((to, from, next) => {
+    console.log(to.name);
+    console.log(from.name);
     const fromRouteGroup = Object.values(ROUTE_NAME_GROUP).find(group =>
         group.routes.includes(from.name)
     );
@@ -79,6 +81,10 @@ router.beforeEach((to, from, next) => {
     );
     if (fromRouteGroup && toRouteGroup && fromRouteGroup !== toRouteGroup) {
         // 그룹을 벗어날 때 검색 조건 세션 스토리지에서 삭제
+        sessionStorage.removeItem('condition');
+    }
+    // 추가 조건: fromRouteGroup 또는 toRouteGroup가 정의되지 않은 경우에도 세션 스토리지에서 삭제
+    if (!fromRouteGroup || !toRouteGroup) {
         sessionStorage.removeItem('condition');
     }
     next();

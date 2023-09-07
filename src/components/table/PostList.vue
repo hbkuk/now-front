@@ -43,12 +43,12 @@ const props = defineProps({
                 </b>
               </div>
               <div class="p-0 d-flex align-items-center">
-                <div class="text-sm">{{ useGetTimeDifference(post.regDate) }} &middot;
+                <div class="text-sm truncate-text">{{ useGetTimeDifference(post.regDate) }} &middot;
                   <b-link class="text-black text-decoration-none" href="#" v-if="post.memberNickname">
-                    <div class="truncate-text">{{ post.memberNickname }}</div>
+                    <span>{{ post.memberNickname }}</span>
                   </b-link>
                   <b-link class="text-black text-decoration-none" v-if="post.managerNickname">
-                    <div class="truncate-text">{{ post.managerNickname }}</div>
+                    <span>{{ post.managerNickname }}</span>
                   </b-link>
                 </div>
               </div>
