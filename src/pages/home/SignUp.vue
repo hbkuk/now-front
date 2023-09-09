@@ -1,7 +1,7 @@
 <script setup>
 import {computed, ref} from "vue";
 import MemberService from "@/service/MemberService";
-import ErrorType from "@/composable/response/ErrorType";
+import ErrorType from "@/composable/response/constants/ErrorType";
 import router from "@/router/router";
 import Error from "@/components/common/Error.vue";
 import AuthenticationService from "@/service/AuthenticationService";

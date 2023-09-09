@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from "vue";
-import ErrorType from "@/composable/response/ErrorType";
+import ErrorType from "@/composable/response/constants/ErrorType";
 import ReportService from "@/service/ReportService";
 import ValidationError from "@/components/common/ValidationError.vue";
 import CharacterCounter from "@/components/common/CharacterCounter.vue";
@@ -167,7 +167,6 @@ async function useFeedbackSubmit(data) {
       id="bugReportModal"
       ref="modal"
       v-model="isOpenBugReportModal"
-      title="버그 제보"
       cancel-title="취소하기"
       ok-title="제보하기"
       @show="resetBugContent()"
@@ -178,6 +177,9 @@ async function useFeedbackSubmit(data) {
       no-close-on-backdrop
   >
 
+    <template #title>
+      <h5 class="modal-title"><b><b-badge variant="danger">BUG</b-badge>&nbsp; 버그 제보</b></h5>
+    </template>
     <b class="mb-0">오류 내용을 간략하게 적어주세요.</b>
     <b-form class="mt-3">
       <b-form-group label-for="bug-content-input">
@@ -206,7 +208,6 @@ async function useFeedbackSubmit(data) {
       id="feedbackReportModal"
       ref="modal"
       v-model="isOpenFeedbackReportModal"
-      title="서비스 의견"
       cancel-title="취소하기"
       ok-title="전송하기"
       @show="resetFeedbackContent()"
@@ -216,6 +217,10 @@ async function useFeedbackSubmit(data) {
       centered
       no-close-on-backdrop
   >
+
+    <template #title>
+      <h5 class="modal-title"><b><b-badge variant="primary">FEEDBACK</b-badge>&nbsp; 서비스 의견</b></h5>
+    </template>
 
     <b class="mb-0"> 서비스에 대한 소중한 의견을 듣고 싶습니다</b>
     <b-form class="mt-3">

@@ -9,7 +9,6 @@ import LogoImage from "@/components/common/LogoImage.vue";
       id="welcomeModal"
       ref="modal"
       v-model="store.isShowWelcomeModal"
-      title="Welcome"
       ok-title="확인했어요"
       centered
       ok-only
@@ -17,6 +16,9 @@ import LogoImage from "@/components/common/LogoImage.vue";
       button-size="sm"
       @ok="useHandleWelcomeOk"
   >
+    <template #title>
+      <h5 class="modal-title"><b><b-badge variant="primary">INFO</b-badge>&nbsp; 첫 방문</b></h5>
+    </template>
     <div class="text-center">
       <div class="bg-white">
         <LogoImage :image-name="`now-logo-name.png`"/>

@@ -1,10 +1,10 @@
 import axios from "axios";
-import ErrorType from "@/composable/response/ErrorType";
+import ErrorType from "@/composable/response/constants/ErrorType";
 import router from "@/router/router";
 import {store} from "@/store";
-import {HttpMethod} from "@/composable/request/constants/HttpMethod";
-import {RateLimit} from "@/composable/request/constants/RateLimitConstants";
 import {useRateLimitedControl} from "@/composable/request/rateLimitedControl";
+import {RateLimit} from "@/composable/request/constants/RateLimitConstants";
+import {ResponseHeader} from "@/composable/response/constants/Headers";
 
 /**
  * Axios 인스턴스를 생성
@@ -18,7 +18,9 @@ const instance = axios.create({
 export default instance;
 
 const {
-    writeRequestCount, increaseWriteRequestCount
+    writeRequestCount,
+    increaseWriteRequestCount,
+    resetWriteRequestCount
 } = useRateLimitedControl()
 
 let previousRequestUrl = null;
@@ -27,28 +29,24 @@ let previousRequestUrl = null;
  * 요청을 처리하는 Axios 인터셉터 함수
  */
 instance.interceptors.request.use(function (config) {
-    store.updateIsCurrentRequesting(true);
-    if (config.method === HttpMethod.POST || config.method === HttpMethod.PUT || config.method === HttpMethod.DELETE) {
 
-        if (previousRequestUrl === config.url) {
-            store.updateIsDuplicateRequesting(true); // 중복 요청이라고 표시
-            return Promise.reject(new Error("Request is already in progress")); // 이미 요청 중인 경우 요청 막기
-        }
-        previousRequestUrl = config.url; // 이전 요청의 URL 저장
-
-        increaseWriteRequestCount();
-        if (writeRequestCount > RateLimit.MAX_WRITE_REQUESTS) {
-            router.push({name: 'TooManyRequest'}).then(() => {
-                return Promise.reject(new Error('Too many write requests.'));
-            })
-        }
+    increaseWriteRequestCount();
+    if (writeRequestCount.value > RateLimit.MAX_WRITE_REQUESTS) {
+        store.updateIsDuplicateRequesting(true); // 중복 요청이라고 표시
+        resetWriteRequestCount();
     }
 
-    // 일정 시간 후에 요청 중인 상태 해제
-    setTimeout(() => {
-        previousRequestUrl = null
-        store.updateIsDuplicateRequesting(false); // 중복 요청 상태도 해제
-    }, 5000); // 5초 후에 상태 해제 (적절한 시간으로 조정)
+    if (store.getIsCurrentRequesting()) {
+        store.updateIsDuplicateRequesting(true); // 중복 요청이라고 표시
+    }
+
+    if (previousRequestUrl === config.url) {
+        store.updateIsDuplicateRequesting(true); // 중복 요청이라고 표시
+        return Promise.reject(new Error("Request is already in progress")); // 이미 요청 중인 경우 요청 막기
+    }
+    previousRequestUrl = config.url; // 이전 요청의 URL 저장
+
+    store.updateIsCurrentRequesting(true);
 
     return config;
 }, function (error) {
@@ -99,6 +97,16 @@ instance.interceptors.response.use(function (response) {
     }
     if (errorCode === ErrorType.NOT_FOUND_TOKEN) {
         store.resetMember();
+    }
+    if (errorCode === ErrorType.TOO_MANY_REQUESTS) {
+        store.updateIsCurrentRequesting(true);
+
+        const retryAfterHeaderValue = error.response.headers.get(ResponseHeader.X_RATELIMIT_RETRY_AFTER);
+        if (retryAfterHeaderValue) {
+            setTimeout(() => {
+                store.updateIsCurrentRequesting(false);
+            }, Math.ceil(parseFloat(retryAfterHeaderValue)));
+        }
     }
     return Promise.reject(error);
 });

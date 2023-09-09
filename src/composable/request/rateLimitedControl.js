@@ -29,5 +29,6 @@ export function useRateLimitedControl() {
     return {
         writeRequestCount,
         increaseWriteRequestCount,
+        resetWriteRequestCount,
     };
 }

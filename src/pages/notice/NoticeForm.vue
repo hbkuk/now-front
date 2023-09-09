@@ -1,6 +1,6 @@
 <script setup>
 import PostFormHeader from "@/components/common/PostFormHeader.vue";
-import ErrorType from "@/composable/response/ErrorType";
+import ErrorType from "@/composable/response/constants/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import AuthenticationService from "@/service/AuthenticationService";
 import {useFindSubCodeGroup} from "@/composable/postGroup/findSubCodeGroup";

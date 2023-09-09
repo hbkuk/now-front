@@ -4,7 +4,7 @@ import {onBeforeUpdate, ref} from "vue";
 import PostService from "@/service/PostService";
 import Comments from "@/components/Comments.vue";
 import Answer from "@/components/Answer.vue";
-import ErrorType from "@/composable/response/ErrorType";
+import ErrorType from "@/composable/response/constants/ErrorType";
 import CommonMessage from "@/components/common/CommonMessage.vue";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import router from "@/router/router";

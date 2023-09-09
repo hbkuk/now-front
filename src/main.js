@@ -8,7 +8,7 @@ import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 import '@/assest/main.css';
 import {store} from "@/store";
 import AuthenticationService from "@/service/AuthenticationService";
-import ErrorType from "@/composable/response/ErrorType";
+import ErrorType from "@/composable/response/constants/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import {useParseJsonItemFromSessionStorage} from "@/composable/parse/parseJsonItemFromSessionStorage";
 import CategoryService from "@/service/CategoryService";
@@ -17,9 +17,9 @@ import VueDOMPurifyHTML from 'vue-dompurify-html'
 const app = createApp(App);
 initializeStore();
 
+app.use(VueDOMPurifyHTML)
 app.use(BootstrapVue3);
 app.use(router);
-app.use(VueDOMPurifyHTML)
 app.mount('#app');
 
 // 사용자가 앱을 종료하기 전에 회원의 로그인 정보를 세션 스토리지에 저장

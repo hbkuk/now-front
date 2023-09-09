@@ -13,5 +13,5 @@ export const RateLimit = {
      * 요청 제한 시간 간격
      * @type {number}
      */
-    TIME_INTERVAL: 60 * 3000,
+    TIME_INTERVAL: 60 * 1000,
 };

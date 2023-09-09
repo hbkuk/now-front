@@ -3,7 +3,7 @@ import {useValidateAttachmentsExtension} from "@/composable/attachment/validateA
 import {useValidateAttachmentSize} from "@/composable/attachment/validateAttachmentSize";
 import {useValidateAttachmentUploadCount} from "@/composable/attachment/validateAttachmentUploadCount";
 import router from "@/router/router";
-import ErrorType from "@/composable/response/ErrorType";
+import ErrorType from "@/composable/response/constants/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import {EditPhotoOptions} from "@/composable/attachment/constants/EditAttachmentType";
 import {useExtractIdFromLocationHeader} from "@/composable/param/extractIdFromLocationHeader";

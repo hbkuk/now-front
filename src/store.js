@@ -51,6 +51,15 @@ export const store = reactive({
     },
 
     /**
+     * 현재 요청 상태 값 반환
+     * 
+     * @returns {boolean} - 요청 상태 값
+     */
+    getIsCurrentRequesting() {
+        return this.isCurrentRequesting;
+    },
+
+    /**
      * 요청 상태 변경
      *
      * @param value - 변경할 상태 값

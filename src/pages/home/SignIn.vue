@@ -44,7 +44,7 @@ async function submitForm() {
 
   try {
     // 로그인 요청 보내기
-    await AuthenticationService.signIn(formData).then(response => {
+    await AuthenticationService.signIn(formData).then(() => {
       // 로그인 성공 시 홈 페이지로 이동
       router.push({name: "Home"})
     }).catch(error => {
