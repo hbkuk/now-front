@@ -7,7 +7,9 @@ export const store = reactive({
 
     isCurrentRequesting: false,
 
-    isDuplicateRequesting: false,
+    isTooManyRequesting: false,
+
+    remainingRequestSeconds: 0,
 
     isSignInModalVisible: ref(false),
 
@@ -52,7 +54,7 @@ export const store = reactive({
 
     /**
      * 현재 요청 상태 값 반환
-     * 
+     *
      * @returns {boolean} - 요청 상태 값
      */
     getIsCurrentRequesting() {
@@ -60,21 +62,37 @@ export const store = reactive({
     },
 
     /**
-     * 요청 상태 변경
+     * 남은 요청 가능 시간 변경
      *
      * @param value - 변경할 상태 값
      */
-    updateIsDuplicateRequesting(value) {
-        this.isDuplicateRequesting = value;
+    updateRemainingRequestSeconds(value) {
+        this.remainingRequestSeconds = value;
     },
 
     /**
-     * 요청 상태 값 반환
+     * 남은 요청 가능 시간 반환
+     */
+    getRemainingRequestSeconds() {
+        return this.remainingRequestSeconds;
+    },
+
+    /**
+     * 상태 변경
+     *
+     * @param value - 변경할 상태 값
+     */
+    updateIsTooManyRequesting(value) {
+        this.isTooManyRequesting = value;
+    },
+
+    /**
+     * 상태 값 반환
      *
      * @returns {boolean} 요청 상태 값
      */
-    getIsDuplicateRequesting() {
-        return this.isDuplicateRequesting;
+    getIsTooManyRequesting() {
+        return this.isTooManyRequesting;
     },
 
     /**
@@ -146,4 +164,5 @@ export const store = reactive({
     closeSignInModal() {
         store.isSignInModalVisible = false;
     }
+
 });

@@ -14,6 +14,8 @@ import {store} from "@/store";
 import {PostGroup} from "@/composable/postGroup/PostGroup";
 import ValidationError from "@/components/common/ValidationError.vue";
 import CharacterCounter from "@/components/common/CharacterCounter.vue";
+import {useGetPostSubmit} from "@/composable/submitForm/post/getPostSubmit";
+import {useGetEditPostSubmit} from "@/composable/submitForm/post/getEditPostSubmit";
 
 // 게시글의 하위 코드 그룹 찾기
 const communitySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.COMMUNITY);
@@ -25,27 +27,6 @@ const props = defineProps({
     default: '',
   },
 });
-
-/**
- * 커뮤니티 게시글을 가져오는 함수
- *
- * @param {String} postIdx - 게시글 번호
- * @returns {Promise<void>}
- */
-async function getEditCommunity(postIdx) {
-  try {
-    const response = await PostService.fetchEditCommunity(postIdx);
-    post.value = response?.data;
-  } catch (error) {
-    console.log(error);
-    if (error.response?.data?.errorCode === ErrorType.EXPIRED_ACCESS_TOKEN) {
-      await useRefreshTokenAndRetry(() => getEditCommunity(postIdx));
-    }
-  }
-}
-
-// 컴포넌트가 마운트되면 게시글 가져오기 실행
-getEditCommunity(props.postIdx);
 
 // 컴포넌트 내에서 사용할 변수와 함수를 가져오는 커스텀 훅 사용
 const {
@@ -63,6 +44,14 @@ const {
     PostService.editCommunity,
     "CommunityPost"
 );
+
+// 수정 게시글 조회와 관련된 변수와 함수를 가져오는 커스텀 훅 사용
+const {
+  useSubmit: getEditCommunity,
+} = useGetEditPostSubmit(post, PostService.fetchEditCommunity)
+
+// 컴포넌트가 마운트되면 게시글 가져오기 실행
+getEditCommunity(props.postIdx);
 
 </script>
 

@@ -13,9 +13,7 @@ import BannerSub from "@/components/common/BannerSub.vue";
 import {store} from "@/store";
 import {usePostReactionSubmit} from "@/composable/submitForm/reaction/reactionSubmit";
 import {useCommentSubmit} from "@/composable/submitForm/comment/commentSubmit";
-
-// 게시글을 담는 반응성 객체
-const fetchCommunityData = ref(null);
+import {useGetPostSubmit} from "@/composable/submitForm/post/getPostSubmit";
 
 // 게시글 번호를 props로 전달받음
 const props = defineProps({
@@ -25,19 +23,18 @@ const props = defineProps({
   }
 });
 
+// 커스텀 훅을 사용하여 게시글 조회와 관련된 변수와 함수들을 가져옴
+const {
+  fetchPostData: fetchCommunityData,
+  useSubmit: getCommunity,
+} = useGetPostSubmit(PostService.fetchCommunity)
+
 /**
  * 커뮤니티 게시글을 가져오는 함수
  *
  * @param postIdx 게시글 번호
  * @returns {Promise<void>}
  */
-async function getCommunity(postIdx) {
-  return PostService.fetchCommunity(postIdx).then(response => {
-    fetchCommunityData.value = response?.data
-  }).catch(error => {
-    console.log(error)
-  })
-}
 
 // 커스텀 훅을 사용하여 게시글 반응과 관련된 변수와 함수들을 가져옴
 const {

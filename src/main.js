@@ -24,12 +24,12 @@ app.mount('#app');
 
 // 사용자가 앱을 종료하기 전에 회원의 로그인 정보를 세션 스토리지에 저장
 window.addEventListener('beforeunload', () => {
-    sessionStorage.setItem('isSignedIn', store.member.isSignedIn.toString());
+    localStorage.setItem('isSignedIn', store.member.isSignedIn.toString());
 });
 
 /**
  * 스토어 초기화
- *
+ *z
  * @returns {object} 카테고리와 멤버 데이터가 포함된 초기화된 스토어를 반환
  */
 async function initializeStore() {
@@ -40,10 +40,10 @@ async function initializeStore() {
         store.updateCategory(category);
     }
 
-    const isSignedIn = sessionStorage.getItem('isSignedIn');
+    const isSignedIn = localStorage.getItem('isSignedIn');
     if (isSignedIn === 'true') {
         await getMember();
-        sessionStorage.removeItem('isSignedIn');
+        localStorage.removeItem("isSignedIn");
     }
 
     const isShowWelcomeModal = localStorage.getItem('isShowWelcomeModal');
