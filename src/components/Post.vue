@@ -131,13 +131,16 @@ function updatePostReaction(newReaction) {
       id="deletePostModal"
       ref="modal"
       v-model="isShowPostModal"
-      title="게시글 삭제"
       cancel-title="취소하기"
       ok-title="삭제하기"
       centered
       button-size="sm"
       @ok="handleDeletePost"
   >
+    <template #title>
+      <h5 class="modal-title"><b>
+        <b-badge variant="warning">WARN</b-badge>&nbsp;게시글 삭제 확인</b></h5>
+    </template>
     <b class="mb-0">정말로 삭제하시겠습니까?</b>
   </b-modal>
 

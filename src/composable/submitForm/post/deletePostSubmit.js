@@ -33,7 +33,7 @@ export function useDeletePostSubmit(targetRouteName, deletePostFunction) {
             if (error.response?.data?.errorCode === ErrorType.CAN_NOT_DELETE_POST_WITH_OTHER_MEMBER_COMMENTS) {
                 deleteSubmitError.value = error.response.data;
             }
-            return Promise.reject(error);
+            //return Promise.reject(error);
         }
     }
 
