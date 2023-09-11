@@ -79,14 +79,14 @@ onBeforeUnmount(() => {
                        :to="{ name: `${PostRouteName}`, params: { postIdx: post.postIdx } }">
 
             <div
-                style="display: flex; justify-content: center; align-items: center; width: 100%;"
+                style="display: flex; justify-content: center; align-items: center; width: 100%; overflow: hidden"
                 :style="{ height: getImageHeight() }"
             >
               <div>
                 <b-img
                     v-if="post.thumbnailSavedAttachmentName"
                     :src="`${bucketPath}${uploadDirectoryName}${post.thumbnailSavedAttachmentName}`"
-                    :fluid="true"
+                    fluid
                     rounded
                 ></b-img>
                 <b-img v-else :fluid="true"></b-img>

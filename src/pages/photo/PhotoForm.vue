@@ -139,13 +139,13 @@ const useHandleThumbnail = (event) => {
                     </div>
                     <!-- 파일 업로드 오류가 있을 경우, 오류 메시지 출력 -->
                     <template v-if="attachmentUploadErrors.hasUnsupportedExtensions">
-                      <ValidationError :message="`확장자 jpg, gif, png만 가능합니다.`"/>
+                      <ValidationError :message="`확장자 jpg, gif, png, jpeg, psd, tiff, heif 만 가능합니다.`"/>
                     </template>
                     <template v-if="attachmentUploadErrors.isMaxUploadCountExceeded">
                       <ValidationError :message="`최대 20개의 파일까지 업로드 가능합니다.`"/>
                     </template>
                     <template v-if="attachmentUploadErrors.isSizeExceeded">
-                      <ValidationError :message="`파일의 크기는 최대 1,024,000 byte 입니다.`"/>
+                      <ValidationError :message="`파일의 크기는 최대 2,048,000 byte 입니다.`"/>
                     </template>
 
                     <!-- 대표 이미지 미리보기 -->

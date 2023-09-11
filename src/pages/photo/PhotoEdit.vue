@@ -252,15 +252,12 @@ async function handleEditSubmit(postIdx) {
                                      id="formFileMultiple" multiple ref="fileInput">
                             </div>
                             <template v-if="attachmentUploadErrors.hasUnsupportedExtensions">
-                              <!-- 파일 확장자 에러 메시지 출력 -->
-                              <ValidationError :message="`확장자 jpg, gif, png, zip만 업로드 가능합니다.`"/>
+                              <ValidationError :message="`확장자 jpg, gif, png, jpeg, psd, tiff, heif, zip, docx, xlsx, pptx 만 업로드 가능합니다.`"/>
                             </template>
                             <template v-if="attachmentUploadErrors.isMaxUploadCountExceeded">
-                              <!-- 파일 업로드 개수 초과 에러 메시지 출력 -->
-                              <ValidationError :message="`최대 5개의 파일까지 업로드 가능합니다.`"/>
+                              <ValidationError :message="`최대 20개의 파일까지 업로드 가능합니다.`"/>
                             </template>
                             <template v-if="attachmentUploadErrors.isSizeExceeded">
-                              <!-- 파일 크기 초과 에러 메시지 출력 -->
                               <ValidationError :message="`파일의 크기는 최대 2,048,000 byte 입니다.`"/>
                             </template>
 

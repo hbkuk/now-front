@@ -27,6 +27,11 @@ window.addEventListener('beforeunload', () => {
     localStorage.setItem('isSignedIn', store.member.isSignedIn.toString());
 });
 
+// iOS safari에서 beforeunload 이벤트를 지원하지 않는 이슈로 인해 추가
+window.addEventListener('pagehide', () => {
+    localStorage.setItem('isSignedIn', store.member.isSignedIn.toString());
+});
+
 /**
  * 스토어 초기화
  *z

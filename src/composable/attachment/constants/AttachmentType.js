@@ -5,13 +5,13 @@
  */
 export const AttachmentType = {
     FILE: {
-        allowedExtensions: ["jpg", "gif", "png", "zip"],
+        allowedExtensions: ["jpg", "gif", "png", "jpeg", "psd", "tiff", "heif", "zip", "docx", "xlsx", "pptx"],
         maxUploadSize: 2048000,
         maxUploadCount: 5,
     },
     IMAGE: {
-        allowedExtensions: ["jpg", "gif", "png"],
-        maxUploadSize: 1024000,
+        allowedExtensions: ["jpg", "gif", "png", "jpeg", "psd", "tiff", "heif"],
+        maxUploadSize: 2048000,
         maxUploadCount: 20,
     },
 };
