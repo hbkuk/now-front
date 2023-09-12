@@ -7,52 +7,17 @@ import ValidationError from "@/components/common/ValidationError.vue";
 import {useSavePostSubmitWithAttachments} from "@/composable/submitForm/post/savePostSubmitWithAttachments";
 import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
 import PostService from "@/service/PostService";
-import {ref} from "vue";
 import CharacterCounter from "@/components/common/CharacterCounter.vue";
 
 const photoSubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup.PHOTO);
 
 // useSavePostSubmitWithAttachments 커스텀 훅을 사용하여 게시글 저장에 필요한 데이터와 함수 가져오기
-const {post, formData, submitError, attachmentUploadErrors, hasAttachmentUploadErrors,
-  useHandleAttachment, useSubmit}
-    = useSavePostSubmitWithAttachments(AttachmentType.IMAGE,
-    "photo",  PostService.savePhoto, 'PhotoPost')
+const {
+  post, formData, submitError, selectedFile, attachmentUploadErrors, hasAttachmentUploadErrors,
+  useHandleThumbnail, useHandleAttachment, useSubmit
+} = useSavePostSubmitWithAttachments(AttachmentType.IMAGE,
+    "photo", PostService.savePhoto, 'PhotoPost')
 
-// 대표 이미지 파일을 담는 반응성 객체
-const selectedFile = ref(null);
-
-/**
- * 대표 이미지 변경 처리 함수
- *
- * @param {Event} event - 파일 선택 이벤트
- */
-const useHandleThumbnail = (event) => {
-  if (hasAttachmentUploadErrors(event.target.files)) {
-    selectedFile.value = null;
-    event.target.value = "";
-    return;
-  }
-
-  formData.value.delete('thumbnail');
-  for (const file of event.target.files) {
-    formData.value.append('thumbnail', file)
-  }
-
-  const fileInput = event.target;
-  if (fileInput.files && fileInput.files.length > 0) {
-    const file = fileInput.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      selectedFile.value = {
-        file: file,
-        preview: reader.result
-      };
-    };
-    reader.readAsDataURL(file);
-  } else {
-    selectedFile.value = null;
-  }
-};
 
 </script>
 <template>

@@ -6,6 +6,8 @@ import router from "@/router/router";
 import ErrorType from "@/composable/response/constants/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import {useExtractIdFromLocationHeader} from "@/composable/param/extractIdFromLocationHeader";
+import {isImageExtension} from "@/composable/attachment/isImageExtension";
+import {useResizeImage} from "@/composable/attachment/resizeImage";
 
 /**
  * 게시글 수정 폼을 관리하는 컴포저블
@@ -22,6 +24,8 @@ export function useEditPostSubmitWithAttachments(attachmentType, formDataName, s
     const post = ref({category: null});
 
     const formData = ref(new FormData());
+
+    const resizedAndUnmodifiedAttachments = ref([]);
 
     // 삭제할 첨부파일 인덱스를 저장하는 배열
     const selectedDeleteAttachmentIndexes = ref([]);
@@ -55,15 +59,27 @@ export function useEditPostSubmitWithAttachments(attachmentType, formDataName, s
      *
      * @param {Event} event - 파일 업로드 이벤트 객체
      */
-    const useHandleAttachment = (event) => {
-        if (hasAttachmentUploadErrors(event.target.files)) {
+    const useHandleAttachment = async (event) => {
+        resizedAndUnmodifiedAttachments.value = [];
+
+        for (const file of event.target.files) {
+            if (isImageExtension(file.name)) {
+                resizedAndUnmodifiedAttachments.value.push(await useResizeImage(file, 800));
+            }
+            if (!isImageExtension(file.name)) {
+                resizedAndUnmodifiedAttachments.value.push(file);
+            }
+        }
+
+        if (hasAttachmentUploadErrors(resizedAndUnmodifiedAttachments.value)) {
             event.target.value = "";
+            resizedAndUnmodifiedAttachments.value = [];
             return;
         }
 
         formData.value.delete('attachments');
-        for (const file of event.target.files) {
-            formData.value.append('attachments', file)
+        for (const resizedAndUnmodifiedAttachment of resizedAndUnmodifiedAttachments.value) {
+            formData.value.append('attachments', resizedAndUnmodifiedAttachment);
         }
     };
 

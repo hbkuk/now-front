@@ -7,6 +7,8 @@ import ErrorType from "@/composable/response/constants/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import {EditPhotoOptions} from "@/composable/attachment/constants/EditAttachmentType";
 import {useExtractIdFromLocationHeader} from "@/composable/param/extractIdFromLocationHeader";
+import {isImageExtension} from "@/composable/attachment/isImageExtension";
+import {useResizeImage} from "@/composable/attachment/resizeImage";
 
 /**
  * 사진 게시글의 수정 폼을 관리하는 컴포저블
@@ -53,6 +55,10 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
     // 대표 이미지 파일을 담는 반응성 객체
     const selectedFile = ref();
 
+    const resizedAndUnmodifiedThumbnail = ref([]);
+
+    const resizedAndUnmodifiedAttachments = ref([]);
+
     /**
      * 첨부파일 인덱스가 삭제된 상태인지 확인하는 함수
      *
@@ -86,15 +92,27 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
      *
      * @param {Event} event - 파일 업로드 이벤트 객체
      */
-    const useHandleAttachment = (event) => {
-        if (hasAttachmentUploadErrors(event.target.files)) {
+    const useHandleAttachment = async (event) => {
+        resizedAndUnmodifiedAttachments.value = [];
+
+        for (const file of event.target.files) {
+            if (isImageExtension(file.name)) {
+                resizedAndUnmodifiedAttachments.value.push(await useResizeImage(file, 800));
+            }
+            if (!isImageExtension(file.name)) {
+                resizedAndUnmodifiedAttachments.value.push(file);
+            }
+        }
+
+        if (hasAttachmentUploadErrors(resizedAndUnmodifiedAttachments.value)) {
             event.target.value = "";
+            resizedAndUnmodifiedAttachments.value = [];
             return;
         }
 
         formData.value.delete('attachments');
-        for (const file of event.target.files) {
-            formData.value.append('attachments', file)
+        for (const resizedAndUnmodifiedAttachment of resizedAndUnmodifiedAttachments.value) {
+            formData.value.append('attachments', resizedAndUnmodifiedAttachment);
         }
     };
 
@@ -179,8 +197,19 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
      *
      * @param {Event} event - 파일 선택 이벤트
      */
-    const useHandleThumbnail = (event) => {
-        if (hasAttachmentUploadErrors(event.target.files)) {
+    const useHandleThumbnail = async (event) => {
+        resizedAndUnmodifiedThumbnail.value = [];
+
+        for (const file of event.target.files) {
+            if (isImageExtension(file.name)) {
+                resizedAndUnmodifiedThumbnail.value.push(await useResizeImage(file, 800));
+            }
+            if (!isImageExtension(file.name)) {
+                resizedAndUnmodifiedThumbnail.value.push(file);
+            }
+        }
+
+        if (hasAttachmentUploadErrors(resizedAndUnmodifiedThumbnail.value)) {
             selectedFile.value = null;
             event.target.value = "";
             return;
@@ -192,8 +221,8 @@ export function useEditPostSubmitWithAttachmentsAndThumbnail(attachmentType, for
         formData.value.delete('thumbnail');
 
         // 새로 선택한 파일을 formData에 추가
-        if (event.target.files && event.target.files.length > 0) {
-            const file = event.target.files[0];
+        if (resizedAndUnmodifiedThumbnail.value && resizedAndUnmodifiedThumbnail.value.length > 0) {
+            const file = resizedAndUnmodifiedThumbnail.value[0];
             formData.value.append('thumbnail', file);
 
             // 파일 미리보기 설정

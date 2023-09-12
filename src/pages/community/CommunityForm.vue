@@ -16,8 +16,7 @@ const communitySubCodeGroup = useFindSubCodeGroup(store.getCategory(), PostGroup
 const {
   post, submitError, attachmentUploadErrors,
   useHandleAttachment, useSubmit
-}
-    = useSavePostSubmitWithAttachments(AttachmentType.FILE,
+} = useSavePostSubmitWithAttachments(AttachmentType.FILE,
     "community", PostService.saveCommunity, 'CommunityPost')
 
 /**
@@ -109,7 +108,8 @@ async function handleSubmit() {
                     </div>
                     <template v-if="attachmentUploadErrors.hasUnsupportedExtensions">
                       <!-- 파일 확장자 에러 메시지 출력 -->
-                      <ValidationError :message="`확장자 jpg, gif, png, jpeg, psd, tiff, heif, zip, docx, xlsx, pptx 만 업로드 가능합니다.`"/>
+                      <ValidationError
+                          :message="`확장자 jpg, gif, png, jpeg, psd, tiff, heif, zip, docx, xlsx, pptx 만 업로드 가능합니다.`"/>
                     </template>
                     <template v-if="attachmentUploadErrors.isMaxUploadCountExceeded">
                       <!-- 파일 업로드 개수 초과 에러 메시지 출력 -->

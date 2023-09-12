@@ -6,6 +6,9 @@ import router from "@/router/router";
 import ErrorType from "@/composable/response/constants/ErrorType";
 import {useRefreshTokenAndRetry} from "@/composable/authentication/refreshTokenAndRetry";
 import {useExtractIdFromLocationHeader} from "@/composable/param/extractIdFromLocationHeader";
+import {useResizeImage} from "@/composable/attachment/resizeImage";
+import {AttachmentType} from "@/composable/attachment/constants/AttachmentType";
+import {isImageExtension} from "@/composable/attachment/isImageExtension";
 
 /**
  * 게시글 작성 폼을 관리하는 컴포저블
@@ -17,11 +20,17 @@ import {useExtractIdFromLocationHeader} from "@/composable/param/extractIdFromLo
  * @returns {object} 게시글 작성 폼 관련 함수와 상태를 포함한 객체
  */
 export function useSavePostSubmitWithAttachments(attachmentType, formDataName, savePostFunction, targetRouteName) {
-    const submitError = ref(null)
+    const submitError = ref(null);
 
     const post = ref({category: null});
 
     const formData = ref(new FormData());
+
+    const selectedFile = ref(null);
+
+    const resizedAndUnmodifiedThumbnail = ref([]);
+
+    const resizedAndUnmodifiedAttachments = ref([]);
 
     const attachmentUploadErrors = ref({
         hasUnsupportedExtensions: false,
@@ -31,8 +40,7 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
 
     /**
      * 업로드된 파일들의 유효성 검사 결과를 확인하여 에러 여부를 반환하는 함수
-     *
-     * @param {FileList} files - 업로드된 파일들의 FileList 객체
+     * @param files files - 업로드된 파일들의 FileList 객체
      * @returns {boolean} 업로드된 파일들의 유효성 검사 결과에 따른 에러 여부 (true: 에러 발생, false: 에러 없음)
      */
     function hasAttachmentUploadErrors(files) {
@@ -48,19 +56,74 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
     }
 
     /**
-     * 파일 업로드 핸들러 함수
+     * 대표 이미지 변경 처리 함수
      *
-     * @param {Event} event - 파일 업로드 이벤트 객체
+     * @param {Event} event - 파일 선택 이벤트
      */
-    const useHandleAttachment = (event) => {
-        if (hasAttachmentUploadErrors(event.target.files)) {
+    const useHandleThumbnail = async (event) => {
+        resizedAndUnmodifiedThumbnail.value = [];
+
+        for (const file of event.target.files) {
+            if (isImageExtension(file.name)) {
+                resizedAndUnmodifiedThumbnail.value.push(await useResizeImage(file, 800));
+            }
+            if (!isImageExtension(file.name)) {
+                resizedAndUnmodifiedThumbnail.value.push(file);
+            }
+        }
+
+        if (hasAttachmentUploadErrors(resizedAndUnmodifiedThumbnail.value)) {
+            selectedFile.value = null;
             event.target.value = "";
             return;
         }
 
-        formData.value.delete('attachments');
+        formData.value.delete('thumbnail');
+        for (const resizedAndUnmodifiedFile of resizedAndUnmodifiedThumbnail.value) {
+            formData.value.append('thumbnail', resizedAndUnmodifiedFile)
+        }
+
+        if (resizedAndUnmodifiedThumbnail.value && resizedAndUnmodifiedThumbnail.value.length > 0) {
+            const file = resizedAndUnmodifiedThumbnail.value[0];
+            const reader = new FileReader();
+            reader.onload = () => {
+                selectedFile.value = {
+                    file: file,
+                    preview: reader.result
+                };
+            };
+            reader.readAsDataURL(file);
+        } else {
+            selectedFile.value = null;
+        }
+    };
+
+    /**
+     * 파일 업로드 핸들러 함수
+     *
+     * @param {Event} event - 파일 업로드 이벤트 객체
+     */
+    const useHandleAttachment = async (event) => {
+        resizedAndUnmodifiedAttachments.value = [];
+
         for (const file of event.target.files) {
-            formData.value.append('attachments', file)
+            if (isImageExtension(file.name)) {
+                resizedAndUnmodifiedAttachments.value.push(await useResizeImage(file, 800));
+            }
+            if (!isImageExtension(file.name)) {
+                resizedAndUnmodifiedAttachments.value.push(file);
+            }
+        }
+
+        if (hasAttachmentUploadErrors(resizedAndUnmodifiedAttachments.value)) {
+            event.target.value = "";
+            resizedAndUnmodifiedAttachments.value = [];
+            return;
+        }
+
+        formData.value.delete('attachments');
+        for (const resizedAndUnmodifiedAttachment of resizedAndUnmodifiedAttachments.value) {
+            formData.value.append('attachments', resizedAndUnmodifiedAttachment);
         }
     };
 
@@ -103,8 +166,10 @@ export function useSavePostSubmitWithAttachments(attachmentType, formDataName, s
         post,
         formData,
         submitError,
+        selectedFile,
         attachmentUploadErrors,
         hasAttachmentUploadErrors,
+        useHandleThumbnail,
         useHandleAttachment,
         useSubmit
     };
