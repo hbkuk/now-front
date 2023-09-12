@@ -38,9 +38,9 @@ async function searchPosts() {
 </script>
 
 <template>
-  <div class="header">
+  <div class="top-fixed">
     <b-container>
-      <b-navbar toggleable="lg" class="bg-white text-black header">
+      <b-navbar toggleable="lg" class="bg-white text-black">
         <b-navbar-brand to="/">
           <b-img
               style="height: 30px"
@@ -138,10 +138,12 @@ async function searchPosts() {
 </template>
 
 <style scoped>
-.header {
-  position: sticky;
+.top-fixed {
+  position: fixed;
   top: 0;
-  background-color: white; /* Adjust as needed */
-  z-index: 100; /* Adjust as needed */
+  left: 0;
+  width: 100%;
+  background-color: white; /* 필요에 따라 조정 */
+  z-index: 100; /* 필요에 따라 조정 */
 }
 </style>

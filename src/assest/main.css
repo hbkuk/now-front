@@ -1,91 +1,112 @@
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  overflow-y: scroll;
-  overflow-x:hidden;
+html, body {
+    position: fixed;
+    overflow: hidden;
+    font-family: 'Noto Sans KR', sans-serif;
 }
+
+.main-body {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
 
 /* 화면 크기가 576px 이하일 때 */
 @media (max-width: 576px) {
-  body {
-    font-size: 15px; /* 폰트 크기 조절 */
-  }
-  .b-sm-icon {
-    font-size: 11px;
-  }
-  .b-md-icon {
-    font-size: 17px;
-  }
-  .b-btn {
-    font-size: 13px; /* 원하는 폰트 크기로 설정 */
-  }
-  .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 220px; /* 제목의 최대 너비 설정 */
-  }
+    body {
+        font-size: 15px; /* 폰트 크기 조절 */
+    }
+
+    .b-sm-icon {
+        font-size: 11px;
+    }
+
+    .b-md-icon {
+        font-size: 17px;
+    }
+
+    .b-btn {
+        font-size: 13px; /* 원하는 폰트 크기로 설정 */
+    }
+
+    .truncate-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 220px; /* 제목의 최대 너비 설정 */
+    }
 }
 
 /* 화면 크기가 577px에서 768px 사이일 때 */
 @media (min-width: 577px) and (max-width: 768px) {
-  body {
-    font-size: 16px; /* 폰트 크기 조절 */
-  }
-  .b-sm-icon {
-    font-size: 13px;
-  }
-  .b-md-icon {
-    font-size: 18px;
-  }
-  .b-btn {
-    font-size: 16px; /* 원하는 폰트 크기로 설정 */
-  }
-  .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 280px; /* 제목의 최대 너비 설정 */
-  }
+    body {
+        font-size: 16px; /* 폰트 크기 조절 */
+    }
+
+    .b-sm-icon {
+        font-size: 13px;
+    }
+
+    .b-md-icon {
+        font-size: 18px;
+    }
+
+    .b-btn {
+        font-size: 16px; /* 원하는 폰트 크기로 설정 */
+    }
+
+    .truncate-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 280px; /* 제목의 최대 너비 설정 */
+    }
 }
 
 /* 화면 크기가 769px 이상일 때 */
 @media (min-width: 769px) {
-  body {
-    font-size: 16px; /* 폰트 크기 조절 */
-  }
-  .b-sm-icon {
-    font-size: 15px;
-  }
-  .b-md-icon {
-    font-size: 20px;
-  }
-  .b-btn {
-    font-size: 20px; /* 원하는 폰트 크기로 설정 */
-  }
-  .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 330px; /* 제목의 최대 너비 설정 */
-  }
+    body {
+        font-size: 16px; /* 폰트 크기 조절 */
+    }
+
+    .b-sm-icon {
+        font-size: 15px;
+    }
+
+    .b-md-icon {
+        font-size: 20px;
+    }
+
+    .b-btn {
+        font-size: 20px; /* 원하는 폰트 크기로 설정 */
+    }
+
+    .truncate-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 330px; /* 제목의 최대 너비 설정 */
+    }
 }
 
 
 /* nav, list 에서 선택된 item */
 .selected {
-  font-weight: bold;
-  color: #1E90FF; /* 파란색 */
-  text-shadow: 5px 5px 10px rgba(77, 148, 255, 1);
+    font-weight: bold;
+    color: #1E90FF; /* 파란색 */
+    text-shadow: 5px 5px 10px rgba(77, 148, 255, 1);
 }
 
 .text-container-wrap {
-  white-space: normal; /* 텍스트 줄바꿈 활성화 */
-  overflow: visible; /* 오버플로우 허용 */
-  overflow-wrap: break-word; /* 긴 단어나 문자열을 wrap */
+    white-space: normal; /* 텍스트 줄바꿈 활성화 */
+    overflow: visible; /* 오버플로우 허용 */
+    overflow-wrap: break-word; /* 긴 단어나 문자열을 wrap */
 }
 
 .emphasis {
-  font-weight: bold;
-  text-shadow: 10px 0px 20px rgba(0, 0, 0, 0.3);
-  padding: 10px;
+    font-weight: bold;
+    text-shadow: 10px 0px 20px rgba(0, 0, 0, 0.3);
+    padding: 10px;
 }

@@ -4,6 +4,7 @@ import ErrorType from "@/composable/response/constants/ErrorType";
 import ReportService from "@/service/ReportService";
 import ValidationError from "@/components/common/ValidationError.vue";
 import CharacterCounter from "@/components/common/CharacterCounter.vue";
+import Footer from "@/components/static/Footer.vue";
 
 const submitError = ref(null);
 const isSuccessSubmit = ref(false);
@@ -144,22 +145,24 @@ async function useFeedbackSubmit(data) {
 
 <template>
   <div class="bottom-sticky">
-    <b-row align-h="between" class="justify-content-start">
-      <b-col cols="6">
-        <div class="bug-report-button p-3">
-          <b-button size="sm" variant="danger" pill @click="openBugReportModal">
-            <i class="bi bi-bug b-sm-icon"></i>&nbsp; <b>오류 제보</b>
-          </b-button>
-        </div>
-      </b-col>
-      <b-col cols="6" class="d-flex justify-content-end">
-        <div class="bug-report-button p-3">
-          <b-button size="sm" variant="primary" pill @click="openFeedbackReportModal">
-            <i class="bi bi-clipboard-check b-sm-icon"></i>&nbsp; <b>서비스 의견</b>
-          </b-button>
-        </div>
-      </b-col>
-    </b-row>
+    <b-container class="mb-3">
+        <b-row align-h="between" class="justify-content-start">
+          <b-col cols="6">
+            <div class="bug-report-button">
+              <b-button size="sm" variant="danger" pill @click="openBugReportModal">
+                <i class="bi bi-bug b-sm-icon"></i>&nbsp; <b>오류 제보</b>
+              </b-button>
+            </div>
+          </b-col>
+          <b-col cols="6" class="d-flex justify-content-end">
+            <div class="bug-report-button">
+              <b-button size="sm" variant="primary" pill @click="openFeedbackReportModal">
+                <i class="bi bi-clipboard-check b-sm-icon"></i>&nbsp; <b>서비스 의견</b>
+              </b-button>
+            </div>
+          </b-col>
+        </b-row>
+    </b-container>
   </div>
 
   <!-- 모달 -->
@@ -261,9 +264,11 @@ async function useFeedbackSubmit(data) {
 
 <style scoped>
 .bottom-sticky {
-  position: sticky;
+  position: fixed;
   bottom: 0;
-  background-color: transparent; /* Adjust as needed */
-  z-index: 100; /* Adjust as needed */
+  left: 0;
+  width: 100%;
+  background-color: transparent; /* 필요에 따라 조정 */
+  z-index: 100; /* 필요에 따라 조정 */
 }
 </style>
