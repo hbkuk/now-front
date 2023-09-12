@@ -1,3 +1,5 @@
+import {isImageExtension} from "@/composable/attachment/isImageExtension";
+
 /**
  * 확장자에 따라 해당 파일의 아이콘 태그를 반환
  *
@@ -8,14 +10,13 @@
  */
 export function useGetIconTagByExtension(extension) {
     const lowerCaseExtension = extension.toLowerCase();
-    switch (lowerCaseExtension) {
-        case "jpg":
-        case "gif":
-        case "png":
-            return '<i class="bi bi-file-image"></i>';
-        case "zip":
+    if (isImageExtension(lowerCaseExtension)) {
+        return '<i class="bi bi-file-image"></i>';
+    }
+    if (!isImageExtension(lowerCaseExtension)) {
+        if (lowerCaseExtension === "zip") {
             return '<i class="bi bi-file-earmark-zip"></i>';
-        default:
-            return '<i class="bi bi-file-earmark"></i>';
+        }
+        return '<i class="bi bi-file-earmark"></i>';
     }
 }

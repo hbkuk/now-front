@@ -139,11 +139,10 @@ async function searchPosts() {
 
 <style scoped>
 .top-fixed {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
-  background-color: white; /* 필요에 따라 조정 */
-  z-index: 100; /* 필요에 따라 조정 */
+  background-color: white;
+  z-index: 100;
+  transition: top 0.3s ease; /* 헤더 위치 변경에 애니메이션을 추가 */
 }
 </style>
