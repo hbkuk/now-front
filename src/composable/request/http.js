@@ -78,5 +78,8 @@ instance.interceptors.response.use(function (response) {
 
         await router.push({name: "TooManyRequest"});
     }
+    if (errorCode === ErrorType.UNHANDLED_EXCEPTION) {
+        await router.push({name: "ServerError"});
+    }
     return Promise.reject(error);
 });

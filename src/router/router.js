@@ -24,6 +24,7 @@ const Unauthorized = () => import(/* webpackChunkName: "Unauthorized"*/ "@/compo
 const Forbidden = () => import(/* webpackChunkName: "Forbidden"*/ "@/components/Forbidden.vue");
 const RequestError = () => import(/* webpackChunkName: "RequestError"*/ "@/components/RequestError.vue");
 const TooManyRequest = () => import(/* webpackChunkName: "TooManyRequest"*/ "@/components/TooManyRequest.vue");
+const ServerError = () => import(/* webpackChunkName: "ServerError"*/ "@/components/ServerError.vue");
 import {store} from "@/store";
 import {ROUTE_NAME_GROUP} from "@/composable/router/routeNameGroup";
 
@@ -57,10 +58,11 @@ const routes = [
     {path: '/inquiries/:postIdx/edit', name: 'InquiryEdit', component: InquiryEdit, props: true, beforeEnter: requireSignIn},
 
 
-    {path: '/TooManyRequest', name: 'TooManyRequest', component: TooManyRequest },
-    {path: '/RequestError', name: 'RequestError', component: RequestError },
-    {path: '/Forbidden', name: 'Forbidden', component: Forbidden },
+    {path: '/too-many-request', name: 'TooManyRequest', component: TooManyRequest },
+    {path: '/request-error', name: 'RequestError', component: RequestError },
+    {path: '/forbidden', name: 'Forbidden', component: Forbidden },
     {path: '/unauthorized', name: 'Unauthorized', component: Unauthorized },
+    {path: '/server-error', name: 'ServerError', component: ServerError },
     {path: '/:catchAll(.*)*', name: 'NotFound', component: NotFound}, // 404 페이지로 리다이렉트
 ]
 
