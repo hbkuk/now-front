@@ -177,33 +177,40 @@ watch(() => props.successEditComment, (newSuccessEditComment) => {
         <b-container class="py-3">
 
           <b-row align-h="between" class="justify-content-start mb-3">
-            <b-col v-if="store.isSameMember(comment.memberNickname)" cols="6">
-              <div>
-                <i class="bi bi-person-circle pe-2 b-md-icon"></i>
-                <span class="text-secondary truncate-text">{{ comment.memberNickname }}</span>
-              </div>
-            </b-col>
 
-            <b-col v-else cols="12">
-              <div>
-                <i class="bi bi-person-circle pe-2 b-md-icon"></i>
-                <span class="text-secondary truncate-text">{{ comment.managerNickname }}</span>
-              </div>
-            </b-col>
+            <div class="d-flex" v-if="store.isSameMember(comment.memberNickname)">
+              <b-col cols="6">
+                <div>
+                  <i class="bi bi-person-circle pe-2 b-md-icon"></i>
+                  <span class="truncate-text">{{ comment.memberNickname }}</span>
+                  <span class="truncate-text">{{ comment.managerNickname }}</span>
+                </div>
+              </b-col>
 
-            <b-col v-if="store.isSameMember(comment.memberNickname)" cols="6" class="d-flex justify-content-end">
-              <div class="text-nowrap flex-row align-items-end">
-                <b-button @click="handleEditClick(comment.commentIdx, comment.content)" variant="link"
-                          class="text-secondary">
-                  <i class="bi bi-eraser b-md-icon"></i> 수정
-                </b-button>
-                <b-button @click="showDeleteModal(comment.commentIdx)" variant="link" class="text-secondary">
-                  <i class="bi bi-trash b-md-icon"></i> 삭제
-                </b-button>
-              </div>
-            </b-col>
+              <b-col cols="6" class="d-flex justify-content-end">
+                <div class="text-nowrap flex-row align-items-end">
+                  <b-button @click="handleEditClick(comment.commentIdx, comment.content)" variant="link"
+                            class="text-secondary">
+                    <i class="bi bi-eraser b-md-icon"></i> 수정
+                  </b-button>
+                  <b-button @click="showDeleteModal(comment.commentIdx)" variant="link" class="text-secondary">
+                    <i class="bi bi-trash b-md-icon"></i> 삭제
+                  </b-button>
+                </div>
+              </b-col>
+            </div>
+
+            <div v-else>
+              <b-col cols="12">
+                <div>
+                  <i class="bi bi-person-circle pe-2 b-md-icon"></i>
+                  <span class="truncate-text">{{ comment.memberNickname }}</span>
+                  <span class="truncate-text">{{ comment.managerNickname }}</span>
+                </div>
+              </b-col>
+            </div>
+
           </b-row>
-
 
           <b-row align-h="between" class="justify-content-start my-3">
             <b-col cols="12" class="text-container-wrap">
